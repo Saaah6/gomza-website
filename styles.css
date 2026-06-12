@@ -1,3 +1,14 @@
+@media (max-width:768px){
+
+    .btn-primary,
+    .btn-ghost,
+    .nav-cta,
+    .gen-btn{
+        min-height:52px;
+        touch-action:manipulation;
+    }
+
+}
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#030712;
