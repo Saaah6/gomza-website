@@ -381,7 +381,7 @@ gsap.fromTo('#beam-group-3',
 })();
 
 // ── Nav link smooth scroll
-/*document.querySelectorAll('[data-target]').forEach(a => {
+document.querySelectorAll('[data-target]').forEach(a => {
   a.style.cursor = 'pointer';
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -391,7 +391,7 @@ gsap.fromTo('#beam-group-3',
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     }
   });
-});*/
+});
 
 function focusStrategyCall(){
   const target = document.getElementById('cta-inner');
@@ -405,10 +405,17 @@ function focusStrategyCall(){
   }, 2200);
 }
 
-document.querySelectorAll('.nav-cta, .btn-primary').forEach(button => {
-  button.style.cursor = 'pointer';
-  button.addEventListener('click', focusStrategyCall);
-});
+// Only the "See Our Work" ghost button scrolls to the CTA section.
+// Real action buttons (Book a Call / Book a Free Strategy Call) are wrapped
+// in <a href="tel:..."> or <a href="https://form.typeform.com/..."> links —
+// they must NOT be intercepted, or taps on mobile get hijacked and feel unresponsive.
+(function(){
+  const seeWork = document.getElementById('btn-see-work');
+  if(seeWork){
+    seeWork.style.cursor = 'pointer';
+    seeWork.addEventListener('click', focusStrategyCall);
+  }
+})();
 
 /* ═══════════════════════════════
    CRO TOOL
@@ -595,10 +602,35 @@ function copyCopy(){
 }
 
 /* ═══════════════════════════════
+   MOBILE TAP-THROUGH FIX
+   Ensures background layers (Three.js canvas, SVG beams, glows)
+   never intercept taps on interactive elements (WhatsApp float,
+   nav, CTAs, hamburger, drawer) — common cause of "nothing is
+   clickable on mobile" when stacking contexts shift.
+═══════════════════════════════ */
+(function(){
+  const bg = document.getElementById('three-bg');
+  const beams = document.getElementById('svg-beams');
+  if(bg) bg.style.pointerEvents = 'none';
+  if(beams) beams.style.pointerEvents = 'none';
+
+  const interactiveSelectors = [
+    '.whatsapp-float', '#navbar', '.mob-drawer', '.mob-overlay',
+    '#hamburger', '.hero-btns', '.cta-btn-link', '.nav-cta-link'
+  ];
+  interactiveSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.style.pointerEvents = 'auto';
+      el.style.position = el.style.position || 'relative';
+      el.style.zIndex = el.style.zIndex || '50';
+    });
+  });
+})();
+
+/* ═══════════════════════════════
    PAGE LOADER
 ═══════════════════════════════ */
 (function(){
-  const loader = document.getElementById('page-loader');
   if(!loader) return;
   // Trigger letter animation
   loader.querySelectorAll('.loader-text span').forEach((span, i) => {
