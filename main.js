@@ -45,7 +45,15 @@ class Lenis {
 /* ═══════════════════════════════
    THREE.JS BACKGROUND SCENE
 ═══════════════════════════════ */
-(function(){
+function initThree(){
+  // Skip on mobile or if WebGL isn't available
+  if(window.innerWidth < 768) return;
+  try {
+    const test = document.createElement('canvas').getContext('webgl');
+    if(!test) return;
+  } catch(e){ return; }
+
+  (function(){
   const container = document.getElementById('three-bg');
 
   const scene = new THREE.Scene();
@@ -229,7 +237,15 @@ class Lenis {
     renderer.render(scene, camera);
   }
   animate();
-})();
+  })(); // end inner IIFE
+} // end initThree
+
+// Run Three.js only after page is idle — doesn't block hero render
+if('requestIdleCallback' in window){
+  requestIdleCallback(initThree, { timeout: 2000 });
+} else {
+  setTimeout(initThree, 300);
+}
 
 /* ═══════════════════════════════
    ANIMATED WAVE CANVAS
@@ -285,6 +301,7 @@ gsap.registerPlugin(ScrollTrigger);
 document.documentElement.classList.add('js-ready');
 
 const lenis = new Lenis({ duration: 1.6, wheelMultiplier: 0.9, touchMultiplier: 1.8 });
+window.lenis = lenis;
 
 function rafLoop(time){
   lenis.raf(time);
@@ -519,7 +536,53 @@ async function generateCopy(){
   bt.style.display='inline'; bs.style.display='none';
 }
 
-function copyCopy(){
+/* ═══════════════════════════════
+   HAMBURGER MENU
+═══════════════════════════════ */
+(function(){
+  const btn     = document.getElementById('hamburger');
+  const drawer  = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+
+  function open(){
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden','false');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => btn.classList.contains('open') ? close() : open());
+  overlay.addEventListener('click', close);
+
+  // Mobile drawer nav links
+  document.querySelectorAll('.mob-link').forEach(a => {
+    a.addEventListener('click', () => {
+      const target = document.getElementById(a.dataset.target);
+      close();
+      if(target){
+        setTimeout(() => {
+          const top = target.getBoundingClientRect().top + (window.__lenisScroll || window.scrollY) - 80;
+          if(window.lenis) window.lenis.target = Math.max(0, top);
+          else window.scrollTo({ top: Math.max(0, top), behavior:'smooth' });
+        }, 380); // wait for drawer close animation
+      }
+    });
+  });
+
+  // Mobile CTA
+  const mobCta = document.querySelector('.mob-cta');
+  if(mobCta) mobCta.addEventListener('click', () => { close(); setTimeout(focusStrategyCall, 400); });
+})();
   const text = document.getElementById('out-box').textContent;
   navigator.clipboard.writeText(text).then(()=>{
     const b = document.querySelector('.copy-btn');
