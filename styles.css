@@ -688,3 +688,137 @@ footer{
   .cta-inner{padding:3rem 1.75rem}
   .tool-outer{padding:1.75rem}
 }
+
+/* ── PAGE LOADER ── */
+#page-loader{
+  position:fixed;inset:0;z-index:9999;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .5s ease, visibility .5s ease;
+}
+#page-loader.loader-done{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.loader-text{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:3.5rem;
+  font-weight:700;
+  letter-spacing:-0.03em;
+  color:#fff;
+  display:flex;gap:2px;
+  overflow:hidden;
+}
+.loader-text span{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(60px);
+  animation:loaderLetterUp 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+/* last char (a) gets gold color */
+.loader-text span:last-child{color:var(--gold)}
+@keyframes loaderLetterUp{
+  0%  { opacity:0; transform:translateY(60px); }
+  60% { opacity:1; transform:translateY(-6px); }
+  100%{ opacity:1; transform:translateY(0); }
+}
+/* ==========================
+   WHATSAPP BLACK PULSE
+========================== */
+
+.whatsapp-float{
+    position:fixed;
+
+    right:28px;
+    bottom:28px;
+
+    width:72px;
+    height:72px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        180deg,
+        #111,
+        #000
+    );
+
+    border:1px solid rgba(255,181,71,.18);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
+
+    box-shadow:
+        0 0 20px rgba(255,181,71,.12),
+        0 0 40px rgba(79,124,255,.12),
+        0 12px 40px rgba(0,0,0,.45);
+
+    transition:all .35s ease;
+}
+
+.whatsapp-float:hover{
+
+    transform:translateY(-4px) scale(1.08);
+
+    box-shadow:
+        0 0 25px rgba(255,181,71,.35),
+        0 0 60px rgba(79,124,255,.25),
+        0 20px 50px rgba(0,0,0,.5);
+}
+.pulse-ring{
+    position:absolute;
+
+    inset:-2px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,181,71,.35);
+
+    animation:gomzaPulse 2.5s infinite;
+}
+@keyframes gomzaPulse{
+
+    0%{
+        transform:scale(1);
+        opacity:.8;
+    }
+
+    100%{
+        transform:scale(2.2);
+        opacity:0;
+    }
+
+}
+#three-bg,
+.hero,
+.btn-primary,
+.btn-ghost,
+.nav-cta,
+.cursor-arrow{
+    will-change:transform;
+    transform:translateZ(0);
+}
+#three-bg,
+#three-bg canvas{
+    pointer-events:none !important;
+}
+#svg-beams{
+    pointer-events:none !important;
+}
+.hero-glow,
+.hero-glow2,
+.cta-bg-glow{
+    pointer-events:none !important;
+}
+#three-bg,
+#three-bg *,
+#svg-beams,
+.hero-glow,
+.hero-glow2,
+.cursor-arrow{
+    pointer-events:none !important;
+}
