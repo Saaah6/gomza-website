@@ -1,48 +1,3 @@
-<<<<<<< HEAD
-/* ── Inline Lenis-style smooth scroll (no CDN) ── */
-class Lenis {
-  constructor(opts={}){
-    this.duration = opts.duration||1.6;
-    this.easing = opts.easing||(t=>1-Math.pow(1-t,3));
-    this.wheelMultiplier = opts.wheelMultiplier||0.9;
-    this.touchMultiplier = opts.touchMultiplier||1.8;
-    this.current = 0; this.target = 0;
-    this._cbs = {}; this._lastTime = null; this._touchY = 0;
-    window.addEventListener('wheel', this._onWheel.bind(this), {passive:false});
-    window.addEventListener('touchstart', this._onTouchStart.bind(this), {passive:true});
-    window.addEventListener('touchmove', this._onTouchMove.bind(this), {passive:false});
-  }
-  _onWheel(e){
-    e.preventDefault();
-    const delta = e.deltaY * this.wheelMultiplier;
-    this.target = Math.max(0, Math.min(this.target + delta, document.body.scrollHeight - window.innerHeight));
-  }
-  _onTouchStart(e){ this._touchY = e.touches[0].clientY; }
-  _onTouchMove(e){
-    e.preventDefault();
-    const dy = (this._touchY - e.touches[0].clientY) * this.touchMultiplier;
-    this._touchY = e.touches[0].clientY;
-    this.target = Math.max(0, Math.min(this.target + dy, document.body.scrollHeight - window.innerHeight));
-  }
-  raf(time){
-    if(!this._lastTime) this._lastTime = time;
-    const dt = Math.min((time - this._lastTime)/1000, 0.05);
-    this._lastTime = time;
-    const lerp = Math.min(dt * 7, 1);
-    this.current += (this.target - this.current) * lerp;
-    if(Math.abs(this.target - this.current) < 0.05) this.current = this.target;
-    window.scrollTo(0, this.current);
-    window.__lenisScroll = this.current;
-    (this._cbs['scroll']||[]).forEach(fn => fn({ scroll: this.current }));
-  }
-  on(event, cb){ (this._cbs[event] = this._cbs[event]||[]).push(cb); return this; }
-  scrollTo(target, opts={}){
-    const offset = opts.offset||0;
-    const top = (typeof target === 'number') ? target : target.getBoundingClientRect().top + this.current + offset;
-    this.target = Math.max(0, Math.min(top, document.body.scrollHeight - window.innerHeight));
-  }
-}
-=======
 /* ── Native scroll shim (replaces heavy Lenis for performance) ── */
 const lenis = {
   target: 0,
@@ -60,7 +15,6 @@ window.addEventListener('scroll', () => {
   window.__lenisScroll = window.scrollY;
   (lenis._cbs['scroll']||[]).forEach(fn => fn({ scroll: window.scrollY }));
 }, { passive: true });
->>>>>>> cb33475 (Updated Gomza website)
 
 /* ═══════════════════════════════
    THREE.JS BACKGROUND SCENE
@@ -80,23 +34,14 @@ function initThree(){
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
   camera.position.z = 500;
 
-<<<<<<< HEAD
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-=======
   const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
->>>>>>> cb33475 (Updated Gomza website)
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
 
   // ── STAR FIELD ──
-<<<<<<< HEAD
-  const starCount = 1200;
-=======
   const starCount = 500;
->>>>>>> cb33475 (Updated Gomza website)
   const starGeo = new THREE.BufferGeometry();
   const starPos = new Float32Array(starCount * 3);
   const starColors = new Float32Array(starCount * 3);
@@ -129,11 +74,7 @@ function initThree(){
   scene.add(stars);
 
   // ── FLOATING NODE NETWORK ──
-<<<<<<< HEAD
-  const nodeCount = 50;
-=======
   const nodeCount = 20;
->>>>>>> cb33475 (Updated Gomza website)
   const nodePositions = [];
   const nodeVelocities = [];
   const nodeMeshes = [];
@@ -270,12 +211,6 @@ function initThree(){
     renderer.render(scene, camera);
   }
   animate();
-<<<<<<< HEAD
-  })(); // end inner IIFE
-} // end initThree
-
-// Run Three.js only after page is idle — doesn't block hero render
-=======
   // Pause rendering when tab is hidden
   document.addEventListener('visibilitychange', () => {
     if(document.hidden) renderer.setAnimationLoop(null);
@@ -284,7 +219,6 @@ function initThree(){
 } // end initThree
 
 // Run Three.js only after page is idle — pause when scrolled past hero
->>>>>>> cb33475 (Updated Gomza website)
 if('requestIdleCallback' in window){
   requestIdleCallback(initThree, { timeout: 2000 });
 } else {
@@ -302,9 +236,6 @@ if('requestIdleCallback' in window){
   window.addEventListener('resize', resize);
   resize();
 
-<<<<<<< HEAD
-  function draw(){
-=======
   // 30fps throttle for wave canvas
   let lastWave = 0;
   function draw(now){
@@ -315,7 +246,6 @@ if('requestIdleCallback' in window){
     const rect = c.getBoundingClientRect();
     if(rect.bottom < 0 || rect.top > window.innerHeight) return;
 
->>>>>>> cb33475 (Updated Gomza website)
     ctx.clearRect(0,0,c.width,100);
     const W = c.width;
 
@@ -328,11 +258,7 @@ if('requestIdleCallback' in window){
 
       ctx.beginPath();
       ctx.moveTo(0, 100);
-<<<<<<< HEAD
-      for(let x=0; x<=W; x+=3){
-=======
       for(let x=0; x<=W; x+=4){ // step 3→4 saves ~25% path ops
->>>>>>> cb33475 (Updated Gomza website)
         const y = 50 + Math.sin(x * freq + t * speed + offset) * amp
                      + Math.sin(x * freq * 1.7 + t * speed * 0.8 + offset) * amp * 0.5;
         ctx.lineTo(x, y);
@@ -349,14 +275,8 @@ if('requestIdleCallback' in window){
       ctx.fill();
     }
     t++;
-<<<<<<< HEAD
-    requestAnimationFrame(draw);
-  }
-  draw();
-=======
   }
   requestAnimationFrame(draw);
->>>>>>> cb33475 (Updated Gomza website)
 })();
 
 /* ═══════════════════════════════
@@ -366,19 +286,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 document.documentElement.classList.add('js-ready');
 
-<<<<<<< HEAD
-const lenis = new Lenis({ duration: 1.6, wheelMultiplier: 0.9, touchMultiplier: 1.8 });
-window.lenis = lenis;
-
-function rafLoop(time){
-  lenis.raf(time);
-  ScrollTrigger.update();
-  requestAnimationFrame(rafLoop);
-}
-requestAnimationFrame(rafLoop);
-=======
 // ScrollTrigger uses native scroll — no manual RAF needed
->>>>>>> cb33475 (Updated Gomza website)
 
 // Hero entrance
 gsap.to('#eyebrow',     { opacity:1, y:0, duration:.9, ease:'power3.out', delay:.15 });
@@ -456,18 +364,6 @@ gsap.fromTo('#beam-group-3',
 );
 
 // ── Smooth nav background
-<<<<<<< HEAD
-lenis.on('scroll', ({ scroll }) => {
-  const nav = document.getElementById('navbar');
-  if(scroll > 60){
-    nav.style.background = 'rgba(6,11,24,0.94)';
-    nav.style.boxShadow = '0 1px 0 rgba(248,250,252,0.05)';
-  } else {
-    nav.style.background = 'rgba(6,11,24,0.7)';
-    nav.style.boxShadow = 'none';
-  }
-});
-=======
 // Nav background on scroll (native)
 (function(){
   const nav = document.getElementById('navbar');
@@ -483,36 +379,25 @@ lenis.on('scroll', ({ scroll }) => {
   }
   window.addEventListener('scroll', updateNav, { passive: true });
 })();
->>>>>>> cb33475 (Updated Gomza website)
 
 // ── Nav link smooth scroll
-document.querySelectorAll('[data-target]').forEach(a => {
+/*document.querySelectorAll('[data-target]').forEach(a => {
   a.style.cursor = 'pointer';
   a.addEventListener('click', e => {
     e.preventDefault();
     const target = document.getElementById(a.dataset.target);
     if(target){
-<<<<<<< HEAD
-      const absoluteTop = target.getBoundingClientRect().top + (window.__lenisScroll || window.scrollY);
-      lenis.target = Math.max(0, absoluteTop - 80);
-=======
       const top = target.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
->>>>>>> cb33475 (Updated Gomza website)
     }
   });
-});
+});*/
 
 function focusStrategyCall(){
   const target = document.getElementById('cta-inner');
   if(!target) return;
-<<<<<<< HEAD
-  const absoluteTop = target.getBoundingClientRect().top + (window.__lenisScroll || window.scrollY) - 80;
-  lenis.target = Math.max(0, absoluteTop);
-=======
   const top = target.getBoundingClientRect().top + window.scrollY - 80;
   window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
->>>>>>> cb33475 (Updated Gomza website)
   target.classList.add('is-targeted');
   window.clearTimeout(window.__strategyCallFocusTimer);
   window.__strategyCallFocusTimer = window.setTimeout(() => {
@@ -629,11 +514,6 @@ async function generateCopy(){
     prompt = buildSaasCopy(product, icp, problem, content);
   }
 
-<<<<<<< HEAD
-  ob.className='out-box'; ob.textContent=prompt;
-  cr.style.display='flex';
-  bt.style.display='inline'; bs.style.display='none';
-=======
   ob.className='out-box';
   ob.textContent='';
   cr.style.display='none';
@@ -656,7 +536,6 @@ async function generateCopy(){
     bt.style.display='inline'; bs.style.display='none';
     typeChar();
   }, 600);
->>>>>>> cb33475 (Updated Gomza website)
 }
 
 /* ═══════════════════════════════
@@ -694,14 +573,8 @@ async function generateCopy(){
       close();
       if(target){
         setTimeout(() => {
-<<<<<<< HEAD
-          const top = target.getBoundingClientRect().top + (window.__lenisScroll || window.scrollY) - 80;
-          if(window.lenis) window.lenis.target = Math.max(0, top);
-          else window.scrollTo({ top: Math.max(0, top), behavior:'smooth' });
-=======
           const top = target.getBoundingClientRect().top + window.scrollY - 80;
           window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
->>>>>>> cb33475 (Updated Gomza website)
         }, 380); // wait for drawer close animation
       }
     });
@@ -711,11 +584,8 @@ async function generateCopy(){
   const mobCta = document.querySelector('.mob-cta');
   if(mobCta) mobCta.addEventListener('click', () => { close(); setTimeout(focusStrategyCall, 400); });
 })();
-<<<<<<< HEAD
-=======
 
 function copyCopy(){
->>>>>>> cb33475 (Updated Gomza website)
   const text = document.getElementById('out-box').textContent;
   navigator.clipboard.writeText(text).then(()=>{
     const b = document.querySelector('.copy-btn');
@@ -723,8 +593,6 @@ function copyCopy(){
     setTimeout(()=>{ b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy text'; }, 2000);
   });
 }
-<<<<<<< HEAD
-=======
 
 /* ═══════════════════════════════
    PAGE LOADER
@@ -747,4 +615,3 @@ function copyCopy(){
     loader.classList.add('loader-done');
   }, 3000);
 })();
->>>>>>> cb33475 (Updated Gomza website)
