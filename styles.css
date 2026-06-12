@@ -822,3 +822,15 @@ footer{
 .cursor-arrow{
     pointer-events:none !important;
 }
+@media (max-width:768px){
+
+    .beam-soft{
+        display:none;
+    }
+
+    .beam-path{
+        stroke-width:2;
+        opacity:.6;
+    }
+
+}
