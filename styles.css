@@ -722,3 +722,9 @@ footer{
 .hero-glow,.hero-glow2,.cta-bg-glow{pointer-events:none!important}
 #three-bg,#three-bg *,#svg-beams,.hero-glow,.hero-glow2{pointer-events:none!important}
 #three-bg,.btn-primary,.btn-ghost,.nav-cta{will-change:transform;transform:translateZ(0)}
+.pulse-ring{
+  pointer-events:none!important;
+}
+.whatsapp-float *{
+  pointer-events:none;
+}
