@@ -591,10 +591,10 @@ footer{
 .mob-overlay{
   display:none;position:fixed;inset:0;z-index:150;
   background:rgba(3,7,18,0.6);
-  /* backdrop-filter removed — causes repaints on scroll behind overlay */
   opacity:0;transition:opacity .3s ease;
+  pointer-events:none;
 }
-.mob-overlay.show{opacity:1}
+.mob-overlay.show{opacity:1;pointer-events:auto;}
 
 /* ── MOBILE DRAWER ── */
 .mob-drawer{
