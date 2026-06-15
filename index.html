@@ -279,6 +279,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         SaaS
       </button>
+      <button class="tab tab-img" onclick="switchTab('imgstudio',this)" id="tab-imgstudio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        AI Image Studio
+        <span class="tab-badge">NEW</span>
+      </button>
     </div>
 
     <div id="re-fields">
@@ -303,7 +308,149 @@
       </div>
     </div>
 
-    <button class="gen-btn" onclick="generateCopy()">
+    <!-- AI IMAGE STUDIO PANEL -->
+    <div id="imgstudio-fields" style="display:none">
+      <div class="img-studio-header">
+        <div class="img-studio-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          AI-Powered · Pollinations Engine
+        </div>
+        <p class="img-studio-desc">Generate stunning, industry-specific ad creatives using AI. Pick your niche, describe your product, choose a style — and get a custom image in seconds.</p>
+      </div>
+
+      <!-- Industry Selector -->
+      <div class="img-industry-selector">
+        <div class="img-field-label">Select your industry</div>
+        <div class="img-industry-grid" id="img-industry-grid">
+          <button class="industry-chip active" data-industry="real_estate" onclick="selectIndustry(this,'real_estate')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Real Estate
+          </button>
+          <button class="industry-chip" data-industry="saas" onclick="selectIndustry(this,'saas')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            SaaS / Tech
+          </button>
+          <button class="industry-chip" data-industry="ecommerce" onclick="selectIndustry(this,'ecommerce')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            E-Commerce
+          </button>
+          <button class="industry-chip" data-industry="healthcare" onclick="selectIndustry(this,'healthcare')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Healthcare
+          </button>
+          <button class="industry-chip" data-industry="finance" onclick="selectIndustry(this,'finance')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            Finance
+          </button>
+          <button class="industry-chip" data-industry="hospitality" onclick="selectIndustry(this,'hospitality')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+            Hospitality
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Prompt Inputs -->
+      <div class="fields" style="margin-top:1.25rem">
+        <div class="fld">
+          <label>Product / Service / Subject</label>
+          <input id="img-subject" type="text" placeholder="e.g. Luxury 3BHK apartment in Bandra" />
+        </div>
+        <div class="fld">
+          <label>Target Audience</label>
+          <input id="img-audience" type="text" placeholder="e.g. NRI investors, premium buyers" />
+        </div>
+      </div>
+
+      <!-- Style + Mood + Ratio Row -->
+      <div class="img-controls-row">
+        <div class="img-ctrl">
+          <div class="img-field-label">Visual Style</div>
+          <div class="img-chip-group" id="img-style-group">
+            <button class="img-ctrl-chip active" data-val="photorealistic" onclick="selectCtrl(this,'style')">📸 Photo</button>
+            <button class="img-ctrl-chip" data-val="cinematic" onclick="selectCtrl(this,'style')">🎬 Cinematic</button>
+            <button class="img-ctrl-chip" data-val="3D render" onclick="selectCtrl(this,'style')">💎 3D Render</button>
+            <button class="img-ctrl-chip" data-val="flat illustration" onclick="selectCtrl(this,'style')">🎨 Illustration</button>
+            <button class="img-ctrl-chip" data-val="abstract futuristic" onclick="selectCtrl(this,'style')">🌐 Abstract</button>
+          </div>
+        </div>
+        <div class="img-ctrl">
+          <div class="img-field-label">Mood / Tone</div>
+          <div class="img-chip-group" id="img-mood-group">
+            <button class="img-ctrl-chip active" data-val="premium luxury" onclick="selectCtrl(this,'mood')">✨ Luxury</button>
+            <button class="img-ctrl-chip" data-val="minimal clean" onclick="selectCtrl(this,'mood')">⬜ Minimal</button>
+            <button class="img-ctrl-chip" data-val="bold energetic" onclick="selectCtrl(this,'mood')">⚡ Bold</button>
+            <button class="img-ctrl-chip" data-val="warm trustworthy" onclick="selectCtrl(this,'mood')">🌅 Warm</button>
+            <button class="img-ctrl-chip" data-val="dark dramatic" onclick="selectCtrl(this,'mood')">🌑 Dark</button>
+          </div>
+        </div>
+        <div class="img-ctrl">
+          <div class="img-field-label">Aspect Ratio</div>
+          <div class="img-chip-group" id="img-ratio-group">
+            <button class="img-ctrl-chip active" data-val="landscape" onclick="selectCtrl(this,'ratio')">▬ 16:9</button>
+            <button class="img-ctrl-chip" data-val="square" onclick="selectCtrl(this,'ratio')">■ 1:1</button>
+            <button class="img-ctrl-chip" data-val="portrait" onclick="selectCtrl(this,'ratio')">▯ 4:5</button>
+            <button class="img-ctrl-chip" data-val="banner" onclick="selectCtrl(this,'ratio')">▬ Banner</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prompt Box -->
+      <div class="img-prompt-wrap" style="margin-top:1.25rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem">
+          <div class="img-field-label">AI Prompt <span style="color:rgba(251,253,255,0.35);font-weight:400;text-transform:none;letter-spacing:0">— auto-generated, fully editable</span></div>
+          <button class="img-prompt-rebuild" onclick="rebuildImgPrompt()" id="rebuild-prompt-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+            Rebuild
+          </button>
+        </div>
+        <textarea id="img-prompt-textarea" rows="3" class="img-prompt-textarea" placeholder="Your AI prompt will appear here…"></textarea>
+      </div>
+
+      <!-- Generate Image Button -->
+      <button class="gen-btn img-gen-btn" id="img-gen-btn" onclick="generateAIImage()">
+        <span id="img-btn-text">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="vertical-align:middle;margin-right:6px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Generate AI Image
+        </span>
+        <span class="spinner" id="img-btn-spin"></span>
+      </button>
+
+      <!-- Image Preview Area -->
+      <div class="img-preview-area" id="img-preview-area" style="display:none">
+        <div class="img-preview-shell">
+          <div class="img-preview-header">
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+            <span class="img-preview-label" id="img-preview-label">AI Generated Creative</span>
+            <div class="img-preview-actions">
+              <button class="img-action-btn" id="img-regen-btn" onclick="generateAIImage()" title="Regenerate">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                Regenerate
+              </button>
+              <button class="img-action-btn img-action-download" id="img-download-btn" onclick="downloadAIImage()" title="Download">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+              </button>
+            </div>
+          </div>
+          <div class="img-preview-img-wrap" id="img-preview-img-wrap">
+            <div class="img-gen-skeleton" id="img-gen-skeleton">
+              <div class="skeleton-shimmer"></div>
+              <div class="skeleton-text">Generating your image…</div>
+            </div>
+            <img id="ai-generated-img" src="" alt="AI Generated Image" style="display:none" />
+          </div>
+          <div class="img-preview-meta" id="img-preview-meta" style="display:none">
+            <div class="img-meta-industry" id="img-meta-industry"></div>
+            <div class="img-meta-prompt" id="img-meta-prompt"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /AI IMAGE STUDIO PANEL -->
+
+    <button class="gen-btn" id="copy-gen-btn" onclick="generateCopy()">
       <span id="btn-text">Generate copy with Gomza's approach</span>
       <span class="spinner" id="btn-spin"></span>
     </button>

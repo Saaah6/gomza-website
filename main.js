@@ -506,10 +506,20 @@ function switchTab(tab, el){
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('re-fields').style.display = tab === 're' ? 'block' : 'none';
-  document.getElementById('saas-fields').style.display = tab === 'saas' ? 'block' : 'none';
-  document.getElementById('out-box').style.display = 'none';
-  document.getElementById('copy-row').style.display = 'none';
+  document.getElementById('re-fields').style.display     = tab === 're'          ? 'block' : 'none';
+  document.getElementById('saas-fields').style.display   = tab === 'saas'        ? 'block' : 'none';
+  document.getElementById('imgstudio-fields').style.display = tab === 'imgstudio' ? 'block' : 'none';
+  const copyGenBtn = document.getElementById('copy-gen-btn');
+  if(copyGenBtn) copyGenBtn.style.display = (tab === 'imgstudio') ? 'none' : 'flex';
+  const outCols = document.getElementById('out-cols');
+  if(outCols && tab === 'imgstudio') outCols.style.display = 'none';
+  if(tab !== 'imgstudio'){
+    document.getElementById('out-box').style.display  = 'none';
+    document.getElementById('copy-row').style.display = 'none';
+  }
+  if(tab === 'imgstudio' && !document.getElementById('img-prompt-textarea').value){
+    rebuildImgPrompt();
+  }
 }
 
 function cleanPhrase(value){
@@ -597,7 +607,38 @@ async function generateCopy(){
   ob.style.display='block'; ob.className='out-box loading';
   ob.textContent='Generating copy using Gomza\'s CRO framework…';
   cr.style.display='none';
-  if(mockup) mockup.style.opacity = '0';
+  
+  if(mockup) {
+    mockup.style.opacity = '0';
+    mockup.classList.add('mockup-loading');
+  }
+
+  let imageLoaded = false;
+  let typingDone = false;
+
+  function checkReveal() {
+    if(imageLoaded && typingDone && mockup) {
+      mockup.classList.remove('mockup-loading');
+      gsap.fromTo(mockup, 
+        { opacity: 0, y: 25 }, 
+        { opacity: 1, y: 0, duration: 0.85, ease: "power2.out" }
+      );
+    }
+  }
+
+  if(mockupImg) {
+    mockupImg.onload = () => {
+      imageLoaded = true;
+      checkReveal();
+    };
+    mockupImg.onerror = () => {
+      // fallback in case of errors
+      imageLoaded = true;
+      checkReveal();
+    };
+  } else {
+    imageLoaded = true;
+  }
 
   let prompt = '';
   if(currentTab === 're'){
@@ -610,12 +651,14 @@ async function generateCopy(){
     // Setup Real Estate mockup details
     if(mockup) {
       mockup.classList.remove('saas-creative-theme');
-      if(mockupImg) mockupImg.src = 'assets/real_estate_creative.png';
       if(mockupTitleHeader) mockupTitleHeader.textContent = 'Real Estate Ad Visual';
       if(mockupEyebrow) mockupEyebrow.textContent = `${type}`;
       if(mockupHeadline) mockupHeadline.textContent = `${offer}`;
       if(mockupText) mockupText.textContent = `High-converting positioning for ${audience.toLowerCase()} - structured using Gomza's visual layout.`;
       if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Contact Agent' : 'Learn More';
+      
+      const dynamicPrompt = `${type} luxury architecture property building ${offer}, beautiful high-end real estate photography, minimalist exterior design, photorealistic sunset lighting`;
+      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&nologo=true`;
     }
   } else {
     const product = document.getElementById('saas-product').value || 'a productivity SaaS tool';
@@ -627,12 +670,14 @@ async function generateCopy(){
     // Setup SaaS mockup details
     if(mockup) {
       mockup.classList.add('saas-creative-theme');
-      if(mockupImg) mockupImg.src = 'assets/saas_creative.png';
       if(mockupTitleHeader) mockupTitleHeader.textContent = 'SaaS Creative Preview';
       if(mockupEyebrow) mockupEyebrow.textContent = `Campaign for ${icp}`;
       if(mockupHeadline) mockupHeadline.textContent = `${product}`;
       if(mockupText) mockupText.textContent = `Optimized user-acquisition design built to solve conversion friction in the funnel.`;
       if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Book Demo' : 'Launch App';
+      
+      const dynamicPrompt = `${product} software user interface tech dashboard, abstract futuristic graphic nodes and glowing charts for ${icp}, digital tech layout, cyan and deep blue color palette`;
+      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&nologo=true`;
     }
   }
 
@@ -651,14 +696,8 @@ async function generateCopy(){
     } else {
       cr.style.display='flex';
       bt.style.display='inline'; bs.style.display='none';
-      
-      // Dynamic fade-in reveal with GSAP for a premium wavy look
-      if(mockup) {
-        gsap.fromTo(mockup, 
-          { opacity: 0, y: 25 }, 
-          { opacity: 1, y: 0, duration: 0.85, ease: "power2.out" }
-        );
-      }
+      typingDone = true;
+      checkReveal();
     }
   }
   // Small delay so the "Generating…" message is visible briefly
@@ -722,6 +761,196 @@ function copyCopy(){
     b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
     setTimeout(()=>{ b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy text'; }, 2000);
   });
+}
+
+/* ═══════════════════════════════
+   AI IMAGE STUDIO
+═══════════════════════════════ */
+const IMG_INDUSTRY_DATA = {
+  real_estate: {
+    label: '🏠 Real Estate',
+    color: '#FFB547',
+    subjects: ['luxury villa', 'modern apartment', 'commercial office', 'gated community'],
+    prompts: (s, a, style, mood) =>
+      `${mood} ${style} photography of ${s||'luxury real estate property'}, premium architectural exterior, golden hour lighting, ultra-detailed, award-winning real estate photo, for ${a||'high-net-worth buyers'}, 8K resolution`
+  },
+  saas: {
+    label: '💻 SaaS / Tech',
+    color: '#29D3FF',
+    subjects: ['dashboard interface', 'analytics platform', 'AI workflow tool', 'CRM software'],
+    prompts: (s, a, style, mood) =>
+      `${mood} ${style} graphic of ${s||'modern SaaS dashboard'}, glowing UI components, data visualization, deep space gradient background, neon cyan and electric blue, for ${a||'B2B decision makers'}, ultra-sharp digital art`
+  },
+  ecommerce: {
+    label: '🛒 E-Commerce',
+    color: '#FF6B8B',
+    subjects: ['product showcase', 'fashion collection', 'electronics', 'lifestyle product'],
+    prompts: (s, a, style, mood) =>
+      `${mood} ${style} product photography of ${s||'premium ecommerce product'}, studio lighting, white marble surface, minimalist composition, for ${a||'online shoppers'}, commercial ad quality, 4K`
+  },
+  healthcare: {
+    label: '🏥 Healthcare',
+    color: '#4ADE80',
+    subjects: ['medical clinic', 'wellness app', 'health service', 'telemedicine platform'],
+    prompts: (s, a, style, mood) =>
+      `${mood} ${style} visual of ${s||'modern healthcare service'}, clean clinical environment, soft blue-green tones, trust-building composition, for ${a||'patients and caregivers'}, professional medical imagery`
+  },
+  finance: {
+    label: '💰 Finance',
+    color: '#A78BFA',
+    subjects: ['investment platform', 'digital banking app', 'wealth management', 'fintech dashboard'],
+    prompts: (s, a, style, mood) =>
+      `${mood} ${style} image of ${s||'modern fintech platform'}, stock market data visualization, gold and deep navy palette, wealth symbolism, for ${a||'investors and HNIs'}, premium financial brand aesthetic`
+  },
+  hospitality: {
+    label: '🏨 Hospitality',
+    color: '#FB923C',
+    subjects: ['luxury hotel lobby', 'resort pool', 'fine dining restaurant', 'boutique hotel room'],
+    prompts: (s, a, style, mood) =>
+      `${mood} ${style} photography of ${s||'luxury hotel and resort'}, opulent interior design, warm ambient lighting, marble and gold accents, for ${a||'premium travelers'}, travel magazine quality, cinematic depth`
+  }
+};
+
+const IMG_RATIO_MAP = {
+  landscape: { w: 1280, h: 720 },
+  square:    { w: 1024, h: 1024 },
+  portrait:  { w: 820,  h: 1024 },
+  banner:    { w: 1440, h: 480 }
+};
+
+let imgState = {
+  industry: 'real_estate',
+  style: 'photorealistic',
+  mood: 'premium luxury',
+  ratio: 'landscape'
+};
+
+let currentImgUrl = '';
+
+function selectIndustry(btn, industry){
+  document.querySelectorAll('.industry-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  imgState.industry = industry;
+  const data = IMG_INDUSTRY_DATA[industry];
+  // Tint the active chip with industry color
+  btn.style.setProperty('--ind-color', data.color);
+  rebuildImgPrompt();
+}
+
+function selectCtrl(btn, type){
+  const groupId = `img-${type}-group`;
+  document.querySelectorAll(`#${groupId} .img-ctrl-chip`).forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  imgState[type] = btn.dataset.val;
+  rebuildImgPrompt();
+}
+
+function rebuildImgPrompt(){
+  const data = IMG_INDUSTRY_DATA[imgState.industry];
+  if(!data) return;
+  const subject  = (document.getElementById('img-subject')  || {}).value || '';
+  const audience = (document.getElementById('img-audience') || {}).value || '';
+  const built = data.prompts(subject, audience, imgState.style, imgState.mood);
+  const ta = document.getElementById('img-prompt-textarea');
+  if(ta) ta.value = built;
+}
+
+// Auto-rebuild prompt when inputs change
+setTimeout(() => {
+  const subjectEl  = document.getElementById('img-subject');
+  const audienceEl = document.getElementById('img-audience');
+  if(subjectEl)  subjectEl.addEventListener('input',  debounce(rebuildImgPrompt, 400));
+  if(audienceEl) audienceEl.addEventListener('input', debounce(rebuildImgPrompt, 400));
+  // Initial build
+  rebuildImgPrompt();
+}, 200);
+
+function debounce(fn, ms){
+  let t;
+  return function(...args){
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+async function generateAIImage(){
+  const prompt = (document.getElementById('img-prompt-textarea') || {}).value;
+  if(!prompt || !prompt.trim()) { rebuildImgPrompt(); return; }
+
+  const genBtn    = document.getElementById('img-gen-btn');
+  const btnText   = document.getElementById('img-btn-text');
+  const btnSpin   = document.getElementById('img-btn-spin');
+  const previewArea = document.getElementById('img-preview-area');
+  const skeleton  = document.getElementById('img-gen-skeleton');
+  const imgEl     = document.getElementById('ai-generated-img');
+  const metaEl    = document.getElementById('img-preview-meta');
+  const metaInd   = document.getElementById('img-meta-industry');
+  const metaPro   = document.getElementById('img-meta-prompt');
+  const labelEl   = document.getElementById('img-preview-label');
+
+  // Show loading state
+  if(btnText) btnText.style.display = 'none';
+  if(btnSpin) btnSpin.style.display = 'inline-block';
+  if(genBtn)  genBtn.disabled = true;
+
+  previewArea.style.display = 'block';
+  skeleton.style.display = 'flex';
+  if(imgEl)  { imgEl.style.display = 'none'; imgEl.src = ''; }
+  if(metaEl) metaEl.style.display = 'none';
+
+  // Scroll preview into view
+  previewArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  const { w, h } = IMG_RATIO_MAP[imgState.ratio] || IMG_RATIO_MAP.landscape;
+  const seed = Math.floor(Math.random() * 900000) + 100000;
+  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true&enhance=true`;
+  currentImgUrl = url;
+
+  const data = IMG_INDUSTRY_DATA[imgState.industry];
+
+  imgEl.onload = () => {
+    skeleton.style.display = 'none';
+    imgEl.style.display = 'block';
+    if(metaEl) {
+      metaEl.style.display = 'flex';
+      metaInd.textContent = data ? data.label : imgState.industry;
+      metaPro.textContent = prompt.length > 120 ? prompt.slice(0, 120) + '…' : prompt;
+    }
+    if(labelEl) labelEl.textContent = `${data ? data.label : 'AI'} — ${imgState.style} · ${imgState.mood}`;
+    // Animate in
+    imgEl.style.opacity = '0';
+    imgEl.style.transform = 'scale(0.97) translateY(8px)';
+    imgEl.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1)';
+    requestAnimationFrame(() => {
+      imgEl.style.opacity = '1';
+      imgEl.style.transform = 'scale(1) translateY(0)';
+    });
+    // Restore button
+    if(btnText) btnText.style.display = 'inline-flex';
+    if(btnSpin) btnSpin.style.display = 'none';
+    if(genBtn)  genBtn.disabled = false;
+  };
+
+  imgEl.onerror = () => {
+    skeleton.style.display = 'none';
+    skeleton.innerHTML = `<div class="skeleton-text" style="color:#FF6B8B">⚠ Generation failed — try a different prompt</div>`;
+    if(btnText) btnText.style.display = 'inline-flex';
+    if(btnSpin) btnSpin.style.display = 'none';
+    if(genBtn)  genBtn.disabled = false;
+  };
+
+  imgEl.src = url;
+}
+
+function downloadAIImage(){
+  if(!currentImgUrl) return;
+  const a = document.createElement('a');
+  a.href = currentImgUrl;
+  a.download = `gomza-ai-creative-${Date.now()}.jpg`;
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 /* ═══════════════════════════════
