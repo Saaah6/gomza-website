@@ -615,7 +615,7 @@ function copyCopy(){
   if(beams) beams.style.pointerEvents = 'none';
 
   const interactiveSelectors = [
-    '.whatsapp-float', '#navbar', '.mob-drawer', '.mob-overlay',
+    '.whatsapp-float', '#navbar',
     '#hamburger', '.hero-btns', '.cta-btn-link', '.nav-cta-link'
   ];
   interactiveSelectors.forEach(sel => {
@@ -625,7 +625,10 @@ function copyCopy(){
       if (computedPos === 'static') {
         el.style.position = 'relative';
       }
-      el.style.zIndex = el.style.zIndex || '50';
+      const computedZ = window.getComputedStyle(el).zIndex;
+      if (computedZ === 'auto') {
+        el.style.zIndex = '50';
+      }
     });
   });
 })();
