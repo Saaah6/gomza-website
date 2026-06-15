@@ -629,12 +629,24 @@ async function generateCopy(){
   if(mockupImg) {
     mockupImg.onload = () => {
       imageLoaded = true;
-      checkReveal();
+      // Fade in image smoothly
+      mockupImg.style.transition = 'opacity 0.6s ease';
+      mockupImg.style.opacity = '1';
+      mockup.classList.remove('mockup-loading');
+      mockup.style.opacity = '1';
+      if(typeof gsap !== 'undefined') {
+        gsap.fromTo(mockup, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' });
+      }
     };
     mockupImg.onerror = () => {
-      // fallback in case of errors
       imageLoaded = true;
-      checkReveal();
+      // Show fallback — use local static asset
+      mockupImg.src = currentTab === 're'
+        ? 'assets/real_estate_creative.png'
+        : 'assets/saas_creative.png';
+      mockupImg.style.opacity = '1';
+      mockup.classList.remove('mockup-loading');
+      mockup.style.opacity = '1';
     };
   } else {
     imageLoaded = true;
@@ -657,9 +669,12 @@ async function generateCopy(){
       if(mockupText) mockupText.textContent = `High-converting positioning for ${audience.toLowerCase()} - structured using Gomza's visual layout.`;
       if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Contact Agent' : 'Learn More';
       
-      const reSeed = Math.floor(Math.random() * 999999) + 1;
-      const dynamicPrompt = `premium luxury ${type} exterior architectural photography, ${offer}, golden hour dramatic lighting, glass and steel modern design, award-winning real estate photo for ${audience}, 8K ultra-sharp, professional HDR`;
-      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${reSeed}&nologo=true&enhance=true`;
+      const reSeed = Math.floor(Math.random() * 9999999) + 1;
+      const dynamicPrompt = `luxury ${type}, ${offer}, golden hour lighting, modern architecture exterior, photorealistic, professional real estate photography, sharp focus`;
+      if(mockupImg) {
+        mockupImg.style.opacity = '0';
+        mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${reSeed}&nologo=true&model=flux`;
+      }
     }
   } else {
     const product = document.getElementById('saas-product').value || 'a productivity SaaS tool';
@@ -677,9 +692,12 @@ async function generateCopy(){
       if(mockupText) mockupText.textContent = `Optimized user-acquisition design built to solve conversion friction in the funnel.`;
       if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Book Demo' : 'Launch App';
       
-      const saasSeed = Math.floor(Math.random() * 999999) + 1;
-      const dynamicPrompt = `${product} modern SaaS dashboard UI, glowing neon data visualization, futuristic tech interface for ${icp}, deep space navy and electric cyan palette, ultra-sharp 3D render, premium tech brand aesthetic`;
-      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${saasSeed}&nologo=true&enhance=true`;
+      const saasSeed = Math.floor(Math.random() * 9999999) + 1;
+      const dynamicPrompt = `${product} software dashboard interface, futuristic UI, glowing data charts, dark navy blue background, neon cyan accents, professional tech product screenshot`;
+      if(mockupImg) {
+        mockupImg.style.opacity = '0';
+        mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${saasSeed}&nologo=true&model=flux`;
+      }
     }
   }
 
@@ -904,8 +922,8 @@ async function generateAIImage(){
   previewArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   const { w, h } = IMG_RATIO_MAP[imgState.ratio] || IMG_RATIO_MAP.landscape;
-  const seed = Math.floor(Math.random() * 900000) + 100000;
-  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true&enhance=true`;
+  const seed = Math.floor(Math.random() * 9999999) + 1;
+  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true&model=flux`;
   currentImgUrl = url;
 
   const data = IMG_INDUSTRY_DATA[imgState.industry];
@@ -935,7 +953,7 @@ async function generateAIImage(){
 
   imgEl.onerror = () => {
     skeleton.style.display = 'none';
-    skeleton.innerHTML = `<div class="skeleton-text" style="color:#FF6B8B">⚠ Generation failed — try a different prompt</div>`;
+    skeleton.innerHTML = `<div class="skeleton-text" style="color:#FF6B8B">⚠️ Generation failed — try again</div>`;
     if(btnText) btnText.style.display = 'inline-flex';
     if(btnSpin) btnSpin.style.display = 'none';
     if(genBtn)  genBtn.disabled = false;
