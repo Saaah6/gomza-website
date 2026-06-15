@@ -582,10 +582,22 @@ async function generateCopy(){
   const bs = document.getElementById('btn-spin');
   const ob = document.getElementById('out-box');
   const cr = document.getElementById('copy-row');
+  const outCols = document.getElementById('out-cols');
+  
+  const mockup = document.getElementById('creative-mockup');
+  const mockupImg = document.getElementById('mockup-img');
+  const mockupTitleHeader = document.getElementById('mockup-title-header');
+  const mockupEyebrow = document.getElementById('mockup-eyebrow');
+  const mockupHeadline = document.getElementById('mockup-headline');
+  const mockupText = document.getElementById('mockup-text');
+  const mockupCtaText = document.getElementById('mockup-cta-text');
+
   bt.style.display='none'; bs.style.display='inline-block';
+  outCols.style.display='flex';
   ob.style.display='block'; ob.className='out-box loading';
   ob.textContent='Generating copy using Gomza\'s CRO framework…';
   cr.style.display='none';
+  if(mockup) mockup.style.opacity = '0';
 
   let prompt = '';
   if(currentTab === 're'){
@@ -594,12 +606,34 @@ async function generateCopy(){
     const offer = document.getElementById('re-offer').value || 'premium properties';
     const content = document.getElementById('re-content').value;
     prompt = buildRealEstateCopy(type, audience, offer, content);
+
+    // Setup Real Estate mockup details
+    if(mockup) {
+      mockup.classList.remove('saas-creative-theme');
+      if(mockupImg) mockupImg.src = 'assets/real_estate_creative.png';
+      if(mockupTitleHeader) mockupTitleHeader.textContent = 'Real Estate Ad Visual';
+      if(mockupEyebrow) mockupEyebrow.textContent = `${type}`;
+      if(mockupHeadline) mockupHeadline.textContent = `${offer}`;
+      if(mockupText) mockupText.textContent = `High-converting positioning for ${audience.toLowerCase()} - structured using Gomza's visual layout.`;
+      if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Contact Agent' : 'Learn More';
+    }
   } else {
     const product = document.getElementById('saas-product').value || 'a productivity SaaS tool';
     const icp = document.getElementById('saas-icp').value || 'B2B founders';
     const problem = document.getElementById('saas-problem').value || 'teams waste hours on manual work';
     const content = document.getElementById('saas-content').value;
     prompt = buildSaasCopy(product, icp, problem, content);
+
+    // Setup SaaS mockup details
+    if(mockup) {
+      mockup.classList.add('saas-creative-theme');
+      if(mockupImg) mockupImg.src = 'assets/saas_creative.png';
+      if(mockupTitleHeader) mockupTitleHeader.textContent = 'SaaS Creative Preview';
+      if(mockupEyebrow) mockupEyebrow.textContent = `Campaign for ${icp}`;
+      if(mockupHeadline) mockupHeadline.textContent = `${product}`;
+      if(mockupText) mockupText.textContent = `Optimized user-acquisition design built to solve conversion friction in the funnel.`;
+      if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Book Demo' : 'Launch App';
+    }
   }
 
   ob.className='out-box';
@@ -617,6 +651,14 @@ async function generateCopy(){
     } else {
       cr.style.display='flex';
       bt.style.display='inline'; bs.style.display='none';
+      
+      // Dynamic fade-in reveal with GSAP for a premium wavy look
+      if(mockup) {
+        gsap.fromTo(mockup, 
+          { opacity: 0, y: 25 }, 
+          { opacity: 1, y: 0, duration: 0.85, ease: "power2.out" }
+        );
+      }
     }
   }
   // Small delay so the "Generating…" message is visible briefly

@@ -307,12 +307,61 @@
       <span id="btn-text">Generate copy with Gomza's approach</span>
       <span class="spinner" id="btn-spin"></span>
     </button>
-    <div class="out-box" id="out-box"></div>
-    <div class="copy-row" id="copy-row">
-      <button class="copy-btn" onclick="copyCopy()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        Copy text
-      </button>
+    <!-- TWO COLUMN OUTPUT GRID -->
+    <div class="out-cols" id="out-cols" style="display:none">
+      <!-- Left Panel: Text output -->
+      <div class="out-left-panel">
+        <div class="out-box" id="out-box"></div>
+        <div class="copy-row" id="copy-row">
+          <button class="copy-btn" onclick="copyCopy()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy text
+          </button>
+        </div>
+      </div>
+      
+      <!-- Right Panel: Wavy Creative Mockup -->
+      <div class="out-right-panel">
+        <div class="creative-mockup" id="creative-mockup">
+          <div class="mockup-header">
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-title" id="mockup-title-header">Ad Creative Preview</span>
+          </div>
+          
+          <div class="mockup-body">
+            <div class="mockup-img-wrap">
+              <img id="mockup-img" src="assets/real_estate_creative.png" alt="Creative Visual" />
+              
+              <!-- SVG Wave Mask Overlay -->
+              <div class="mockup-wave-overlay">
+                <svg viewBox="0 0 400 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0,45 C140,85 260,15 400,55 L400,100 L0,100 Z" fill="var(--navy3)"></path>
+                </svg>
+              </div>
+            </div>
+            
+            <div class="mockup-content">
+              <div class="mockup-eyebrow" id="mockup-eyebrow">Real Estate Campaign</div>
+              <h4 class="mockup-headline" id="mockup-headline">Premium Properties offer</h4>
+              <p class="mockup-text" id="mockup-text">Positioning built to turn searches into qualified leads.</p>
+              
+              <div class="mockup-footer">
+                <span class="mockup-domain" id="mockup-domain">gomza.data-sys // ads</span>
+                <button class="mockup-cta" id="mockup-cta">
+                  <span id="mockup-cta-text">Learn More</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Animated Wavy Accent Circles -->
+            <div class="mockup-accent-wave accent-wave-1"></div>
+            <div class="mockup-accent-wave accent-wave-2"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
