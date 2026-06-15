@@ -86,7 +86,7 @@ nav{
   /* backdrop-filter removed on nav — kills mobile fps */
 }
 .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-0.03em;color:var(--white)}
-.logo span{color:#FF9F1C}
+.logo span{color:#DFF140}
 .nav-links{display:flex;gap:.35rem;list-style:none}
 .nav-links a{
   position:relative;
@@ -768,7 +768,7 @@ footer{
   display:inline-block;opacity:0;transform:translateY(60px);
   animation:loaderLetterUp 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
 }
-.loader-text span:last-child{color:#FF9F1C}
+.loader-text span:last-child{color:#DFF140}
 @keyframes loaderLetterUp{
   0%{opacity:0;transform:translateY(60px)}
   60%{opacity:1;transform:translateY(-6px)}
