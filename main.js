@@ -38,144 +38,107 @@ function initThree(){
 
   (function(){
   const container = document.getElementById('three-bg');
+  if(!container) return;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
   camera.position.z = 500;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
 
-  // ── STAR FIELD ──
-  const starCount = 500;
-  const starGeo = new THREE.BufferGeometry();
-  const starPos = new Float32Array(starCount * 3);
-  const starColors = new Float32Array(starCount * 3);
-  const colorPalette = [
-    new THREE.Color(0x3B82F6),
-    new THREE.Color(0x6366F1),
-    new THREE.Color(0xF59E0B),
-    new THREE.Color(0xA5B4FC),
-    new THREE.Color(0xFFFFFF),
-  ];
-  for(let i = 0; i < starCount; i++){
-    starPos[i*3]   = (Math.random() - 0.5) * 2000;
-    starPos[i*3+1] = (Math.random() - 0.5) * 2000;
-    starPos[i*3+2] = (Math.random() - 0.5) * 1200;
-    const c = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-    starColors[i*3]   = c.r;
-    starColors[i*3+1] = c.g;
-    starColors[i*3+2] = c.b;
+  // ── INTERACTIVE TOPOGRAPHIC GRID ──
+  const cols = 28;
+  const rows = 18;
+  const spacingX = 45;
+  const spacingY = 40;
+  const gridWidth = (cols - 1) * spacingX;
+  const gridHeight = (rows - 1) * spacingY;
+
+  // We will keep an array of base vertex positions to calculate animations
+  const baseVertices = [];
+  for(let j = 0; j < rows; j++){
+    for(let i = 0; i < cols; i++){
+      const x = i * spacingX - gridWidth / 2;
+      const y = j * spacingY - gridHeight / 2;
+      baseVertices.push({ x, y, ox: x, oy: y });
+    }
   }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-  starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
-  const starMat = new THREE.PointsMaterial({
-    size: 1.2,
+
+  // Define line segments geometry
+  const numLines = (cols - 1) * rows + cols * (rows - 1);
+  const lineGeo = new THREE.BufferGeometry();
+  const linePositions = new Float32Array(numLines * 2 * 3);
+  const lineColors = new Float32Array(numLines * 2 * 3);
+  lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+  lineGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+  const lineMat = new THREE.LineBasicMaterial({
     vertexColors: true,
     transparent: true,
-    opacity: 0.45,
-    sizeAttenuation: true,
+    opacity: 0.22,
+    linewidth: 1
   });
-  const stars = new THREE.Points(starGeo, starMat);
-  scene.add(stars);
+  const gridLines = new THREE.LineSegments(lineGeo, lineMat);
+  scene.add(gridLines);
 
-  // ── FLOATING NODE NETWORK ──
-  const nodeCount = 20;
-  const nodePositions = [];
-  const nodeVelocities = [];
-  const nodeMeshes = [];
+  // Define glowing nodes (Points) at intersections
+  const pointGeo = new THREE.BufferGeometry();
+  const pointPositions = new Float32Array(cols * rows * 3);
+  const pointColors = new Float32Array(cols * rows * 3);
+  pointGeo.setAttribute('position', new THREE.BufferAttribute(pointPositions, 3));
+  pointGeo.setAttribute('color', new THREE.BufferAttribute(pointColors, 3));
 
-  const nodeGeo = new THREE.SphereGeometry(0.8, 5, 5);
-  const nodeMats = [
-    new THREE.MeshBasicMaterial({ color: 0x3B82F6, transparent: true, opacity: 0.35 }),
-    new THREE.MeshBasicMaterial({ color: 0x6366F1, transparent: true, opacity: 0.28 }),
-    new THREE.MeshBasicMaterial({ color: 0xF59E0B, transparent: true, opacity: 0.22 }),
-  ];
-
-  for(let i = 0; i < nodeCount; i++){
-    const pos = new THREE.Vector3(
-      (Math.random() - 0.5) * 1400,
-      (Math.random() - 0.5) * 900,
-      (Math.random() - 0.5) * 400 - 200
-    );
-    const vel = new THREE.Vector3(
-      (Math.random() - 0.5) * 0.12,
-      (Math.random() - 0.5) * 0.12,
-      0
-    );
-    nodePositions.push(pos);
-    nodeVelocities.push(vel);
-    const mesh = new THREE.Mesh(nodeGeo, nodeMats[i % nodeMats.length]);
-    mesh.position.copy(pos);
-    mesh.scale.setScalar(Math.random() * 0.6 + 0.3);
-    scene.add(mesh);
-    nodeMeshes.push(mesh);
+  // Custom canvas texture for glowing particles
+  function createCircleTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext('2d');
+    const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 16, 16);
+    return new THREE.CanvasTexture(canvas);
   }
 
-  // ── CONNECTING LINES ──
-  const MAX_DIST = 180;
-  const maxSegments = (nodeCount * (nodeCount - 1)) / 2;
-  const linePositions = new Float32Array(maxSegments * 2 * 3);
-  const lineGeo = new THREE.BufferGeometry();
-  lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-  lineGeo.setDrawRange(0, 0);
-  const lineMat = new THREE.LineBasicMaterial({
-    color: 0x3B82F6,
+  const pointMat = new THREE.PointsMaterial({
+    size: 5.5,
+    map: createCircleTexture(),
+    vertexColors: true,
     transparent: true,
-    opacity: 0.06,
+    opacity: 0.65,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
   });
-  const lineSegments = new THREE.LineSegments(lineGeo, lineMat);
-  scene.add(lineSegments);
+  const gridPoints = new THREE.Points(pointGeo, pointMat);
+  scene.add(gridPoints);
 
-  function updateLines(){
-    let writeIndex = 0;
-    for(let i = 0; i < nodeCount; i++){
-      for(let j = i + 1; j < nodeCount; j++){
-        const a = nodePositions[i];
-        const b = nodePositions[j];
-        if(a.distanceTo(b) < MAX_DIST){
-          linePositions[writeIndex++] = a.x;
-          linePositions[writeIndex++] = a.y;
-          linePositions[writeIndex++] = a.z;
-          linePositions[writeIndex++] = b.x;
-          linePositions[writeIndex++] = b.y;
-          linePositions[writeIndex++] = b.z;
-        }
-      }
-    }
-    lineGeo.setDrawRange(0, writeIndex / 3);
-    lineGeo.attributes.position.needsUpdate = true;
-  }
-
-  // ── LARGE GLOWING ORBS ──
-  const orbData = [
-    { color: 0x2563EB, x: -300, y: 200, z: -300, size: 80, speed: 0.0008 },
-    { color: 0x4F46E5, x: 350, y: -150, z: -400, size: 60, speed: 0.0011 },
-    { color: 0xF59E0B, x: -100, y: -280, z: -500, size: 45, speed: 0.0006 },
-  ];
-  const orbs = orbData.map(d => {
-    const geo = new THREE.SphereGeometry(d.size, 32, 32);
-    const mat = new THREE.MeshBasicMaterial({ color: d.color, transparent: true, opacity: 0.025 });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(d.x, d.y, d.z);
-    scene.add(mesh);
-    const ringGeo = new THREE.SphereGeometry(d.size * 1.6, 32, 32);
-    const ringMat = new THREE.MeshBasicMaterial({ color: d.color, transparent: true, opacity: 0.01, side: THREE.BackSide });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    mesh.add(ring);
-    return { mesh, ...d, angle: Math.random() * Math.PI * 2 };
-  });
-
-  // ── MOUSE PARALLAX ──
+  // ── MOUSE AND INTERACTION STATE ──
   let mouseX = 0, mouseY = 0;
-  let targetX = 0, targetY = 0;
+  const mouse3D = new THREE.Vector3(0, 0, 0);
+  const targetMouse3D = new THREE.Vector3(0, 0, 0);
+  let isHovered = false;
+
   document.addEventListener('mousemove', e => {
+    isHovered = true;
     mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
+
+  document.addEventListener('mouseleave', () => {
+    isHovered = false;
+  });
+
+  // Colors
+  const colorBlue = new THREE.Color(0x3B82F6);
+  const colorLime = new THREE.Color(0xDFF140);
+  const colorDark = new THREE.Color(0x1F2937);
 
   // ── RESIZE ──
   window.addEventListener('resize', () => {
@@ -184,43 +147,128 @@ function initThree(){
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  let frame = 0;
+  let time = 0;
   function animate(){
     requestAnimationFrame(animate);
-    frame++;
+    time += 0.008;
 
-    targetX += (mouseX - targetX) * 0.04;
-    targetY += (mouseY - targetY) * 0.04;
-
-    camera.position.x += (targetX * 30 - camera.position.x) * 0.05;
-    camera.position.y += (-targetY * 20 - camera.position.y) * 0.05;
-    camera.position.z = 500 - (window.__lenisScroll || 0) * 0.12;
-    camera.lookAt(scene.position);
-
-    stars.rotation.y += 0.00012;
-    stars.rotation.x += 0.00006;
-
-    for(let i = 0; i < nodeCount; i++){
-      nodePositions[i].add(nodeVelocities[i]);
-      if(Math.abs(nodePositions[i].x) > 700) nodeVelocities[i].x *= -1;
-      if(Math.abs(nodePositions[i].y) > 450) nodeVelocities[i].y *= -1;
-      if(Math.abs(nodePositions[i].z) > 300) nodeVelocities[i].z *= -1;
-      nodeMeshes[i].position.copy(nodePositions[i]);
+    // Smooth mouse interpolation
+    const aspect = window.innerWidth / window.innerHeight;
+    const vWidth = 500 * aspect;
+    const vHeight = 500;
+    if (isHovered) {
+      targetMouse3D.set(mouseX * vWidth * 0.65, -mouseY * vHeight * 0.6, 0);
+    } else {
+      targetMouse3D.set(Math.sin(time * 0.5) * 120, Math.cos(time * 0.3) * 80, 0);
     }
+    mouse3D.lerp(targetMouse3D, 0.06);
 
-    if(frame % 3 === 0) updateLines();
+    // Calculate current positions of all vertices
+    const vertices = [];
+    const maxDist = 220;
 
-    orbs.forEach(o => {
-      o.angle += o.speed * 60;
-      o.mesh.position.x = o.x + Math.sin(o.angle) * 60;
-      o.mesh.position.y = o.y + Math.cos(o.angle * 0.7) * 40;
-      o.mesh.rotation.y += 0.003;
-    });
+    for(let j = 0; j < rows; j++){
+      for(let i = 0; i < cols; i++){
+        const idx = j * cols + i;
+        const base = baseVertices[idx];
+
+        let x = base.ox;
+        let y = base.oy;
+        let z = Math.sin(x * 0.003 + time * 1.2) * Math.cos(y * 0.0035 + time * 1.0) * 45 
+              + Math.sin(x * 0.008 - time * 1.5) * 12;
+
+        const dx = x - mouse3D.x;
+        const dy = y - mouse3D.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        const localColor = colorBlue.clone();
+        if(dist < maxDist){
+          const force = (1 - dist / maxDist);
+          z += force * force * 110;
+          x += (dx / (dist + 0.1)) * force * 22;
+          y += (dy / (dist + 0.1)) * force * 22;
+
+          localColor.lerp(colorLime, force * 0.95);
+        } else {
+          const edgeDist = Math.sqrt(x*x + y*y);
+          const maxEdge = Math.sqrt(gridWidth*gridWidth + gridHeight*gridHeight) * 0.5;
+          const edgeForce = Math.min(edgeDist / maxEdge, 1);
+          localColor.lerp(colorDark, edgeForce * 0.6);
+        }
+
+        vertices.push({ x, y, z, color: localColor });
+
+        pointPositions[idx * 3]     = x;
+        pointPositions[idx * 3 + 1] = y;
+        pointPositions[idx * 3 + 2] = z;
+
+        pointColors[idx * 3]     = localColor.r;
+        pointColors[idx * 3 + 1] = localColor.g;
+        pointColors[idx * 3 + 2] = localColor.b;
+      }
+    }
+    pointGeo.attributes.position.needsUpdate = true;
+    pointGeo.attributes.color.needsUpdate = true;
+
+    // Update line segment vertices
+    let lineIdx = 0;
+    for(let j = 0; j < rows; j++){
+      for(let i = 0; i < cols; i++){
+        const idx = j * cols + i;
+        const pA = vertices[idx];
+
+        if(i < cols - 1){
+          const pB = vertices[idx + 1];
+          linePositions[lineIdx * 3]     = pA.x;
+          linePositions[lineIdx * 3 + 1] = pA.y;
+          linePositions[lineIdx * 3 + 2] = pA.z;
+          lineColors[lineIdx * 3]        = pA.color.r;
+          lineColors[lineIdx * 3 + 1]    = pA.color.g;
+          lineColors[lineIdx * 3 + 2]    = pA.color.b;
+          lineIdx++;
+
+          linePositions[lineIdx * 3]     = pB.x;
+          linePositions[lineIdx * 3 + 1] = pB.y;
+          linePositions[lineIdx * 3 + 2] = pB.z;
+          lineColors[lineIdx * 3]        = pB.color.r;
+          lineColors[lineIdx * 3 + 1]    = pB.color.g;
+          lineColors[lineIdx * 3 + 2]    = pB.color.b;
+          lineIdx++;
+        }
+
+        if(j < rows - 1){
+          const pC = vertices[idx + cols];
+          linePositions[lineIdx * 3]     = pA.x;
+          linePositions[lineIdx * 3 + 1] = pA.y;
+          linePositions[lineIdx * 3 + 2] = pA.z;
+          lineColors[lineIdx * 3]        = pA.color.r;
+          lineColors[lineIdx * 3 + 1]    = pA.color.g;
+          lineColors[lineIdx * 3 + 2]    = pA.color.b;
+          lineIdx++;
+
+          linePositions[lineIdx * 3]     = pC.x;
+          linePositions[lineIdx * 3 + 1] = pC.y;
+          linePositions[lineIdx * 3 + 2] = pC.z;
+          lineColors[lineIdx * 3]        = pC.color.r;
+          lineColors[lineIdx * 3 + 1]    = pC.color.g;
+          lineColors[lineIdx * 3 + 2]    = pC.color.b;
+          lineIdx++;
+        }
+      }
+    }
+    lineGeo.attributes.position.needsUpdate = true;
+    lineGeo.attributes.color.needsUpdate = true;
+
+    gridLines.rotation.y = Math.sin(time * 0.15) * 0.08;
+    gridLines.rotation.x = -0.3 + Math.cos(time * 0.1) * 0.05;
+    gridPoints.rotation.copy(gridLines.rotation);
+
+    camera.position.z = 500 - (window.__lenisScroll || 0) * 0.12;
 
     renderer.render(scene, camera);
   }
   animate();
-  // Pause rendering when tab is hidden
+
   document.addEventListener('visibilitychange', () => {
     if(document.hidden) renderer.setAnimationLoop(null);
   });
@@ -387,15 +435,21 @@ if (!isMobile) {
 // Nav background on scroll (native)
 (function(){
   const nav = document.getElementById('navbar');
+  const progress = document.getElementById('scroll-progress');
   let ticking = false;
   function updateNav(){
     const s = window.scrollY;
     if(s > 60){
-      nav.style.background = 'rgba(6,11,24,0.94)';
-      nav.style.boxShadow = '0 1px 0 rgba(248,250,252,0.05)';
+      nav.style.background = 'rgba(0,0,0,0.95)';
+      nav.style.boxShadow = '0 1px 0 rgba(255,255,255,0.05)';
     } else {
-      nav.style.background = 'rgba(6,11,24,0.7)';
+      nav.style.background = 'rgba(0,0,0,0.7)';
       nav.style.boxShadow = 'none';
+    }
+    if(progress){
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = maxScroll > 0 ? (s / maxScroll) * 100 : 0;
+      progress.style.width = pct + '%';
     }
     ticking = false;
   }
