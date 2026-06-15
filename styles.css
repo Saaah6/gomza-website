@@ -14,10 +14,10 @@
   --navy2:#08090a;
   --navy3:#121315;
   --blue:#3B82F6;
-  --blue-bright:#DFF140;
-  --blue-glow:rgba(223, 241, 64, 0.16);
-  --gold:#DFF140;
-  --gold-dim:rgba(223, 241, 64, 0.08);
+  --blue-bright:#FF9F1C;
+  --blue-glow:rgba(59, 130, 246, 0.16);
+  --gold:#FF9F1C;
+  --gold-dim:rgba(255, 159, 28, 0.08);
   --aqua:#29D3FF;
   --rose:#FF6B8B;
   --white:#F5F5F5;
@@ -420,7 +420,7 @@ h1 .gold{
 }
 .srv:hover {
   background: rgba(255, 255, 255, 0.02);
-  box-shadow: inset 0 0 20px rgba(223, 241, 64, 0.02);
+  box-shadow: inset 0 0 20px rgba(255, 159, 28, 0.02);
 }
 .srv-icon {
   margin-bottom: 1.15rem;
@@ -448,10 +448,10 @@ h1 .gold{
 }
 .srv-gtm {
   grid-column: span 4;
-  background: linear-gradient(135deg, var(--navy3), rgba(223, 241, 64, 0.02)) !important;
+  background: linear-gradient(135deg, var(--navy3), rgba(255, 159, 28, 0.02)) !important;
 }
 .srv-gtm:hover {
-  background: linear-gradient(135deg, var(--navy3), rgba(223, 241, 64, 0.05)) !important;
+  background: linear-gradient(135deg, var(--navy3), rgba(255, 159, 28, 0.05)) !important;
 }
 .srv-icon-gtm svg {
   stroke: var(--aqua) !important;

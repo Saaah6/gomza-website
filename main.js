@@ -137,7 +137,7 @@ function initThree(){
 
   // Colors
   const colorBlue = new THREE.Color(0x3B82F6);
-  const colorLime = new THREE.Color(0xDFF140);
+  const colorOrange = new THREE.Color(0xFF9F1C);
   const colorDark = new THREE.Color(0x1F2937);
 
   // ── RESIZE ──
@@ -188,7 +188,7 @@ function initThree(){
           x += (dx / (dist + 0.1)) * force * 22;
           y += (dy / (dist + 0.1)) * force * 22;
 
-          localColor.lerp(colorLime, force * 0.95);
+          localColor.lerp(colorOrange, force * 0.95);
         } else {
           const edgeDist = Math.sqrt(x*x + y*y);
           const maxEdge = Math.sqrt(gridWidth*gridWidth + gridHeight*gridHeight) * 0.5;
