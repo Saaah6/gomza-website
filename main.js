@@ -1,3 +1,5 @@
+const isMobile = window.innerWidth < 768;
+
 /* ── Native scroll shim (replaces heavy Lenis for performance) ── */
 const lenis = {
   target: 0,
@@ -11,9 +13,16 @@ const lenis = {
 };
 window.lenis = lenis;
 // Keep __lenisScroll in sync with native scroll
+let scrollTicking = false;
 window.addEventListener('scroll', () => {
   window.__lenisScroll = window.scrollY;
-  (lenis._cbs['scroll']||[]).forEach(fn => fn({ scroll: window.scrollY }));
+  if (!scrollTicking) {
+    window.requestAnimationFrame(() => {
+      (lenis._cbs['scroll']||[]).forEach(fn => fn({ scroll: window.scrollY }));
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
 }, { passive: true });
 
 /* ═══════════════════════════════
@@ -21,7 +30,7 @@ window.addEventListener('scroll', () => {
 ═══════════════════════════════ */
 function initThree(){
   // Skip on mobile or if WebGL isn't available
-  if(window.innerWidth < 768) return;
+  if(isMobile) return;
   try {
     const test = document.createElement('canvas').getContext('webgl');
     if(!test) return;
@@ -229,6 +238,7 @@ if('requestIdleCallback' in window){
    ANIMATED WAVE CANVAS
 ═══════════════════════════════ */
 (function(){
+  if(isMobile) return;
   const c = document.getElementById('wave-canvas');
   const ctx = c.getContext('2d');
   let t = 0;
@@ -298,31 +308,39 @@ gsap.to('#metrics-strip',{ opacity:1,     duration:1,  ease:'power2.out', delay:
 // Scroll reveals
 gsap.utils.toArray('.reveal').forEach(el => {
   gsap.to(el, {
-    opacity:1, y:0, filter:'blur(0px)', duration:.85, ease:'power3.out',
+    opacity:1, y:0,
+    ...(isMobile ? {} : { filter:'blur(0px)' }),
+    duration:.85, ease:'power3.out',
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
   });
 });
 
 gsap.utils.toArray('.niche-card').forEach((el, i) => {
   gsap.to(el, {
-    opacity:1, y:0, scale:1, filter:'blur(0px)', duration:.9, ease:'power3.out',
-    delay: i * 0.12,
+    opacity:1, y:0, scale:1,
+    ...(isMobile ? {} : { filter:'blur(0px)' }),
+    duration:.9, ease:'power3.out',
+    delay: isMobile ? 0 : i * 0.12,
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
   });
 });
 
 gsap.utils.toArray('.proof-card').forEach((el, i) => {
   gsap.to(el, {
-    opacity:1, y:0, scale:1, filter:'blur(0px)', duration:.85, ease:'power3.out',
-    delay: i * 0.1,
+    opacity:1, y:0, scale:1,
+    ...(isMobile ? {} : { filter:'blur(0px)' }),
+    duration:.85, ease:'power3.out',
+    delay: isMobile ? 0 : i * 0.1,
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
   });
 });
 
 gsap.utils.toArray('.srv').forEach((el, i) => {
   gsap.to(el, {
-    opacity:1, y:0, filter:'blur(0px)', duration:.75, ease:'power3.out',
-    delay: i * 0.08,
+    opacity:1, y:0,
+    ...(isMobile ? {} : { filter:'blur(0px)' }),
+    duration:.75, ease:'power3.out',
+    delay: isMobile ? 0 : i * 0.08,
     scrollTrigger:{ trigger:el, start:'top 90%', toggleActions:'play none none none' }
   });
 });
@@ -332,41 +350,44 @@ gsap.to('.tool-outer', {
   scrollTrigger:{ trigger:'.tool-outer', start:'top 88%', toggleActions:'play none none none' }
 });
 
-// Parallax
-gsap.to('.hero-glow', {
-  y: 60, scale: 1.1, ease:'none',
-  scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub: 1.2 }
-});
+if (!isMobile) {
+  // Parallax
+  gsap.to('.hero-glow', {
+    y: 60, scale: 1.1, ease:'none',
+    scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub: 1.2 }
+  });
 
-gsap.to('.hero-glow2', {
-  y: 35, scale: 1.12, ease:'none',
-  scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub: 1.4 }
-});
+  gsap.to('.hero-glow2', {
+    y: 35, scale: 1.12, ease:'none',
+    scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub: 1.4 }
+  });
 
-gsap.to('.cta-bg-glow', {
-  scale: 1.08, opacity: 0.95, ease:'sine.inOut',
-  repeat: -1, yoyo: true, duration: 2.8
-});
+  gsap.to('.cta-bg-glow', {
+    scale: 1.08, opacity: 0.95, ease:'sine.inOut',
+    repeat: -1, yoyo: true, duration: 2.8
+  });
 
-gsap.fromTo('#beam-group-1',
-  { x: -260, y: -30, rotate: -4 },
-  { x: 260, y: -30, rotate: 6, duration: 24, ease: 'none', repeat: -1 }
-);
+  gsap.fromTo('#beam-group-1',
+    { x: -260, y: -30, rotate: -4 },
+    { x: 260, y: -30, rotate: 6, duration: 24, ease: 'none', repeat: -1 }
+  );
 
-gsap.fromTo('#beam-group-2',
-  { x: -320, y: 20, rotate: 2 },
-  { x: 320, y: 20, rotate: -4, duration: 28, ease: 'none', repeat: -1, delay: -8 }
-);
+  gsap.fromTo('#beam-group-2',
+    { x: -320, y: 20, rotate: 2 },
+    { x: 320, y: 20, rotate: -4, duration: 28, ease: 'none', repeat: -1, delay: -8 }
+  );
 
-gsap.fromTo('#beam-group-3',
-  { x: -280, y: -10, rotate: -2 },
-  { x: 280, y: -10, rotate: 3, duration: 30, ease: 'none', repeat: -1, delay: -15 }
-);
+  gsap.fromTo('#beam-group-3',
+    { x: -280, y: -10, rotate: -2 },
+    { x: 280, y: -10, rotate: 3, duration: 30, ease: 'none', repeat: -1, delay: -15 }
+  );
+}
 
 // ── Smooth nav background
 // Nav background on scroll (native)
 (function(){
   const nav = document.getElementById('navbar');
+  let ticking = false;
   function updateNav(){
     const s = window.scrollY;
     if(s > 60){
@@ -376,8 +397,14 @@ gsap.fromTo('#beam-group-3',
       nav.style.background = 'rgba(6,11,24,0.7)';
       nav.style.boxShadow = 'none';
     }
+    ticking = false;
   }
-  window.addEventListener('scroll', updateNav, { passive: true });
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateNav);
+      ticking = true;
+    }
+  }, { passive: true });
 })();
 
 // ── Nav link smooth scroll
