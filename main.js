@@ -657,8 +657,9 @@ async function generateCopy(){
       if(mockupText) mockupText.textContent = `High-converting positioning for ${audience.toLowerCase()} - structured using Gomza's visual layout.`;
       if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Contact Agent' : 'Learn More';
       
-      const dynamicPrompt = `${type} luxury architecture property building ${offer}, beautiful high-end real estate photography, minimalist exterior design, photorealistic sunset lighting`;
-      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&nologo=true`;
+      const reSeed = Math.floor(Math.random() * 999999) + 1;
+      const dynamicPrompt = `premium luxury ${type} exterior architectural photography, ${offer}, golden hour dramatic lighting, glass and steel modern design, award-winning real estate photo for ${audience}, 8K ultra-sharp, professional HDR`;
+      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${reSeed}&nologo=true&enhance=true`;
     }
   } else {
     const product = document.getElementById('saas-product').value || 'a productivity SaaS tool';
@@ -676,8 +677,9 @@ async function generateCopy(){
       if(mockupText) mockupText.textContent = `Optimized user-acquisition design built to solve conversion friction in the funnel.`;
       if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Book Demo' : 'Launch App';
       
-      const dynamicPrompt = `${product} software user interface tech dashboard, abstract futuristic graphic nodes and glowing charts for ${icp}, digital tech layout, cyan and deep blue color palette`;
-      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&nologo=true`;
+      const saasSeed = Math.floor(Math.random() * 999999) + 1;
+      const dynamicPrompt = `${product} modern SaaS dashboard UI, glowing neon data visualization, futuristic tech interface for ${icp}, deep space navy and electric cyan palette, ultra-sharp 3D render, premium tech brand aesthetic`;
+      if(mockupImg) mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${saasSeed}&nologo=true&enhance=true`;
     }
   }
 
