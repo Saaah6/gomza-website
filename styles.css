@@ -364,6 +364,12 @@ h1 .gold{
   margin-bottom:0.8rem;
   font-weight:600;
 }
+.srv .card-num{
+  color:var(--blue-bright);
+}
+.srv-gtm .card-num{
+  color:var(--aqua);
+}
 .card-glow{
   position:absolute;top:-60px;right:-60px;
   width:200px;height:200px;border-radius:50%;
@@ -413,13 +419,13 @@ h1 .gold{
 }
 .srv:hover {
   background: rgba(255, 255, 255, 0.02);
-  box-shadow: inset 0 0 20px rgba(255, 159, 28, 0.02);
+  box-shadow: inset 0 0 20px rgba(138, 180, 255, 0.03);
 }
 .srv-icon {
   margin-bottom: 1.15rem;
 }
 .srv-icon svg {
-  stroke: var(--gold);
+  stroke: var(--blue-bright);
   width: 28px;
   height: 28px;
   transition: transform 0.3s ease;
@@ -441,10 +447,10 @@ h1 .gold{
 }
 .srv-gtm {
   grid-column: span 4;
-  background: linear-gradient(135deg, var(--navy3), rgba(255, 159, 28, 0.02)) !important;
+  background: linear-gradient(135deg, var(--navy3), rgba(41, 211, 255, 0.02)) !important;
 }
 .srv-gtm:hover {
-  background: linear-gradient(135deg, var(--navy3), rgba(255, 159, 28, 0.05)) !important;
+  background: linear-gradient(135deg, var(--navy3), rgba(41, 211, 255, 0.05)) !important;
 }
 .srv-icon-gtm svg {
   stroke: var(--aqua) !important;
