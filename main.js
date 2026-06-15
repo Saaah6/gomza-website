@@ -516,6 +516,17 @@ function switchTab(tab, el){
   if(tab !== 'imgstudio'){
     document.getElementById('out-box').style.display  = 'none';
     document.getElementById('copy-row').style.display = 'none';
+    const mockup = document.getElementById('creative-mockup');
+    const mockupImg = document.getElementById('mockup-img');
+    if(mockup) {
+      if(tab === 're') {
+        mockup.classList.remove('saas-creative-theme');
+        if(mockupImg) mockupImg.src = 'assets/real_estate_creative.png';
+      } else if(tab === 'saas') {
+        mockup.classList.add('saas-creative-theme');
+        if(mockupImg) mockupImg.src = 'assets/saas_creative.png';
+      }
+    }
   }
   if(tab === 'imgstudio' && !document.getElementById('img-prompt-textarea').value){
     rebuildImgPrompt();
@@ -613,46 +624,45 @@ async function generateCopy(){
     mockup.classList.add('mockup-loading');
   }
 
-  let imageLoaded = false;
-  let typingDone = false;
-
-  function checkReveal() {
-    if(imageLoaded && typingDone && mockup) {
-      mockup.classList.remove('mockup-loading');
-      gsap.fromTo(mockup, 
-        { opacity: 0, y: 25 }, 
-        { opacity: 1, y: 0, duration: 0.85, ease: "power2.out" }
-      );
-    }
-  }
-
-  if(mockupImg) {
-    mockupImg.onload = () => {
-      imageLoaded = true;
-      // Fade in image smoothly
-      mockupImg.style.transition = 'opacity 0.6s ease';
+  // ── Helper: silently load an AI image in background, then swap
+  function loadAIImageInBackground(aiUrl, fallbackSrc) {
+    // Show local asset immediately — never a black box
+    if(mockupImg) {
+      mockupImg.src = fallbackSrc;
       mockupImg.style.opacity = '1';
+    }
+    // Reveal the whole mockup right away
+    if(mockup) {
       mockup.classList.remove('mockup-loading');
       mockup.style.opacity = '1';
       if(typeof gsap !== 'undefined') {
         gsap.fromTo(mockup, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' });
       }
+    }
+    // Load AI image in background
+    const bgImg = new Image();
+    let swapped = false;
+    const swapFn = () => {
+      if(swapped || !mockupImg) return;
+      swapped = true;
+      mockupImg.style.transition = 'opacity 0.5s ease';
+      mockupImg.style.opacity = '0';
+      setTimeout(() => {
+        mockupImg.src = bgImg.src;
+        mockupImg.style.opacity = '1';
+      }, 500);
     };
-    mockupImg.onerror = () => {
-      imageLoaded = true;
-      // Show fallback — use local static asset
-      mockupImg.src = currentTab === 're'
-        ? 'assets/real_estate_creative.png'
-        : 'assets/saas_creative.png';
-      mockupImg.style.opacity = '1';
-      mockup.classList.remove('mockup-loading');
-      mockup.style.opacity = '1';
-    };
-  } else {
-    imageLoaded = true;
+    bgImg.onload  = swapFn;
+    bgImg.onerror = () => { /* keep local image, do nothing */ };
+    bgImg.src = aiUrl;
+    // Fallback: if image doesn't load in 20s, keep local
+    setTimeout(() => { if(!swapped) swapped = true; }, 20000);
   }
 
   let prompt = '';
+  let pendingAiUrl = '';
+  let pendingFallback = '';
+
   if(currentTab === 're'){
     const type = document.getElementById('re-type').value;
     const audience = document.getElementById('re-audience').value;
@@ -664,21 +674,27 @@ async function generateCopy(){
     if(mockup) {
       mockup.classList.remove('saas-creative-theme');
       if(mockupTitleHeader) mockupTitleHeader.textContent = 'Real Estate Ad Visual';
-      if(mockupEyebrow) mockupEyebrow.textContent = `${type}`;
-      if(mockupHeadline) mockupHeadline.textContent = `${offer}`;
-      if(mockupText) mockupText.textContent = `High-converting positioning for ${audience.toLowerCase()} - structured using Gomza's visual layout.`;
-      if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Contact Agent' : 'Learn More';
-      
+      if(mockupEyebrow)    mockupEyebrow.textContent    = `${type}`;
+      if(mockupHeadline)   mockupHeadline.textContent   = `${offer}`;
+      if(mockupText)       mockupText.textContent       = `High-converting positioning for ${audience.toLowerCase()} — structured using Gomza's CRO framework.`;
+      if(mockupCtaText)    mockupCtaText.textContent    = content.includes('email') ? 'Contact Agent' : 'Learn More';
+
       const reSeed = Math.floor(Math.random() * 9999999) + 1;
-      const dynamicPrompt = `luxury ${type}, ${offer}, golden hour lighting, modern architecture exterior, photorealistic, professional real estate photography, sharp focus`;
+      const aiPrompt = `luxury real estate property exterior, ${offer}, golden hour photography, modern architecture, sharp professional photo`;
+      pendingAiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(aiPrompt)}?width=600&height=400&seed=${reSeed}&nologo=true`;
+      pendingFallback = 'assets/real_estate_creative.png';
+      
+      // Set to fallback image immediately with loading class
       if(mockupImg) {
-        mockupImg.style.opacity = '0';
-        mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${reSeed}&nologo=true&model=flux`;
+        mockupImg.src = pendingFallback;
+        mockupImg.style.opacity = '1';
       }
+      mockup.classList.add('mockup-loading');
+      mockup.style.opacity = '1';
     }
   } else {
     const product = document.getElementById('saas-product').value || 'a productivity SaaS tool';
-    const icp = document.getElementById('saas-icp').value || 'B2B founders';
+    const icp     = document.getElementById('saas-icp').value     || 'B2B founders';
     const problem = document.getElementById('saas-problem').value || 'teams waste hours on manual work';
     const content = document.getElementById('saas-content').value;
     prompt = buildSaasCopy(product, icp, problem, content);
@@ -687,17 +703,23 @@ async function generateCopy(){
     if(mockup) {
       mockup.classList.add('saas-creative-theme');
       if(mockupTitleHeader) mockupTitleHeader.textContent = 'SaaS Creative Preview';
-      if(mockupEyebrow) mockupEyebrow.textContent = `Campaign for ${icp}`;
-      if(mockupHeadline) mockupHeadline.textContent = `${product}`;
-      if(mockupText) mockupText.textContent = `Optimized user-acquisition design built to solve conversion friction in the funnel.`;
-      if(mockupCtaText) mockupCtaText.textContent = content.includes('email') ? 'Book Demo' : 'Launch App';
-      
+      if(mockupEyebrow)    mockupEyebrow.textContent    = `Campaign for ${icp}`;
+      if(mockupHeadline)   mockupHeadline.textContent   = `${product}`;
+      if(mockupText)       mockupText.textContent       = `Optimized user-acquisition design built to solve conversion friction in the funnel.`;
+      if(mockupCtaText)    mockupCtaText.textContent    = content.includes('email') ? 'Book Demo' : 'Launch App';
+
       const saasSeed = Math.floor(Math.random() * 9999999) + 1;
-      const dynamicPrompt = `${product} software dashboard interface, futuristic UI, glowing data charts, dark navy blue background, neon cyan accents, professional tech product screenshot`;
+      const aiPrompt = `modern software dashboard interface for ${product}, neon blue and purple accents, clean minimalist tech branding, high tech illustration, detailed UI vector`;
+      pendingAiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(aiPrompt)}?width=600&height=400&seed=${saasSeed}&nologo=true`;
+      pendingFallback = 'assets/saas_creative.png';
+      
+      // Set to fallback image immediately with loading class
       if(mockupImg) {
-        mockupImg.style.opacity = '0';
-        mockupImg.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(dynamicPrompt)}?width=600&height=400&seed=${saasSeed}&nologo=true&model=flux`;
+        mockupImg.src = pendingFallback;
+        mockupImg.style.opacity = '1';
       }
+      mockup.classList.add('mockup-loading');
+      mockup.style.opacity = '1';
     }
   }
 
@@ -718,6 +740,11 @@ async function generateCopy(){
       bt.style.display='inline'; bs.style.display='none';
       typingDone = true;
       checkReveal();
+      
+      // Trigger AI image load after the copywriting has completely rendered
+      if(pendingAiUrl && pendingFallback) {
+        loadAIImageInBackground(pendingAiUrl, pendingFallback);
+      }
     }
   }
   // Small delay so the "Generating…" message is visible briefly
@@ -832,10 +859,10 @@ const IMG_INDUSTRY_DATA = {
 };
 
 const IMG_RATIO_MAP = {
-  landscape: { w: 1280, h: 720 },
-  square:    { w: 1024, h: 1024 },
-  portrait:  { w: 820,  h: 1024 },
-  banner:    { w: 1440, h: 480 }
+  landscape: { w: 960,  h: 540 },
+  square:    { w: 768,  h: 768 },
+  portrait:  { w: 640,  h: 800 },
+  banner:    { w: 960,  h: 320 }
 };
 
 let imgState = {
@@ -923,7 +950,7 @@ async function generateAIImage(){
 
   const { w, h } = IMG_RATIO_MAP[imgState.ratio] || IMG_RATIO_MAP.landscape;
   const seed = Math.floor(Math.random() * 9999999) + 1;
-  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true&model=flux`;
+  const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true`;
   currentImgUrl = url;
 
   const data = IMG_INDUSTRY_DATA[imgState.industry];
