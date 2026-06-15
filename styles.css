@@ -10,19 +10,19 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#000000;
-  --navy2:#08090a;
-  --navy3:#121315;
-  --blue:#3B82F6;
+  --navy:#030712;
+  --navy2:#081122;
+  --navy3:#0F1A33;
+  --blue:#4F7CFF;
   --blue-bright:#8AB4FF;
-  --blue-glow:rgba(59, 130, 246, 0.16);
-  --gold:#FF9F1C;
-  --gold-dim:rgba(255, 159, 28, 0.08);
+  --blue-glow:rgba(79,124,255,0.38);
+  --gold:#FFB547;
+  --gold-dim:rgba(255,181,71,0.16);
   --aqua:#29D3FF;
   --rose:#FF6B8B;
-  --white:#F5F5F5;
-  --muted:#8C8E8B;
-  --faint:rgba(255, 255, 255, 0.05);
+  --white:#FBFDFF;
+  --muted:rgba(251,253,255,0.76);
+  --faint:rgba(251,253,255,0.1);
 }
 #scroll-progress{
   position:fixed;top:0;left:0;
