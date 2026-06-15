@@ -361,7 +361,7 @@ h1 .gold{
 .niche-card:hover{
   border-color:var(--gold);
   transform:translateY(-4px);
-  box-shadow:0 0 30px rgba(223, 241, 64, 0.08);
+  box-shadow:0 0 30px var(--gold-dim);
 }
 .card-num{
   font-family:'Space Grotesk',sans-serif;
