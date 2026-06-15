@@ -621,7 +621,10 @@ function copyCopy(){
   interactiveSelectors.forEach(sel => {
     document.querySelectorAll(sel).forEach(el => {
       el.style.pointerEvents = 'auto';
-      el.style.position = el.style.position || 'relative';
+      const computedPos = window.getComputedStyle(el).position;
+      if (computedPos === 'static') {
+        el.style.position = 'relative';
+      }
       el.style.zIndex = el.style.zIndex || '50';
     });
   });
@@ -631,6 +634,7 @@ function copyCopy(){
    PAGE LOADER
 ═══════════════════════════════ */
 (function(){
+  const loader = document.getElementById('page-loader');
   if(!loader) return;
   // Trigger letter animation
   loader.querySelectorAll('.loader-text span').forEach((span, i) => {
