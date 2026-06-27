@@ -1625,12 +1625,12 @@ footer{
   .footer-divider { margin-bottom: 2rem; }
 
   #giant-text {
-    font-size: 26vw; 
+    font-size: 22vw; 
     margin-left: -1.5rem; 
     margin-right: -1.5rem; 
     width: calc(100% + 3rem); 
-    margin-bottom: -1rem;
-    line-height: 0.7;
-    letter-spacing: -0.06em; 
+    margin-bottom: 0;
+    line-height: 0.85;
+    letter-spacing: -0.05em; 
   }
 }
