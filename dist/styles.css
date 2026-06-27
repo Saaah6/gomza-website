@@ -1508,3 +1508,51 @@ footer{
   /* Generate button full width on mobile */
   .img-gen-btn{font-size:.85rem;padding:.75rem}
 }
+
+/* ═══════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════ */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  z-index: 99999;
+  scale: 0;
+  opacity: 0;
+  transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  text-align: center;
+  will-change: transform, scale, opacity;
+}
+
+.custom-cursor.active {
+  scale: 1;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .custom-cursor { display: none !important; }
+}
+
+/* ═══════════════════════════════
+   GIANT TEXT SPOTLIGHT EFFECT
+═══════════════════════════════ */
+#giant-text {
+  /* Fully visible by default, transparent hole near mouse */
+  -webkit-mask-image: radial-gradient(circle 250px at var(--mx, -2000px) var(--my, -2000px), rgba(0,0,0,0.05) 0%, rgba(0,0,0,1) 80%);
+  mask-image: radial-gradient(circle 250px at var(--mx, -2000px) var(--my, -2000px), rgba(0,0,0,0.05) 0%, rgba(0,0,0,1) 80%);
+  transition: opacity 0.3s;
+}

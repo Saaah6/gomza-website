@@ -1,29 +1,28 @@
 const isMobile = window.innerWidth < 768;
 
-/* ── Native scroll shim (replaces heavy Lenis for performance) ── */
-const lenis = {
-  target: 0,
-  _cbs: {},
-  on(event, cb){ (this._cbs[event] = this._cbs[event]||[]).push(cb); return this; },
-  scrollTo(target, opts={}){
-    const offset = (opts&&opts.offset)||0;
-    const top = (typeof target === 'number') ? target : target.getBoundingClientRect().top + window.scrollY + offset;
-    window.scrollTo({ top: Math.max(0, top - 80), behavior:'smooth' });
-  }
-};
+/* ── Lenis Smooth Scrolling (Awwwards-style weight) ── */
+const lenis = new Lenis({
+  lerp: 0.06,           // Ultra-smooth, buttery inertia
+  smoothWheel: true,
+  wheelMultiplier: 0.9, // Slightly heavier scroll feel
+  smoothTouch: false,
+  touchMultiplier: 2,
+  infinite: false,
+});
 window.lenis = lenis;
-// Keep __lenisScroll in sync with native scroll
-let scrollTicking = false;
-window.addEventListener('scroll', () => {
-  window.__lenisScroll = window.scrollY;
-  if (!scrollTicking) {
-    window.requestAnimationFrame(() => {
-      (lenis._cbs['scroll']||[]).forEach(fn => fn({ scroll: window.scrollY }));
-      scrollTicking = false;
-    });
-    scrollTicking = true;
-  }
-}, { passive: true });
+
+// Synchronize Lenis with GSAP ScrollTrigger to prevent glitching/jitter
+lenis.on('scroll', ScrollTrigger.update);
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+});
+gsap.ticker.lagSmoothing(0);
+
+// Keep __lenisScroll in sync for Three.js background
+lenis.on('scroll', (e) => {
+  window.__lenisScroll = e.animatedScroll || e.scroll || window.scrollY;
+});
 
 /* ═══════════════════════════════
    THREE.JS BACKGROUND SCENE
@@ -357,7 +356,6 @@ gsap.to('#metrics-strip',{ opacity:1,     duration:1,  ease:'power2.out', delay:
 gsap.utils.toArray('.reveal').forEach(el => {
   gsap.to(el, {
     opacity:1, y:0,
-    ...(isMobile ? {} : { filter:'blur(0px)' }),
     duration:.85, ease:'power3.out',
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
   });
@@ -366,7 +364,6 @@ gsap.utils.toArray('.reveal').forEach(el => {
 gsap.utils.toArray('.niche-card').forEach((el, i) => {
   gsap.to(el, {
     opacity:1, y:0, scale:1,
-    ...(isMobile ? {} : { filter:'blur(0px)' }),
     duration:.9, ease:'power3.out',
     delay: isMobile ? 0 : i * 0.12,
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
@@ -376,7 +373,6 @@ gsap.utils.toArray('.niche-card').forEach((el, i) => {
 gsap.utils.toArray('.proof-card').forEach((el, i) => {
   gsap.to(el, {
     opacity:1, y:0, scale:1,
-    ...(isMobile ? {} : { filter:'blur(0px)' }),
     duration:.85, ease:'power3.out',
     delay: isMobile ? 0 : i * 0.1,
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
@@ -1052,4 +1048,58 @@ function downloadAIImage(){
   setTimeout(function(){
     loader.classList.add('loader-done');
   }, 3000);
+})();
+
+/* ═══════════════════════════════
+   CUSTOM CURSOR (SEE PROJECT)
+═══════════════════════════════ */
+(function(){
+  if(isMobile) return;
+  const cursor = document.getElementById('custom-cursor');
+  if(!cursor) return;
+
+  // Track mouse and cursor coordinates
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let cursorX = mouseX;
+  let cursorY = mouseY;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Lerp loop for buttery smoothness
+  function renderCursor() {
+    // 0.15 is the easing amount. Lower = slower/more trailing.
+    cursorX += (mouseX - cursorX) * 0.15;
+    cursorY += (mouseY - cursorY) * 0.15;
+    
+    // 42.5px offset to perfectly center the 85x85px cursor
+    cursor.style.transform = `translate3d(${cursorX - 42.5}px, ${cursorY - 42.5}px, 0)`;
+    
+    requestAnimationFrame(renderCursor);
+  }
+  requestAnimationFrame(renderCursor);
+
+  // Activate on hover over main sections
+  // Add more selectors here as needed for other "main sections"
+  const hoverTargets = document.querySelectorAll('.niche-card, .srv, .proof-card, .mockup-img-wrap');
+  hoverTargets.forEach(target => {
+    target.style.cursor = 'none'; // hide default cursor when hovering these
+    target.addEventListener('mouseenter', () => cursor.classList.add('active'));
+    target.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+  });
+
+  // Giant text spotlight
+  const giantText = document.getElementById('giant-text');
+  if(giantText) {
+    document.addEventListener('mousemove', (e) => {
+      const rect = giantText.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      giantText.style.setProperty('--mx', `${x}px`);
+      giantText.style.setProperty('--my', `${y}px`);
+    });
+  }
 })();
