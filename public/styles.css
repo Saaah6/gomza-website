@@ -1567,4 +1567,27 @@ footer{
 }
 .hover-letter.text-gold:hover {
   color: #ffffff;
+}
+
+#giant-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24vw;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.75;
+  letter-spacing: -0.05em;
+  width: 100%;
+  text-align: center;
+  margin-bottom: -2vw;
+  cursor: crosshair;
+}
+
+@media(max-width:768px){
+  #giant-text {
+    font-size: 21vw; /* slightly smaller to fit 100% inside mobile bounds */
+    margin-left: -3rem; /* pull left to negate footer padding */
+    margin-right: -3rem; /* pull right */
+    width: calc(100% + 6rem); /* stretch to screen edges */
+    margin-bottom: -1.5rem;
+  }
 }
