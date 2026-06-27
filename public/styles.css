@@ -919,10 +919,10 @@ footer{
 .dark-section{background:rgba(6,11,24,0.6)}
 
 /* ── SCROLL REVEAL INIT ── */
-.js-ready .reveal{opacity:0;transform:translateY(48px);transition:none}
-.js-ready .niche-card{opacity:0;transform:translateY(52px) scale(0.97);transition:border-color .3s,transform .3s}
-.js-ready .proof-card{opacity:0;transform:translateY(40px) scale(0.98);transition:border-color .3s}
-.js-ready .srv{opacity:0;transform:translateY(30px);transition:background .2s}
+.js-ready .reveal{opacity:0;transform:translateY(48px);transition:none; /* filter:blur(4px); causes scroll glitch on GPU */}
+.js-ready .niche-card{opacity:0;transform:translateY(52px) scale(0.97);transition:border-color .3s,transform .3s; /* filter:blur(3px); */}
+.js-ready .proof-card{opacity:0;transform:translateY(40px) scale(0.98);transition:border-color .3s; /* filter:blur(2px); */}
+.js-ready .srv{opacity:0;transform:translateY(30px);transition:background .2s; /* filter:blur(2px); */}
 
 /* ── GPU COMPOSITING ── */
 .section,#hero,.cta-section,.dark-section,footer{position:relative;z-index:1}

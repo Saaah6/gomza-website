@@ -356,6 +356,7 @@ gsap.to('#metrics-strip',{ opacity:1,     duration:1,  ease:'power2.out', delay:
 gsap.utils.toArray('.reveal').forEach(el => {
   gsap.to(el, {
     opacity:1, y:0,
+    // ...(isMobile ? {} : { filter:'blur(0px)' }), // REMOVED: Caused massive GPU lag on scroll
     duration:.85, ease:'power3.out',
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
   });
@@ -364,6 +365,7 @@ gsap.utils.toArray('.reveal').forEach(el => {
 gsap.utils.toArray('.niche-card').forEach((el, i) => {
   gsap.to(el, {
     opacity:1, y:0, scale:1,
+    // ...(isMobile ? {} : { filter:'blur(0px)' }), // REMOVED: Caused massive GPU lag on scroll
     duration:.9, ease:'power3.out',
     delay: isMobile ? 0 : i * 0.12,
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
@@ -373,6 +375,7 @@ gsap.utils.toArray('.niche-card').forEach((el, i) => {
 gsap.utils.toArray('.proof-card').forEach((el, i) => {
   gsap.to(el, {
     opacity:1, y:0, scale:1,
+    // ...(isMobile ? {} : { filter:'blur(0px)' }), // REMOVED: Caused massive GPU lag on scroll
     duration:.85, ease:'power3.out',
     delay: isMobile ? 0 : i * 0.1,
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
@@ -382,7 +385,7 @@ gsap.utils.toArray('.proof-card').forEach((el, i) => {
 gsap.utils.toArray('.srv').forEach((el, i) => {
   gsap.to(el, {
     opacity:1, y:0,
-    ...(isMobile ? {} : { filter:'blur(0px)' }),
+    // ...(isMobile ? {} : { filter:'blur(0px)' }), // REMOVED: Caused massive GPU lag on scroll
     duration:.75, ease:'power3.out',
     delay: isMobile ? 0 : i * 0.08,
     scrollTrigger:{ trigger:el, start:'top 90%', toggleActions:'play none none none' }
