@@ -18,6 +18,7 @@ gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
 });
 gsap.ticker.lagSmoothing(0);
+gsap.ticker.fps(60); // Standardize at 60fps across all devices
 
 // Keep __lenisScroll in sync for Three.js background
 lenis.on('scroll', (e) => {

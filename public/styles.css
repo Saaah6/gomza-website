@@ -59,7 +59,7 @@ body{
   pointer-events:none;
   z-index:0;
   opacity:.55;
-  mix-blend-mode:screen;
+  /* mix-blend-mode:screen; removed for 60fps */
 }
 .beam-path{
   fill:none;
@@ -805,7 +805,7 @@ h1 .gold{
   pointer-events: none;
   filter: blur(28px);
   opacity: 0.08;
-  mix-blend-mode: screen;
+  /* mix-blend-mode: screen; */
 }
 .accent-wave-1 {
   top: -12%;
@@ -911,7 +911,7 @@ footer{
 .tab::after,.gen-btn::after,.copy-btn::after{
   content:'';position:absolute;inset:0;border-radius:inherit;
   background:linear-gradient(135deg, rgba(255,255,255,0.14), transparent 38%, rgba(255,255,255,0.06) 64%, transparent 90%);
-  pointer-events:none;mix-blend-mode:screen;opacity:.45;
+  pointer-events:none;/* mix-blend-mode:screen; */opacity:.45;
   transition:opacity .25s ease;
 }
 
