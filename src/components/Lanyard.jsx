@@ -30,6 +30,9 @@ function useLanyardTexture() {
 }
 
 function SwingingCard() {
+  const { camera, pointer } = useThree()
+  const [isDragging, setIsDragging] = useState(false)
+  
   const fixed = useRef(null)
   const j1 = useRef(null)
   const j2 = useRef(null)
@@ -44,12 +47,39 @@ function SwingingCard() {
 
   const handlePointerDown = (e) => {
     e.stopPropagation()
+    e.target.setPointerCapture(e.pointerId)
+    setIsDragging(true)
     if (card.current) {
-      // Apply upward and random impulse to "juggle" the card
-      card.current.applyImpulse({ x: (Math.random() - 0.5) * 10, y: 15, z: (Math.random() - 0.5) * 10 }, true)
-      card.current.applyTorqueImpulse({ x: (Math.random() - 0.5) * 5, y: (Math.random() - 0.5) * 5, z: (Math.random() - 0.5) * 5 }, true)
+      card.current.wakeUp()
     }
   }
+
+  const handlePointerUp = (e) => {
+    e.stopPropagation()
+    e.target.releasePointerCapture(e.pointerId)
+    setIsDragging(false)
+  }
+
+  useFrame(() => {
+    if (isDragging && card.current) {
+      const pos = card.current.translation()
+      // Project 2D mouse pointer to 3D space at the card's current Z depth
+      const target = new THREE.Vector3(pointer.x, pointer.y, 0).unproject(camera)
+      target.sub(camera.position).normalize()
+      const distance = (pos.z - camera.position.z) / target.z
+      const projectedPos = camera.position.clone().add(target.multiplyScalar(distance))
+      
+      // Apply a strong proportional impulse to pull the card towards the mouse
+      const pullStrength = 20
+      const force = {
+        x: (projectedPos.x - pos.x) * pullStrength,
+        y: (projectedPos.y - pos.y) * pullStrength,
+        z: (projectedPos.z - pos.z) * pullStrength
+      }
+      
+      card.current.applyImpulse(force, true)
+    }
+  })
 
   return (
     <>
@@ -69,7 +99,13 @@ function SwingingCard() {
       
       <RigidBody position={[-2.5, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={4} angularDamping={4}>
          <CuboidCollider args={[1, 1.5, 0.1]} />
-         <mesh onPointerDown={handlePointerDown}>
+         <mesh 
+            onPointerDown={handlePointerDown} 
+            onPointerUp={handlePointerUp}
+            onPointerMove={(e) => { if (isDragging) e.stopPropagation() }}
+            onPointerEnter={() => document.body.style.cursor = 'grab'} 
+            onPointerLeave={() => document.body.style.cursor = 'auto'}
+         >
             <boxGeometry args={[2, 3, 0.2]} />
             <meshStandardMaterial color="#111111" />
             <mesh position={[0, 0, 0.11]}>
