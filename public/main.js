@@ -1053,27 +1053,6 @@ function downloadAIImage(){
   });
 })();
 
-/* ═══════════════════════════════
-   PAGE LOADER
-═══════════════════════════════ */
-(function(){
-  const loader = document.getElementById('page-loader');
-  if(!loader) return;
-  // Trigger letter animation
-  loader.querySelectorAll('.loader-text span').forEach((span, i) => {
-    span.style.animationDelay = (i * 0.08) + 's';
-  });
-  // Hide loader after animation completes
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      loader.classList.add('loader-done');
-    }, 1400);
-  });
-  // Fallback: hide after 3s regardless
-  setTimeout(function(){
-    loader.classList.add('loader-done');
-  }, 3000);
-})();
 
 /* ═══════════════════════════════
    CUSTOM CURSOR (SEE PROJECT)

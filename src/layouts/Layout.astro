@@ -25,6 +25,19 @@ const { title } = Astro.props;
 </head>
 <body>
 <slot />
+<script is:inline>
+(function(){
+  const loader = document.getElementById('page-loader');
+  if(!loader) return;
+  loader.querySelectorAll('.loader-text span').forEach((span, i) => {
+    span.style.animationDelay = (i * 0.08) + 's';
+  });
+  window.addEventListener('load', function(){
+    setTimeout(function(){ loader.classList.add('loader-done'); }, 1400);
+  });
+  setTimeout(function(){ loader.classList.add('loader-done'); }, 3000);
+})();
+</script>
 <script src="/main.js" is:inline></script>
 </body>
 </html>
