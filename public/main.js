@@ -542,10 +542,10 @@ function switchTab(tab, el){
     if(mockup) {
       if(tab === 're') {
         mockup.classList.remove('saas-creative-theme');
-        if(mockupImg) mockupImg.src = 'assets/real_estate_creative.png';
+        if(mockupImg) mockupImg.src = '/assets/real_estate_creative.png';
       } else if(tab === 'saas') {
         mockup.classList.add('saas-creative-theme');
-        if(mockupImg) mockupImg.src = 'assets/saas_creative.png';
+        if(mockupImg) mockupImg.src = '/assets/saas_creative.png';
       }
     }
   }
@@ -703,7 +703,7 @@ async function generateCopy(){
       const reSeed = Math.floor(Math.random() * 9999999) + 1;
       const aiPrompt = `luxury real estate property exterior, ${offer}, golden hour photography, modern architecture, sharp professional photo`;
       pendingAiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(aiPrompt)}?width=600&height=400&seed=${reSeed}&nologo=true`;
-      pendingFallback = 'assets/real_estate_creative.png';
+      pendingFallback = '/assets/real_estate_creative.png';
       
       // Set to fallback image immediately with loading class
       if(mockupImg) {
@@ -732,7 +732,7 @@ async function generateCopy(){
       const saasSeed = Math.floor(Math.random() * 9999999) + 1;
       const aiPrompt = `modern software dashboard interface for ${product}, neon blue and purple accents, clean minimalist tech branding, high tech illustration, detailed UI vector`;
       pendingAiUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(aiPrompt)}?width=600&height=400&seed=${saasSeed}&nologo=true`;
-      pendingFallback = 'assets/saas_creative.png';
+      pendingFallback = '/assets/saas_creative.png';
       
       // Set to fallback image immediately with loading class
       if(mockupImg) {
