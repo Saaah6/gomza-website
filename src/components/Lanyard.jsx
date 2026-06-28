@@ -30,8 +30,9 @@ function useLanyardTexture() {
 }
 
 function SwingingCard() {
-  const { camera, pointer } = useThree()
+  const { camera, pointer, size } = useThree()
   const [isDragging, setIsDragging] = useState(false)
+  const anchorX = size.width < 768 ? -3.5 : -6.5
   
   const fixed = useRef(null)
   const j1 = useRef(null)
@@ -94,21 +95,21 @@ function SwingingCard() {
 
   return (
     <>
-      <RigidBody ref={fixed} type="fixed" position={[-3.5, 6, 0]} />
+      <RigidBody ref={fixed} type="fixed" position={[anchorX, 6, 0]} />
       
-      <RigidBody position={[-3.3, 5, 0]} ref={j1} colliders="ball" linearDamping={4} angularDamping={4}>
+      <RigidBody position={[anchorX + 0.2, 5, 0]} ref={j1} colliders="ball" linearDamping={4} angularDamping={4}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[-3.1, 4, 0]} ref={j2} colliders="ball" linearDamping={4} angularDamping={4}>
+      <RigidBody position={[anchorX + 0.4, 4, 0]} ref={j2} colliders="ball" linearDamping={4} angularDamping={4}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[-2.9, 3, 0]} ref={j3} colliders="ball" linearDamping={4} angularDamping={4}>
+      <RigidBody position={[anchorX + 0.6, 3, 0]} ref={j3} colliders="ball" linearDamping={4} angularDamping={4}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[-2.5, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={4} angularDamping={4}>
+      <RigidBody position={[anchorX + 1.0, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={4} angularDamping={4}>
          <CuboidCollider args={[1, 1.5, 0.1]} />
          <mesh 
             onPointerDown={handlePointerDown} 
