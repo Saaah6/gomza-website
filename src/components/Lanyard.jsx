@@ -29,91 +29,36 @@ function useLanyardTexture() {
   return texture
 }
 
-function Band() {
-  const band = useRef(null)
-  const fixed = useRef(null)
-  const j1 = useRef(null)
-  const j2 = useRef(null)
-  const j3 = useRef(null)
+function FallingCard() {
   const card = useRef(null)
-  
-  const texture = useLanyardTexture()
 
-  const [resolution, setResolution] = useState([window.innerWidth, window.innerHeight])
-  
-  useEffect(() => {
-    const handleResize = () => setResolution([window.innerWidth, window.innerHeight])
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  // Spherical joints connecting the string parts
-  useSphericalJoint(fixed, j1, [[0, 0, 0], [0, 0.8, 0]])
-  useSphericalJoint(j1, j2, [[0, -0.8, 0], [0, 0.8, 0]])
-  useSphericalJoint(j2, j3, [[0, -0.8, 0], [0, 0.8, 0]])
-  useSphericalJoint(j3, card, [[0, -0.8, 0], [0, 1.5, 0]])
-
-  useFrame(() => {
-    if (!band.current) return
-    const points = [
-      fixed.current?.translation(),
-      j1.current?.translation(),
-      j2.current?.translation(),
-      j3.current?.translation(),
-      card.current?.translation(),
-    ]
-    if (points.every(Boolean)) {
-      const p = points.map((p) => new THREE.Vector3(p.x, p.y, p.z))
-      band.current.geometry.setPoints(p)
+  const handlePointerDown = (e) => {
+    e.stopPropagation()
+    if (card.current) {
+      // Apply upward and random impulse to "juggle" the card
+      card.current.applyImpulse({ x: (Math.random() - 0.5) * 20, y: 30, z: (Math.random() - 0.5) * 10 }, true)
+      card.current.applyTorqueImpulse({ x: (Math.random() - 0.5) * 10, y: (Math.random() - 0.5) * 10, z: (Math.random() - 0.5) * 10 }, true)
     }
-  })
+  }
 
   return (
-    <>
-      <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial 
-          map={texture}
-          useMap={true}
-          color="white" 
-          depthTest={true} 
-          resolution={resolution} 
-          lineWidth={0.8} 
-        />
-      </mesh>
-
-      <RigidBody ref={fixed} type="fixed" position={[-3.5, 6, 0]} />
-      
-      <RigidBody position={[-3.3, 5, 0]} ref={j1} colliders="ball" linearDamping={4} angularDamping={4}>
-        <BallCollider args={[0.1]} />
-      </RigidBody>
-      
-      <RigidBody position={[-3.1, 4, 0]} ref={j2} colliders="ball" linearDamping={4} angularDamping={4}>
-        <BallCollider args={[0.1]} />
-      </RigidBody>
-      
-      <RigidBody position={[-2.9, 3, 0]} ref={j3} colliders="ball" linearDamping={4} angularDamping={4}>
-        <BallCollider args={[0.1]} />
-      </RigidBody>
-      
-      <RigidBody position={[-2.5, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={4} angularDamping={4}>
-         <CuboidCollider args={[1, 1.5, 0.1]} />
-         <mesh>
-            <boxGeometry args={[2, 3, 0.2]} />
-            <meshStandardMaterial color="#111111" />
-            <mesh position={[0, 0, 0.11]}>
-              <planeGeometry args={[1.8, 2.8]} />
-              <meshBasicMaterial color="#ffffff" />
-              <Text position={[0, 0.5, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
-                GOMZA
-              </Text>
-              <Text position={[0, 0, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
-                Marketing for Real Estate & SaaS
-              </Text>
-            </mesh>
-         </mesh>
-      </RigidBody>
-    </>
+    <RigidBody position={[-2, 6, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={1} angularDamping={1}>
+       <CuboidCollider args={[1, 1.5, 0.1]} />
+       <mesh onPointerDown={handlePointerDown} onPointerEnter={() => document.body.style.cursor = 'pointer'} onPointerLeave={() => document.body.style.cursor = 'auto'}>
+          <boxGeometry args={[2, 3, 0.2]} />
+          <meshStandardMaterial color="#111111" />
+          <mesh position={[0, 0, 0.11]}>
+            <planeGeometry args={[1.8, 2.8]} />
+            <meshBasicMaterial color="#ffffff" />
+            <Text position={[0, 0.5, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
+              GOMZA
+            </Text>
+            <Text position={[0, 0, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
+              Marketing for Real Estate & SaaS
+            </Text>
+          </mesh>
+       </mesh>
+    </RigidBody>
   )
 }
 
@@ -141,11 +86,11 @@ export default function Lanyard() {
   useEffect(() => {
     const fadeTimer = setTimeout(() => {
       setOpacity(0)
-    }, 4500) // start fading out after 4.5 seconds
+    }, 10000) // Give them 10 seconds to play with it before it fades out
 
     const removeTimer = setTimeout(() => {
       setMounted(false)
-    }, 6500) // fully remove after transition
+    }, 12000) // fully remove after transition
 
     return () => {
       clearTimeout(fadeTimer)
@@ -164,8 +109,8 @@ export default function Lanyard() {
       <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: opacity > 0.5 ? 'auto' : 'none' }}>
         <ResponsiveCamera />
         <ambientLight intensity={1} />
-        <Physics interpolate gravity={[0, -10, 0]} timeStep={1 / 60}>
-          <Band />
+        <Physics interpolate gravity={[0, -5, 0]} timeStep={1 / 60}>
+          <FallingCard />
         </Physics>
         <Environment blur={0.75}>
           <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
