@@ -1,10 +1,28 @@
+// ── HARDWARE & CAPABILITY DETECTION ──
+function getDeviceTier() {
+  const isMobileScreen = window.innerWidth < 768;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Safely check hardware specs if browser supports it
+  const cores = navigator.hardwareConcurrency || 4; // Defaults to 4 if unsupported
+  // Note: navigator.deviceMemory is mainly Chrome/Edge
+  const memory = navigator.deviceMemory || 4; 
+  
+  // If it's a mobile screen, has < 4 cores, < 4GB RAM, or user wants reduced motion
+  if (isMobileScreen || prefersReducedMotion || cores < 4 || memory < 4) {
+    return 'low-tier';
+  }
+  return 'high-tier';
+}
+
+const deviceTier = getDeviceTier();
 const isMobile = window.innerWidth < 768;
 
 /* ── Lenis Smooth Scrolling (Awwwards-style weight) ── */
 const lenis = new Lenis({
-  lerp: 0.06,           // Ultra-smooth, buttery inertia
+  lerp: deviceTier === 'low-tier' ? 0.1 : 0.06, // Faster lerp on low-end devices to save CPU
   smoothWheel: true,
-  wheelMultiplier: 0.9, // Slightly heavier scroll feel
+  wheelMultiplier: 0.9,
   smoothTouch: false,
   touchMultiplier: 2,
   infinite: false,
@@ -18,7 +36,8 @@ gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
 });
 gsap.ticker.lagSmoothing(0);
-gsap.ticker.fps(60); // Standardize at 60fps across all devices
+// Cap at 30fps for low-tier devices, 60fps for high-tier
+gsap.ticker.fps(deviceTier === 'low-tier' ? 30 : 60);
 
 // Keep __lenisScroll in sync for Three.js background
 lenis.on('scroll', (e) => {
@@ -29,8 +48,8 @@ lenis.on('scroll', (e) => {
    THREE.JS BACKGROUND SCENE
 ═══════════════════════════════ */
 function initThree(){
-  // Skip on mobile or if WebGL isn't available
-  if(isMobile) return;
+  // Completely skip heavy 3D WebGL rendering on low-tier hardware or mobile
+  if(deviceTier === 'low-tier') return;
   try {
     const test = document.createElement('canvas').getContext('webgl');
     if(!test) return;
