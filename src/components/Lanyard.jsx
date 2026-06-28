@@ -48,10 +48,10 @@ function Band() {
   }, [])
 
   // Spherical joints connecting the string parts
-  useSphericalJoint(fixed, j1, [[0, 0, 0], [0, 1, 0]])
-  useSphericalJoint(j1, j2, [[0, -1, 0], [0, 1, 0]])
-  useSphericalJoint(j2, j3, [[0, -1, 0], [0, 1, 0]])
-  useSphericalJoint(j3, card, [[0, -1, 0], [0, 2, 0]])
+  useSphericalJoint(fixed, j1, [[0, 0, 0], [0, 0.8, 0]])
+  useSphericalJoint(j1, j2, [[0, -0.8, 0], [0, 0.8, 0]])
+  useSphericalJoint(j2, j3, [[0, -0.8, 0], [0, 0.8, 0]])
+  useSphericalJoint(j3, card, [[0, -0.8, 0], [0, 1.5, 0]])
 
   useFrame(() => {
     if (!band.current) return
@@ -82,21 +82,21 @@ function Band() {
         />
       </mesh>
 
-      <RigidBody ref={fixed} type="fixed" position={[0, 4, 0]} />
+      <RigidBody ref={fixed} type="fixed" position={[0, 6, 0]} />
       
-      <RigidBody position={[0.5, 3, 0]} ref={j1} colliders="ball" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[0.2, 5, 0]} ref={j1} colliders="ball" linearDamping={1} angularDamping={1}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[1, 2, 0]} ref={j2} colliders="ball" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[0.4, 4, 0]} ref={j2} colliders="ball" linearDamping={1} angularDamping={1}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[1.5, 1, 0]} ref={j3} colliders="ball" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[0.6, 3, 0]} ref={j3} colliders="ball" linearDamping={1} angularDamping={1}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[2, 0, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={2} angularDamping={2}>
+      <RigidBody position={[1, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={2} angularDamping={2}>
          <CuboidCollider args={[1, 1.5, 0.1]} />
          <mesh>
             <boxGeometry args={[2, 3, 0.2]} />
@@ -135,9 +135,33 @@ function ResponsiveCamera() {
 }
 
 export default function Lanyard() {
+  const [opacity, setOpacity] = useState(1)
+  const [mounted, setMounted] = useState(true)
+
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => {
+      setOpacity(0)
+    }, 4500) // start fading out after 4.5 seconds
+
+    const removeTimer = setTimeout(() => {
+      setMounted(false)
+    }, 6500) // fully remove after transition
+
+    return () => {
+      clearTimeout(fadeTimer)
+      clearTimeout(removeTimer)
+    }
+  }, [])
+
+  if (!mounted) return null
+
   return (
-    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', pointerEvents: 'none', zIndex: 0 }}>
-      <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: 'auto' }}>
+    <div style={{ 
+      position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', 
+      pointerEvents: 'none', zIndex: 0,
+      opacity: opacity, transition: 'opacity 2s ease-in-out'
+    }}>
+      <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: opacity > 0.5 ? 'auto' : 'none' }}>
         <ResponsiveCamera />
         <ambientLight intensity={1} />
         <Physics interpolate gravity={[0, -4, 0]} timeStep={1 / 60}>
