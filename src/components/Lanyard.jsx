@@ -78,25 +78,25 @@ function Band() {
           color="white" 
           depthTest={true} 
           resolution={resolution} 
-          lineWidth={0.2} 
+          lineWidth={0.8} 
         />
       </mesh>
 
-      <RigidBody ref={fixed} type="fixed" position={[0, 6, 0]} />
+      <RigidBody ref={fixed} type="fixed" position={[-3.5, 6, 0]} />
       
-      <RigidBody position={[0.2, 5, 0]} ref={j1} colliders="ball" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[-3.3, 5, 0]} ref={j1} colliders="ball" linearDamping={4} angularDamping={4}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[0.4, 4, 0]} ref={j2} colliders="ball" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[-3.1, 4, 0]} ref={j2} colliders="ball" linearDamping={4} angularDamping={4}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[0.6, 3, 0]} ref={j3} colliders="ball" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[-2.9, 3, 0]} ref={j3} colliders="ball" linearDamping={4} angularDamping={4}>
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[1, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={2} angularDamping={2}>
+      <RigidBody position={[-2.5, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={4} angularDamping={4}>
          <CuboidCollider args={[1, 1.5, 0.1]} />
          <mesh>
             <boxGeometry args={[2, 3, 0.2]} />
@@ -164,7 +164,7 @@ export default function Lanyard() {
       <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: opacity > 0.5 ? 'auto' : 'none' }}>
         <ResponsiveCamera />
         <ambientLight intensity={1} />
-        <Physics interpolate gravity={[0, -4, 0]} timeStep={1 / 60}>
+        <Physics interpolate gravity={[0, -10, 0]} timeStep={1 / 60}>
           <Band />
         </Physics>
         <Environment blur={0.75}>
