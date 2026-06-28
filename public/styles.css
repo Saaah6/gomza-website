@@ -1656,4 +1656,34 @@ footer{
   /* Footer padding tweaks */
   .site-footer { padding: 4rem 2rem 0; }
   .footer-col-right { gap: 3rem; }
+}
+
+/* ═══════════════════════════════
+   ULTRA-SMALL MOBILE (JioPhone / <360px)
+═══════════════════════════════ */
+@media (max-width: 360px) {
+  /* Squeeze horizontal padding */
+  .section, #hero, .site-footer, nav { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+  
+  /* Stack buttons completely */
+  .hero-btns { flex-direction: column; width: 100%; }
+  .hero-btns .btn-primary, .hero-btns .btn-ghost { width: 100%; text-align: center; justify-content: center; }
+  
+  /* Stack UI tabs */
+  .tabs { flex-direction: column; width: 100%; }
+  .tab { width: 100%; }
+  
+  /* Shrink text */
+  h1 { font-size: clamp(2rem, 12vw, 2.2rem) !important; }
+  .hero-sub, .stitle, .ssub { font-size: 0.85rem !important; }
+  
+  /* Stack footer links to prevent squashing */
+  .footer-col-right { flex-direction: column; gap: 2rem; }
+  
+  /* Shrink niche cards padding */
+  .niche-card { padding: 1.2rem; }
+  
+  /* Force action buttons to wrap/stack */
+  .img-preview-actions { flex-direction: column; width: 100%; }
+  .img-action-btn { width: 100%; justify-content: center; }
 }
