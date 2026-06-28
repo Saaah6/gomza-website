@@ -142,10 +142,32 @@ function ResponsiveCamera() {
 }
 
 export default function Lanyard() {
+  const [opacity, setOpacity] = useState(1)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const footer = document.querySelector('.site-footer')
+      if (footer) {
+        const rect = footer.getBoundingClientRect()
+        // Fade out when footer enters the viewport
+        if (rect.top < window.innerHeight + 100) {
+          setOpacity(0)
+        } else {
+          setOpacity(1)
+        }
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    // Initial check
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div style={{ 
       position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', 
-      pointerEvents: 'none', zIndex: 9999
+      pointerEvents: 'none', zIndex: 9999,
+      opacity: opacity, transition: 'opacity 0.5s ease-out'
     }}>
       <Canvas 
         camera={{ position: [0, 0, 13], fov: 35 }} 
