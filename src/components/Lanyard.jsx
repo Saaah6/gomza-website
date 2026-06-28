@@ -1,11 +1,33 @@
 import * as THREE from 'three'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import { Canvas, useFrame, extend } from '@react-three/fiber'
-import { Environment, Lightformer } from '@react-three/drei'
+import { Environment, Lightformer, Text } from '@react-three/drei'
 import { Physics, RigidBody, BallCollider, CuboidCollider, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 
 extend({ MeshLineGeometry, MeshLineMaterial })
+
+function useLanyardTexture() {
+  const texture = useMemo(() => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 512
+    canvas.height = 128
+    const context = canvas.getContext('2d')
+    context.fillStyle = 'black'
+    context.fillRect(0, 0, 512, 128)
+    context.fillStyle = 'white'
+    context.font = 'bold 80px monospace'
+    context.textAlign = 'center'
+    context.textBaseline = 'middle'
+    context.fillText('GOMZA', 256, 64)
+    const tex = new THREE.CanvasTexture(canvas)
+    tex.wrapS = THREE.RepeatWrapping
+    tex.wrapT = THREE.RepeatWrapping
+    tex.repeat.set(4, 1)
+    return tex
+  }, [])
+  return texture
+}
 
 function Band() {
   const band = useRef(null)
@@ -15,6 +37,8 @@ function Band() {
   const j3 = useRef(null)
   const card = useRef(null)
   
+  const texture = useLanyardTexture()
+
   const [resolution, setResolution] = useState([window.innerWidth, window.innerHeight])
   
   useEffect(() => {
@@ -49,10 +73,12 @@ function Band() {
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial 
+          map={texture}
+          useMap={true}
           color="white" 
           depthTest={true} 
           resolution={resolution} 
-          lineWidth={0.1} 
+          lineWidth={0.2} 
         />
       </mesh>
 
@@ -70,14 +96,20 @@ function Band() {
         <BallCollider args={[0.1]} />
       </RigidBody>
       
-      <RigidBody position={[2, 0, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={1} angularDamping={1}>
+      <RigidBody position={[2, 0, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={2} angularDamping={2}>
          <CuboidCollider args={[1, 1.5, 0.1]} />
          <mesh>
             <boxGeometry args={[2, 3, 0.2]} />
-            <meshStandardMaterial color="#6366f1" />
+            <meshStandardMaterial color="#111111" />
             <mesh position={[0, 0, 0.11]}>
               <planeGeometry args={[1.8, 2.8]} />
               <meshBasicMaterial color="#ffffff" />
+              <Text position={[0, 0.5, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
+                GOMZA
+              </Text>
+              <Text position={[0, 0, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
+                Marketing for Real Estate & SaaS
+              </Text>
             </mesh>
          </mesh>
       </RigidBody>
@@ -90,7 +122,7 @@ export default function Lanyard() {
     <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', pointerEvents: 'none', zIndex: 0 }}>
       <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: 'auto' }}>
         <ambientLight intensity={1} />
-        <Physics interpolate gravity={[0, -20, 0]} timeStep={1 / 60}>
+        <Physics interpolate gravity={[0, -4, 0]} timeStep={1 / 60}>
           <Band />
         </Physics>
         <Environment blur={0.75}>
