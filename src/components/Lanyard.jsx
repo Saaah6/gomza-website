@@ -45,9 +45,20 @@ function SwingingCard() {
   useSphericalJoint(j2, j3, [[0, -0.8, 0], [0, 0.8, 0]])
   useSphericalJoint(j3, card, [[0, -0.8, 0], [0, 1.5, 0]])
 
+  useEffect(() => {
+    if (!isDragging) return
+    const handleGlobalUp = () => setIsDragging(false)
+    window.addEventListener('pointerup', handleGlobalUp)
+    window.addEventListener('pointercancel', handleGlobalUp)
+    return () => {
+      window.removeEventListener('pointerup', handleGlobalUp)
+      window.removeEventListener('pointercancel', handleGlobalUp)
+    }
+  }, [isDragging])
+
   const handlePointerDown = (e) => {
     e.stopPropagation()
-    e.target.setPointerCapture(e.pointerId)
+    try { e.target.setPointerCapture(e.pointerId) } catch (err) {}
     setIsDragging(true)
     if (card.current) {
       card.current.wakeUp()
@@ -56,7 +67,7 @@ function SwingingCard() {
 
   const handlePointerUp = (e) => {
     e.stopPropagation()
-    e.target.releasePointerCapture(e.pointerId)
+    try { e.target.releasePointerCapture(e.pointerId) } catch (err) {}
     setIsDragging(false)
   }
 
@@ -102,9 +113,14 @@ function SwingingCard() {
          <mesh 
             onPointerDown={handlePointerDown} 
             onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onPointerOut={handlePointerUp}
             onPointerMove={(e) => { if (isDragging) e.stopPropagation() }}
             onPointerEnter={() => document.body.style.cursor = 'grab'} 
-            onPointerLeave={() => document.body.style.cursor = 'auto'}
+            onPointerLeave={(e) => {
+              document.body.style.cursor = 'auto'
+              handlePointerUp(e)
+            }}
          >
             <boxGeometry args={[2, 3, 0.2]} />
             <meshStandardMaterial color="#111111" />
@@ -177,7 +193,7 @@ export default function Lanyard() {
       >
         <ResponsiveCamera />
         <ambientLight intensity={1} />
-        <Physics interpolate gravity={[0, -10, 0]} timeStep={1 / 60}>
+        <Physics interpolate gravity={[0, -10, 0]} timeStep="vary">
           <SwingingCard />
         </Physics>
         <Environment blur={0.75}>
