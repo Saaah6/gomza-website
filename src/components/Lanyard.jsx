@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState, useMemo } from 'react'
-import { Canvas, useFrame, extend } from '@react-three/fiber'
+import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
 import { Environment, Lightformer, Text } from '@react-three/drei'
 import { Physics, RigidBody, BallCollider, CuboidCollider, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
@@ -117,10 +117,28 @@ function Band() {
   )
 }
 
+function ResponsiveCamera() {
+  const { camera, size } = useThree()
+  
+  useEffect(() => {
+    if (size.width < 768) {
+      camera.fov = 55
+      camera.position.z = 18
+    } else {
+      camera.fov = 35
+      camera.position.z = 13
+    }
+    camera.updateProjectionMatrix()
+  }, [size, camera])
+  
+  return null
+}
+
 export default function Lanyard() {
   return (
     <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', pointerEvents: 'none', zIndex: 0 }}>
       <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: 'auto' }}>
+        <ResponsiveCamera />
         <ambientLight intensity={1} />
         <Physics interpolate gravity={[0, -4, 0]} timeStep={1 / 60}>
           <Band />
