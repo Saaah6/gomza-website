@@ -379,9 +379,8 @@ gsap.to('#metrics-strip',{ opacity:1,     duration:1,  ease:'power2.out', delay:
 gsap.utils.toArray('.reveal').forEach(el => {
   gsap.to(el, {
     opacity:1, y:0,
-    // ...(isMobile ? {} : { filter:'blur(0px)' }), // REMOVED: Caused massive GPU lag on scroll
-    duration:.85, ease:'power3.out',
-    scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }
+    duration:0.65, ease:'power2.out',
+    scrollTrigger:{ trigger:el, start:'top 90%', toggleActions:'play none none none' }
   });
 });
 
