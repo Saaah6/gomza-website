@@ -123,7 +123,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="fld"><label>Target audience</label><select id="re-audience"><option>First-time home buyers</option><option>Property investors</option><option>NRIs / overseas buyers</option><option>Commercial tenants</option></select></div>
       </div>
       <div class="fields">
-        <div class="fld"><label>Your main offer</label><input id="re-offer" type="text" placeholder="e.g. 2BHK flats in Gurugram from â‚¹80L"/></div>
+        <div class="fld"><label>Your main offer</label><input id="re-offer" type="text" placeholder="e.g. 2BHK flats in Gurugram from ₹80L"/></div>
         <div class="fld"><label>Content type</label><select id="re-content"><option>Meta ad copy</option><option>Cold outreach email</option><option>LinkedIn post</option><option>Google ad headline</option></select></div>
       </div>
     </div>
@@ -144,7 +144,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="img-studio-header">
         <div class="img-studio-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          AI-Powered Â· Pollinations Engine
+          AI-Powered · Pollinations Engine
         </div>
         <p class="img-studio-desc">Generate stunning, industry-specific ad creatives using AI. Pick your niche, describe your product, choose a style — and get a custom image in seconds.</p>
       </div>
@@ -197,30 +197,30 @@ import Layout from '../layouts/Layout.astro';
         <div class="img-ctrl">
           <div class="img-field-label">Visual Style</div>
           <div class="img-chip-group" id="img-style-group">
-            <button class="img-ctrl-chip active" data-val="photorealistic" onclick="selectCtrl(this,'style')">ðŸ“¸ Photo</button>
-            <button class="img-ctrl-chip" data-val="cinematic" onclick="selectCtrl(this,'style')">ðŸŽ¬ Cinematic</button>
-            <button class="img-ctrl-chip" data-val="3D render" onclick="selectCtrl(this,'style')">ðŸ’Ž 3D Render</button>
-            <button class="img-ctrl-chip" data-val="flat illustration" onclick="selectCtrl(this,'style')">ðŸŽ¨ Illustration</button>
-            <button class="img-ctrl-chip" data-val="abstract futuristic" onclick="selectCtrl(this,'style')">ðŸŒ Abstract</button>
+            <button class="img-ctrl-chip active" data-val="photorealistic" onclick="selectCtrl(this,'style')">📸 Photo</button>
+            <button class="img-ctrl-chip" data-val="cinematic" onclick="selectCtrl(this,'style')">🎬 Cinematic</button>
+            <button class="img-ctrl-chip" data-val="3D render" onclick="selectCtrl(this,'style')">🎨 3D Render</button>
+            <button class="img-ctrl-chip" data-val="flat illustration" onclick="selectCtrl(this,'style')">🎨 Illustration</button>
+            <button class="img-ctrl-chip" data-val="abstract futuristic" onclick="selectCtrl(this,'style')">🌀 Abstract</button>
           </div>
         </div>
         <div class="img-ctrl">
           <div class="img-field-label">Mood / Tone</div>
           <div class="img-chip-group" id="img-mood-group">
-            <button class="img-ctrl-chip active" data-val="premium luxury" onclick="selectCtrl(this,'mood')">âœ¨ Luxury</button>
-            <button class="img-ctrl-chip" data-val="minimal clean" onclick="selectCtrl(this,'mood')">â¬œ Minimal</button>
-            <button class="img-ctrl-chip" data-val="bold energetic" onclick="selectCtrl(this,'mood')">âš¡ Bold</button>
-            <button class="img-ctrl-chip" data-val="warm trustworthy" onclick="selectCtrl(this,'mood')">ðŸŒ… Warm</button>
-            <button class="img-ctrl-chip" data-val="dark dramatic" onclick="selectCtrl(this,'mood')">ðŸŒ‘ Dark</button>
+            <button class="img-ctrl-chip active" data-val="premium luxury" onclick="selectCtrl(this,'mood')">✨ Luxury</button>
+            <button class="img-ctrl-chip" data-val="minimal clean" onclick="selectCtrl(this,'mood')">⬜ Minimal</button>
+            <button class="img-ctrl-chip" data-val="bold energetic" onclick="selectCtrl(this,'mood')">⚡ Bold</button>
+            <button class="img-ctrl-chip" data-val="warm trustworthy" onclick="selectCtrl(this,'mood')">🌅 Warm</button>
+            <button class="img-ctrl-chip" data-val="dark dramatic" onclick="selectCtrl(this,'mood')">🌑 Dark</button>
           </div>
         </div>
         <div class="img-ctrl">
           <div class="img-field-label">Aspect Ratio</div>
           <div class="img-chip-group" id="img-ratio-group">
-            <button class="img-ctrl-chip active" data-val="landscape" onclick="selectCtrl(this,'ratio')">â–¬ 16:9</button>
-            <button class="img-ctrl-chip" data-val="square" onclick="selectCtrl(this,'ratio')">â–  1:1</button>
-            <button class="img-ctrl-chip" data-val="portrait" onclick="selectCtrl(this,'ratio')">â–¯ 4:5</button>
-            <button class="img-ctrl-chip" data-val="banner" onclick="selectCtrl(this,'ratio')">â–¬ Banner</button>
+            <button class="img-ctrl-chip active" data-val="landscape" onclick="selectCtrl(this,'ratio')">▬ 16:9</button>
+            <button class="img-ctrl-chip" data-val="square" onclick="selectCtrl(this,'ratio')">■ 1:1</button>
+            <button class="img-ctrl-chip" data-val="portrait" onclick="selectCtrl(this,'ratio')">▯ 4:5</button>
+            <button class="img-ctrl-chip" data-val="banner" onclick="selectCtrl(this,'ratio')">▬ Banner</button>
           </div>
         </div>
       </div>
@@ -234,7 +234,7 @@ import Layout from '../layouts/Layout.astro';
             Rebuild
           </button>
         </div>
-        <textarea id="img-prompt-textarea" rows="3" class="img-prompt-textarea" placeholder="Your AI prompt will appear here"¦"></textarea>
+        <textarea id="img-prompt-textarea" rows="3" class="img-prompt-textarea" placeholder="Your AI prompt will appear here…"></textarea>
       </div>
 
       <!-- Generate Image Button -->
@@ -268,7 +268,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="img-preview-img-wrap" id="img-preview-img-wrap">
             <div class="img-gen-skeleton" id="img-gen-skeleton">
               <div class="skeleton-shimmer"></div>
-              <div class="skeleton-text">Generating your image"¦</div>
+              <div class="skeleton-text">Generating your image…</div>
             </div>
             <img id="ai-generated-img" src="" alt="AI Generated Image" style="display:none" />
           </div>
