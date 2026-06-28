@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { useEffect, useRef, useState, useMemo } from 'react'
+import { useEffect, useRef, useState, useMemo, Suspense } from 'react'
 import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
-import { Environment, Lightformer, Text } from '@react-three/drei'
+import { Environment, Lightformer, Text, useTexture } from '@react-three/drei'
 import { Physics, RigidBody, BallCollider, CuboidCollider, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 
@@ -33,6 +33,8 @@ function SwingingCard() {
   const { camera, pointer, size } = useThree()
   const [isDragging, setIsDragging] = useState(false)
   const anchorX = size.width < 768 ? -3.5 : -6.5
+  
+  const dobermanTex = useTexture('/assets/doberman.png')
   
   const fixed = useRef(null)
   const j1 = useRef(null)
@@ -128,10 +130,14 @@ function SwingingCard() {
             <mesh position={[0, 0, 0.11]}>
               <planeGeometry args={[1.8, 2.8]} />
               <meshBasicMaterial color="#ffffff" />
-              <Text position={[0, 0.5, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
+              <mesh position={[0, 0.25, 0.01]}>
+                <planeGeometry args={[1.5, 1.5]} />
+                <meshBasicMaterial map={dobermanTex} transparent={true} />
+              </mesh>
+              <Text position={[0, -0.65, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
                 GOMZA
               </Text>
-              <Text position={[0, 0, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
+              <Text position={[0, -1.05, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
                 Marketing for Real Estate & SaaS
               </Text>
             </mesh>
@@ -195,7 +201,9 @@ export default function Lanyard() {
         <ResponsiveCamera />
         <ambientLight intensity={1} />
         <Physics interpolate gravity={[0, -10, 0]} timeStep="vary">
-          <SwingingCard />
+          <Suspense fallback={null}>
+            <SwingingCard />
+          </Suspense>
         </Physics>
         <Environment blur={0.75}>
           <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
