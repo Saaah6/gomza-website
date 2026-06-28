@@ -1000,10 +1000,9 @@ footer{
   .hamburger{display:flex}
   .mob-overlay{display:block}
   .section{padding:3.5rem 1.5rem}
-  .niche-grid,.fields{grid-template-columns:1fr}
-  .srv-grid{grid-template-columns:1fr 1fr}
-  .srv{grid-column:span 1}
-  .srv-gtm{grid-column:span 2}
+  .niche-grid, .fields, .srv-grid {grid-template-columns:1fr}
+  .srv {grid-column:span 1}
+  .srv-gtm {grid-column:span 1}
   .proof-grid{grid-template-columns:1fr}
   .metrics-strip{flex-wrap:wrap}
   .met{min-width:50%;border-right:none;border-bottom:.5px solid rgba(248,250,252,0.07)}
@@ -1641,7 +1640,7 @@ footer{
 /* ═══════════════════════════════
    TABLET RESPONSIVE (1024px)
 ═══════════════════════════════ */
-@media (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
   /* Navigation */
   nav { padding: 1.5rem 2rem; }
   
