@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Lanyard from '../components/Lanyard.jsx';
 ---
 <Layout title="Gomza — Marketing for Real Estate & SaaS">
 <div id="scroll-progress"></div>
@@ -87,22 +88,23 @@ import Layout from '../layouts/Layout.astro';
 </div>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="eyebrow" id="eyebrow">
+<section id="hero" style="position: relative; overflow: hidden;">
+  <Lanyard client:only="react" />
+  <div class="hero-glow" style="pointer-events: none; z-index: 1;"></div>
+  <div class="hero-glow2" style="pointer-events: none; z-index: 1;"></div>
+  <div class="eyebrow" id="eyebrow" style="position: relative; z-index: 2;">
     <span class="eyebrow-dot"></span>
     Marketing for Real Estate &amp; SaaS
   </div>
-  <h1 id="h1">
+  <h1 id="h1" style="position: relative; z-index: 2;">
     Marketing that<br>
     <span class="blue">converts prospects</span><br>
     into <span class="gold">paying clients.</span>
   </h1>
-  <p class="hero-sub" id="hero-sub">
+  <p class="hero-sub" id="hero-sub" style="position: relative; z-index: 2;">
     Gomza is a full-service marketing agency built for real estate businesses and SaaS companies. Paid ads, SEO, social, email — we do it all, and we measure everything.
   </p>
-  <div class="hero-btns" id="hero-btns">
+  <div class="hero-btns" id="hero-btns" style="position: relative; z-index: 2;">
     <a href="tel:+919149958270" class="btn-primary btn-book hero-cta-link">Book a Free Strategy Call</a>
     <button class="btn-ghost" id="btn-see-work">See Our Work ↓</button>
   </div>
