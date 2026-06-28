@@ -1636,4 +1636,24 @@ footer{
     line-height: 0.85;
     letter-spacing: -0.05em; 
   }
+}
+
+/* ═══════════════════════════════
+   TABLET RESPONSIVE (1024px)
+═══════════════════════════════ */
+@media (max-width: 1024px) {
+  /* Navigation */
+  nav { padding: 1.5rem 2rem; }
+  
+  /* Services Grid - squashes if kept at 6 cols on iPad */
+  .srv-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .srv-gtm { grid-column: span 3; }
+  
+  /* AI Tools Panel - too narrow side-by-side on iPad */
+  .out-cols { flex-direction: column; gap: 2rem; }
+  .out-left-panel, .out-right-panel { width: 100%; flex: 1 1 auto; }
+  
+  /* Footer padding tweaks */
+  .site-footer { padding: 4rem 2rem 0; }
+  .footer-col-right { gap: 3rem; }
 }
