@@ -9,6 +9,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+a{text-decoration:none;color:inherit}
 :root{
   --navy:#030712;
   --navy2:#081122;
