@@ -29,36 +29,62 @@ function useLanyardTexture() {
   return texture
 }
 
-function FallingCard() {
+function SwingingCard() {
+  const fixed = useRef(null)
+  const j1 = useRef(null)
+  const j2 = useRef(null)
+  const j3 = useRef(null)
   const card = useRef(null)
+
+  // Spherical joints connecting the invisible string parts
+  useSphericalJoint(fixed, j1, [[0, 0, 0], [0, 0.8, 0]])
+  useSphericalJoint(j1, j2, [[0, -0.8, 0], [0, 0.8, 0]])
+  useSphericalJoint(j2, j3, [[0, -0.8, 0], [0, 0.8, 0]])
+  useSphericalJoint(j3, card, [[0, -0.8, 0], [0, 1.5, 0]])
 
   const handlePointerDown = (e) => {
     e.stopPropagation()
     if (card.current) {
       // Apply upward and random impulse to "juggle" the card
-      card.current.applyImpulse({ x: (Math.random() - 0.5) * 20, y: 30, z: (Math.random() - 0.5) * 10 }, true)
-      card.current.applyTorqueImpulse({ x: (Math.random() - 0.5) * 10, y: (Math.random() - 0.5) * 10, z: (Math.random() - 0.5) * 10 }, true)
+      card.current.applyImpulse({ x: (Math.random() - 0.5) * 10, y: 15, z: (Math.random() - 0.5) * 10 }, true)
+      card.current.applyTorqueImpulse({ x: (Math.random() - 0.5) * 5, y: (Math.random() - 0.5) * 5, z: (Math.random() - 0.5) * 5 }, true)
     }
   }
 
   return (
-    <RigidBody position={[-2, 6, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={1} angularDamping={1}>
-       <CuboidCollider args={[1, 1.5, 0.1]} />
-       <mesh onPointerDown={handlePointerDown} onPointerEnter={() => document.body.style.cursor = 'pointer'} onPointerLeave={() => document.body.style.cursor = 'auto'}>
-          <boxGeometry args={[2, 3, 0.2]} />
-          <meshStandardMaterial color="#111111" />
-          <mesh position={[0, 0, 0.11]}>
-            <planeGeometry args={[1.8, 2.8]} />
-            <meshBasicMaterial color="#ffffff" />
-            <Text position={[0, 0.5, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
-              GOMZA
-            </Text>
-            <Text position={[0, 0, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
-              Marketing for Real Estate & SaaS
-            </Text>
-          </mesh>
-       </mesh>
-    </RigidBody>
+    <>
+      <RigidBody ref={fixed} type="fixed" position={[-3.5, 6, 0]} />
+      
+      <RigidBody position={[-3.3, 5, 0]} ref={j1} colliders="ball" linearDamping={4} angularDamping={4}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      
+      <RigidBody position={[-3.1, 4, 0]} ref={j2} colliders="ball" linearDamping={4} angularDamping={4}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      
+      <RigidBody position={[-2.9, 3, 0]} ref={j3} colliders="ball" linearDamping={4} angularDamping={4}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      
+      <RigidBody position={[-2.5, 1, 0]} ref={card} type="dynamic" colliders="cuboid" linearDamping={4} angularDamping={4}>
+         <CuboidCollider args={[1, 1.5, 0.1]} />
+         <mesh onPointerDown={handlePointerDown}>
+            <boxGeometry args={[2, 3, 0.2]} />
+            <meshStandardMaterial color="#111111" />
+            <mesh position={[0, 0, 0.11]}>
+              <planeGeometry args={[1.8, 2.8]} />
+              <meshBasicMaterial color="#ffffff" />
+              <Text position={[0, 0.5, 0.01]} fontSize={0.35} color="black" fontWeight="bold" letterSpacing={0.1}>
+                GOMZA
+              </Text>
+              <Text position={[0, 0, 0.01]} fontSize={0.12} color="#666666" maxWidth={1.4} textAlign="center">
+                Marketing for Real Estate & SaaS
+              </Text>
+            </mesh>
+         </mesh>
+      </RigidBody>
+    </>
   )
 }
 
@@ -80,37 +106,20 @@ function ResponsiveCamera() {
 }
 
 export default function Lanyard() {
-  const [opacity, setOpacity] = useState(1)
-  const [mounted, setMounted] = useState(true)
-
-  useEffect(() => {
-    const fadeTimer = setTimeout(() => {
-      setOpacity(0)
-    }, 10000) // Give them 10 seconds to play with it before it fades out
-
-    const removeTimer = setTimeout(() => {
-      setMounted(false)
-    }, 12000) // fully remove after transition
-
-    return () => {
-      clearTimeout(fadeTimer)
-      clearTimeout(removeTimer)
-    }
-  }, [])
-
-  if (!mounted) return null
-
   return (
     <div style={{ 
-      position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh', 
-      pointerEvents: 'none', zIndex: 0,
-      opacity: opacity, transition: 'opacity 2s ease-in-out'
+      position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', 
+      pointerEvents: 'none', zIndex: 9999
     }}>
-      <Canvas camera={{ position: [0, 0, 13], fov: 35 }} style={{ pointerEvents: opacity > 0.5 ? 'auto' : 'none' }}>
+      <Canvas 
+        camera={{ position: [0, 0, 13], fov: 35 }} 
+        style={{ pointerEvents: 'none' }}
+        eventSource={typeof document !== 'undefined' ? document.body : undefined}
+      >
         <ResponsiveCamera />
         <ambientLight intensity={1} />
-        <Physics interpolate gravity={[0, -5, 0]} timeStep={1 / 60}>
-          <FallingCard />
+        <Physics interpolate gravity={[0, -10, 0]} timeStep={1 / 60}>
+          <SwingingCard />
         </Physics>
         <Environment blur={0.75}>
           <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
