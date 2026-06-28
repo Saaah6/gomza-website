@@ -39,6 +39,9 @@ gsap.ticker.lagSmoothing(0);
 // Cap at 30fps for low-tier devices, 60fps for high-tier
 gsap.ticker.fps(deviceTier === 'low-tier' ? 30 : 60);
 
+// Prevent mobile scroll glitches when address bar hides/shows
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 // Keep __lenisScroll in sync for Three.js background
 lenis.on('scroll', (e) => {
   window.__lenisScroll = e.animatedScroll || e.scroll || window.scrollY;

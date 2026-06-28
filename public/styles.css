@@ -33,6 +33,10 @@ a{text-decoration:none;color:inherit}
   box-shadow:0 0 10px var(--gold);
 }
 html{font-size:19px}
+html, body{
+  overflow-x:hidden;
+  width:100%;
+}
 body{
   background:
     radial-gradient(circle at top left, rgba(79,124,255,0.05), transparent 35%),
@@ -41,7 +45,6 @@ body{
     var(--navy);
   color:var(--white);
   font-family:'Manrope',sans-serif;
-  overflow-x:hidden;
   text-rendering:optimizeLegibility;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
