@@ -151,6 +151,7 @@ export default function Lanyard() {
         camera={{ position: [0, 0, 13], fov: 35 }} 
         style={{ pointerEvents: 'none' }}
         eventSource={typeof document !== 'undefined' ? document.body : undefined}
+        eventPrefix="client"
       >
         <ResponsiveCamera />
         <ambientLight intensity={1} />

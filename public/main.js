@@ -487,10 +487,13 @@ document.querySelectorAll('[data-target]').forEach(a => {
   a.style.cursor = 'pointer';
   a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.getElementById(a.dataset.target);
+    const targetId = a.dataset.target;
+    const target = document.getElementById(targetId);
     if(target){
       const top = target.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    } else {
+      window.location.href = '/#' + targetId;
     }
   });
 });
