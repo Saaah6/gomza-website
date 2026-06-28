@@ -1620,8 +1620,12 @@ footer{
 
 @media(max-width:768px){
   .site-footer { padding: 3rem 1.5rem 0; }
-  .footer-top { gap: 3rem; }
-  .footer-col-right { gap: 3rem; flex-wrap: wrap; }
+  .footer-top { gap: 3rem; flex-direction: column; } /* explicitly stack them */
+  .footer-col-right { 
+    width: 100%; 
+    justify-content: space-between; /* push columns apart */
+    padding-right: 2rem; /* add breathing room on the right edge */
+  }
   .footer-divider { margin-bottom: 2rem; }
 
   #giant-text {
