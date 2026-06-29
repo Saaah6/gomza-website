@@ -34,6 +34,37 @@ const {
       <p class="case-study-desc">{description}</p>
     )}
   </div>
+
+  <div class="case-study-image-wrapper case-study-trigger" style="cursor: pointer; margin: auto;">
+    <!-- Mock Browser Bar -->
+    <div class="mock-browser-bar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    <!-- Image or Premium Placeholder -->
+    <div class="image-placeholder">
+      {imageUrl !== "/assets/placeholder-dashboard.png" ? (
+        <img loading="lazy" decoding="async" src={imageUrl} alt={`${brand} Campaign Performance`} loading="lazy" />
+      ) : (
+        <div class="premium-dummy-image">
+          <div class="abstract-chart">
+            <div class="bar" style="height: 40%;"></div>
+            <div class="bar" style="height: 70%;"></div>
+            <div class="bar" style="height: 50%;"></div>
+            <div class="bar" style="height: 90%;"></div>
+            <div class="bar" style="height: 60%;"></div>
+            <div class="bar" style="height: 85%;"></div>
+            <div class="bar" style="height: 100%;"></div>
+          </div>
+          <div class="dummy-text-overlay">
+            <div class="dummy-metric">+340%</div>
+            <div class="dummy-label">ROAS</div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
   
   {objective && (
     <div class="cs-section">
@@ -86,36 +117,6 @@ const {
     </div>
   )}
   
-  <div class="case-study-image-wrapper case-study-trigger" style="cursor: pointer; margin: auto;">
-    <!-- Mock Browser Bar -->
-    <div class="mock-browser-bar">
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
-    </div>
-    <!-- Image or Premium Placeholder -->
-    <div class="image-placeholder">
-      {imageUrl !== "/assets/placeholder-dashboard.png" ? (
-        <img loading="lazy" decoding="async" src={imageUrl} alt={`${brand} Campaign Performance`} loading="lazy" />
-      ) : (
-        <div class="premium-dummy-image">
-          <div class="abstract-chart">
-            <div class="bar" style="height: 40%;"></div>
-            <div class="bar" style="height: 70%;"></div>
-            <div class="bar" style="height: 50%;"></div>
-            <div class="bar" style="height: 90%;"></div>
-            <div class="bar" style="height: 60%;"></div>
-            <div class="bar" style="height: 85%;"></div>
-            <div class="bar" style="height: 100%;"></div>
-          </div>
-          <div class="dummy-text-overlay">
-            <div class="dummy-metric">+340%</div>
-            <div class="dummy-label">ROAS</div>
-          </div>
-        </div>
-      )}
-    </div>
-  </div>
 </div>
 
 <style>
