@@ -32,7 +32,7 @@ a{text-decoration:none;color:inherit}
   z-index:10001;pointer-events:none;
   box-shadow:0 0 10px var(--gold);
 }
-html{font-size:clamp(12px, 1.2vw + 10px, 19px)}
+html{font-size:clamp(10px, 1.25vw + 4px, 19px)}
 html, body{
   overflow-x:hidden;
   width:100%;
@@ -103,7 +103,7 @@ body{
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;justify-content:space-between;align-items:center;
-  padding:1.2rem 3rem;
+  padding:1.2rem clamp(1rem, 3vw, 3rem);
   background:rgba(2,4,10,0.7);
   backdrop-filter:blur(24px);
   -webkit-backdrop-filter:blur(24px);
