@@ -149,9 +149,7 @@ nav{
 }
 .nav-links a:hover, .glass-link:hover {
   color:#fff;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.08);
   border-color:rgba(255,255,255,0.15);
   box-shadow: 
     0 4px 16px rgba(0,0,0,0.2), 

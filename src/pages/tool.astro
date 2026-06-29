@@ -81,7 +81,7 @@ import Layout from '../layouts/Layout.astro';
   <ul class="nav-links">
     <li><a data-target="services">Services</a></li>
     <li><a data-target="niches">Industries</a></li>
-    <li><a href="/tool">CRO Tool</a></li>
+    <li><a data-target="case-studies" style="cursor:pointer">Case Studies</a></li>
     <li><a data-target="proof">Work</a></li>
   </ul>
   <a href="https://form.typeform.com/to/S1It3Kbv" target="_blank" rel="noopener" class="nav-cta nav-cta-link">Book a Call</a>
@@ -92,13 +92,13 @@ import Layout from '../layouts/Layout.astro';
 
 <!-- MOBILE DRAWER -->
 <div class="mob-overlay" id="mob-overlay"></div>
-<div class="mob-drawer" id="mob-drawer" aria-hidden="true">
-  <ul class="mob-links">
-    <li><a class="mob-link" data-target="services">Services</a></li>
-    <li><a class="mob-link" data-target="niches">Industries</a></li>
-    <li><a class="mob-link" href="/tool">CRO Tool</a></li>
-    <li><a class="mob-link" data-target="proof">Work</a></li>
-  </ul>
+  <div class="mob-drawer" id="mob-drawer" aria-hidden="true">
+    <ul class="mob-links">
+      <li><a class="mob-link" data-target="services">Services</a></li>
+      <li><a class="mob-link" data-target="niches">Industries</a></li>
+      <li><a class="mob-link" data-target="case-studies" style="cursor:pointer">Case Studies</a></li>
+      <li><a class="mob-link" data-target="proof">Work</a></li>
+    </ul>
   <a href="https://form.typeform.com/to/S1It3Kbv" target="_blank" rel="noopener" class="btn-primary mob-cta">Book a Call</a>
 </div>
 
