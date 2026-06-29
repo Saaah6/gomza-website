@@ -1787,3 +1787,8 @@ footer{
   .btn-primary, .btn-ghost, .nav-cta, .gen-btn { white-space: normal; height: auto; padding: 1rem 1.5rem; }
   .mob-overlay { display: none; } /* Ensuring this is hidden unless active */
 }
+@media (max-width: 1100px) {
+  .nav-links { display: none !important; }
+  .nav-cta { display: none !important; }
+  .hamburger { display: flex !important; }
+}
