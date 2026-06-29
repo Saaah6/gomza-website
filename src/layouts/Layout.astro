@@ -33,7 +33,7 @@ const { title } = Astro.props;
     span.style.animationDelay = (i * 0.08) + 's';
   });
   window.addEventListener('load', function(){
-    setTimeout(function(){ loader.classList.add('loader-done'); }, 1400);
+    loader.classList.add('loader-done');
   });
   setTimeout(function(){ loader.classList.add('loader-done'); }, 3000);
 })();
