@@ -206,7 +206,7 @@ nav{
 .nav-links a:hover::before{opacity:1}
 .nav-cta{
   background:var(--blue);color:var(--white);border:1px solid rgba(255,255,255,0.15);
-  padding:.6rem 1.6rem;border-radius:9999px;
+  padding:.6rem 1.6rem;border-radius:8px;
   font-size:.85rem;font-weight:600;cursor:pointer;
   font-family:'Manrope',sans-serif;
   position:relative;z-index:3;
@@ -278,7 +278,7 @@ h1 .gold{
 .js-ready .hero-btns{opacity:0;transform:translateY(20px)}
 .btn-primary{
   background:var(--blue);color:var(--white);border:1px solid rgba(255,255,255,0.15);
-  padding:.8rem 2.2rem;border-radius:9999px;
+  padding:.8rem 2.2rem;border-radius:8px;
   font-size:.9rem;font-weight:600;cursor:pointer;
   font-family:'Manrope',sans-serif;
   position:relative;z-index:3;
