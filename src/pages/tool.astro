@@ -129,7 +129,10 @@ import Layout from '../layouts/Layout.astro';
       <button class="tab tab-img" onclick="switchTab('imgstudio',this)" id="tab-imgstudio">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         AI Image Studio
-        <span class="tab-badge">NEW</span>
+        <div style="display:inline-flex; flex-direction:column; align-items:center; line-height:1; vertical-align:middle; margin-left:8px;">
+          <span class="tab-badge" style="background:#ffbd2e; color:#000; margin-left:0;">BETA</span>
+          <span style="font-size:0.55rem; color:rgba(255,255,255,0.5); margin-top:3px; letter-spacing:0.5px;">IN TESTING</span>
+        </div>
       </button>
     </div>
 
