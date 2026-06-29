@@ -1,0 +1,192 @@
+---
+interface Props {
+  platform: string;
+  brand: string;
+  imageUrl?: string;
+}
+
+const { platform, brand, imageUrl = "/assets/placeholder-dashboard.png" } = Astro.props;
+---
+
+<div class="case-study-card">
+  <div class="case-study-header">
+    <h3 class="case-study-title">Campaign Performance</h3>
+    <p class="case-study-subtitle">
+      <span class="platform">{platform}</span> - <span class="brand">{brand}</span>
+    </p>
+  </div>
+  
+  <div class="case-study-image-wrapper">
+    <!-- Optional image placeholder -->
+    <div class="image-placeholder">
+      {imageUrl !== "/assets/placeholder-dashboard.png" ? (
+        <img src={imageUrl} alt={`${brand} Campaign Performance`} loading="lazy" />
+      ) : (
+        <div class="dummy-image">
+          <div class="dummy-ui">
+             <div class="dummy-nav"></div>
+             <div class="dummy-content">
+               <div class="dummy-sidebar"></div>
+               <div class="dummy-main">
+                  <div class="dummy-chart"></div>
+                  <div class="dummy-table">
+                     <div class="dummy-row"></div>
+                     <div class="dummy-row"></div>
+                     <div class="dummy-row"></div>
+                  </div>
+               </div>
+             </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div class="case-study-footer">
+    <p>We do it all, We measure everything.</p>
+  </div>
+</div>
+
+<style>
+  .case-study-card {
+    background: rgba(20, 25, 40, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .case-study-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(41, 211, 255, 0.4);
+  }
+
+  .case-study-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .case-study-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #29d3ff;
+    margin: 0;
+    letter-spacing: -0.5px;
+  }
+
+  .case-study-subtitle {
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0;
+    opacity: 0.9;
+  }
+  
+  .platform {
+    font-weight: 600;
+    color: #f4a62a;
+  }
+
+  .case-study-image-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0a0f1e;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .case-study-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Dummy UI for the dashboard */
+  .dummy-image {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #111827, #1f2937);
+  }
+
+  .dummy-ui {
+    width: 100%;
+    height: 100%;
+    background: #f3f4f6;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0.8;
+  }
+
+  .dummy-nav {
+    height: 15%;
+    background: #e5e7eb;
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  .dummy-content {
+    display: flex;
+    flex: 1;
+  }
+
+  .dummy-sidebar {
+    width: 20%;
+    background: #e5e7eb;
+    border-right: 1px solid #d1d5db;
+  }
+
+  .dummy-main {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dummy-chart {
+    height: 40%;
+    background: #d1d5db;
+    border-radius: 4px;
+  }
+
+  .dummy-table {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .dummy-row {
+    height: 25%;
+    background: #d1d5db;
+    border-radius: 2px;
+  }
+
+  .case-study-footer {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .case-study-footer p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+    font-style: italic;
+  }
+</style>

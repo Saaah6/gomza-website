@@ -185,7 +185,8 @@ nav{
   padding:.38rem 1.1rem;border-radius:20px;margin-bottom:1.75rem;
 }
 .js-ready .eyebrow{opacity:0;transform:translateY(20px)}
-.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:dot-blink 1.5s ease-in-out infinite;}
+@keyframes dot-blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
 h1{
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(2.8rem,6vw,5.2rem);

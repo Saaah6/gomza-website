@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Lanyard from '../components/Lanyard.jsx';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
 ---
 <Layout title="Gomza | Marketing for Real Estate & SaaS">
 <div id="scroll-progress"></div>
@@ -110,7 +111,7 @@ import Lanyard from '../components/Lanyard.jsx';
   <div class="hero-glow2" style="pointer-events: none; z-index: 1;"></div>
   <div class="eyebrow" id="eyebrow" style="position: relative; z-index: 2;">
     <span class="eyebrow-dot"></span>
-    Marketing for Real Estate &amp; SaaS
+    Now Accepting Select Clients
   </div>
   <h1 id="h1" style="position: relative; z-index: 2;">
     Marketing that<br>
@@ -261,6 +262,28 @@ import Lanyard from '../components/Lanyard.jsx';
         <span class="gtm-tool">Smartlead</span>
       </div>
     </div>
+  </div>
+</div>
+</div>
+
+<!-- CASE STUDIES -->
+<div id="case-studies" style="background:var(--bg); padding-top: 4rem;">
+<div class="section">
+  <div class="label reveal">Case Studies</div>
+  <div class="stitle reveal">Campaign Performance</div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem;" class="reveal">
+    <CaseStudyCard 
+      platform="Meta Ads" 
+      brand="OTT Streaming Platform"
+    />
+    <CaseStudyCard 
+      platform="Meta Ads" 
+      brand="Premium Jewellery Brand"
+    />
+    <CaseStudyCard 
+      platform="DV360" 
+      brand="Premium Motorcycle Brand"
+    />
   </div>
 </div>
 </div>
