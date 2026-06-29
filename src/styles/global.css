@@ -934,7 +934,7 @@ h1 .gold{
 .cta-section{position:relative;z-index:1;overflow:hidden;padding:6rem 3rem;text-align:center}
 .cta-inner{
   position:relative;
-  background:linear-gradient(135deg, rgba(12,20,41,0.92), rgba(16,26,51,0.9));
+  background:linear-gradient(135deg, rgba(6,10,22,0.95), rgba(8,14,28,0.95));
   border:.5px solid rgba(138,180,255,0.24);border-radius:24px;
   padding:4.5rem 3rem;max-width:800px;margin:0 auto;overflow:hidden;
 }
