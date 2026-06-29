@@ -19,22 +19,21 @@ const deviceTier = getDeviceTier();
 const isMobile = window.innerWidth < 768;
 
 /* ── Lenis Smooth Scrolling (Awwwards-style weight) ── */
-const lenis = new Lenis({
-  lerp: deviceTier === 'low-tier' ? 0.1 : 0.06, // Faster lerp on low-end devices to save CPU
-  smoothWheel: true,
-  wheelMultiplier: 0.9,
-  smoothTouch: false,
-  touchMultiplier: 2,
-  infinite: false,
-});
-window.lenis = lenis;
-
-// Synchronize Lenis with GSAP ScrollTrigger to prevent glitching/jitter
-lenis.on('scroll', ScrollTrigger.update);
-
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
+let lenis = null;
+if (!isMobile) {
+  lenis = new Lenis({
+    lerp: deviceTier === 'low-tier' ? 0.1 : 0.06,
+    smoothWheel: true,
+    wheelMultiplier: 0.9,
+    smoothTouch: false,
+    infinite: false,
+  });
+  window.lenis = lenis;
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+}
 gsap.ticker.lagSmoothing(0);
 // Cap at 60fps for all devices to ensure smooth animations
 gsap.ticker.fps(60);
@@ -43,7 +42,7 @@ gsap.ticker.fps(60);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 // Keep __lenisScroll in sync for Three.js background
-lenis.on('scroll', (e) => {
+if(lenis) lenis.on('scroll', (e) => {
   window.__lenisScroll = e.animatedScroll || e.scroll || window.scrollY;
 });
 
@@ -52,7 +51,7 @@ lenis.on('scroll', (e) => {
 ═══════════════════════════════ */
 function initThree(){
   // Completely skip heavy 3D WebGL rendering on low-tier hardware or mobile
-  if(deviceTier === 'low-tier') return;
+  if(isMobile || deviceTier === 'low-tier') return;
   try {
     const test = document.createElement('canvas').getContext('webgl');
     if(!test) return;
