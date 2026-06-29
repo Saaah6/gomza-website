@@ -189,14 +189,11 @@ export default function Lanyard() {
   return (
     <div style={{ 
       position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', 
-      pointerEvents: 'none', zIndex: 9999,
+      pointerEvents: 'auto', zIndex: 0,
       opacity: opacity, transition: 'opacity 0.5s ease-out'
     }}>
       <Canvas 
         camera={{ position: [0, 0, 13], fov: 35 }} 
-        style={{ pointerEvents: 'none' }}
-        eventSource={typeof document !== 'undefined' ? document.body : undefined}
-        eventPrefix="client"
       >
         <ResponsiveCamera />
         <ambientLight intensity={1} />
