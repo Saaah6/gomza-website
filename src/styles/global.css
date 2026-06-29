@@ -1076,12 +1076,15 @@ footer{
 .mob-cta{width:100%;margin-top:auto;justify-content:center}
 
 /* ── RESPONSIVE ── */
-@media(max-width:768px){
+@media(max-width:1024px){
   nav{padding:1rem 1.5rem}
   .nav-links{display:none}
   .nav-cta{display:none}
   .hamburger{display:flex}
   .mob-overlay{display:block}
+}
+
+@media(max-width:768px){
   .section{padding:3.5rem 1.5rem}
   .niche-grid, .fields, .srv-grid {grid-template-columns:1fr}
   .srv {grid-column:span 1}
