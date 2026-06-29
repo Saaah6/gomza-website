@@ -33,4 +33,19 @@
   
   /* Fix nav overlap */
   nav { background: rgba(6, 10, 22, 0.95) !important; backdrop-filter: none !important; }
+
+  /* FORCE HERO VISIBILITY - Bulletproof fix against GSAP / JS-ready hidden states */
+  #hero .eyebrow, 
+  #hero h1, 
+  #hero .hero-sub, 
+  #hero .hero-btns, 
+  #hero #metrics-strip {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    animation: none !important;
+    display: flex !important; /* For flex containers like hero-btns */
+  }
+  #hero h1 { display: block !important; }
+  #hero .hero-sub { display: block !important; }
 }
