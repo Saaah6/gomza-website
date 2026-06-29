@@ -368,12 +368,7 @@ document.documentElement.classList.add('js-ready');
 
 // ScrollTrigger uses native scroll — no manual RAF needed
 
-// Hero entrance
-gsap.to('#eyebrow',     { opacity:1, y:0, duration:.9, ease:'power3.out', delay:.15 });
-gsap.to('#h1',          { opacity:1, y:0, duration:1,  ease:'power3.out', delay:.3  });
-gsap.to('#hero-sub',    { opacity:1, y:0, duration:.9, ease:'power3.out', delay:.5  });
-gsap.to('#hero-btns',   { opacity:1, y:0, duration:.9, ease:'power3.out', delay:.65 });
-gsap.to('#metrics-strip',{ opacity:1,     duration:1,  ease:'power2.out', delay:.85 });
+// Hero entrance animations moved to native CSS for faster LCP
 
 // Scroll reveals
 gsap.utils.toArray('.reveal').forEach(el => {
