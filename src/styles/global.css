@@ -1770,4 +1770,12 @@ footer{
   /* Force action buttons to wrap/stack */
   .img-preview-actions { flex-direction: column; width: 100%; }
   .img-action-btn { width: 100%; justify-content: center; }
-}
+}
+@media (min-width: 769px) and (max-width: 1150px) {
+  nav { padding: 1.2rem 2rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.75rem; padding: 0.3rem 0.5rem; }
+  .nav-cta { padding: 0.5rem 1rem; font-size: 0.8rem; }
+  .logo div { font-size: 2.2rem !important; }
+}
+.btn-primary, .btn-ghost, .nav-cta, .gen-btn { white-space: nowrap; }
