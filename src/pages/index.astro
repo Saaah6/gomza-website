@@ -107,7 +107,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 <!-- HERO -->
 <section id="hero" style="position: relative; overflow: hidden;">
   <Lanyard client:only="react" />
-  <audio id="dobermanBark" src="https://actions.google.com/sounds/v1/animals/dog_barking.ogg" autoplay></audio>
+  <audio id="dobermanBark" src="https://actions.google.com/sounds/v1/animals/dog_barking.ogg" autoplay style="display:none;"></audio>
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       const bark = document.getElementById('dobermanBark');
