@@ -1,9 +1,10 @@
 ---
 interface Props {
 	title: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = "Gomza - AI-powered Marketing for Real Estate & SaaS." } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@ const { title } = Astro.props;
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content={description}/>
 <title>{title}</title>
 <link rel="icon" type="image/png" href="/assets/doberman_face.png"/>
 <link rel="apple-touch-icon" href="/assets/doberman_face.png"/>
@@ -38,6 +40,6 @@ const { title } = Astro.props;
   setTimeout(function(){ loader.classList.add('loader-done'); }, 3000);
 })();
 </script>
-<script src="/main.js" is:inline></script>
+<script src="/main.min.js" is:inline></script>
 </body>
 </html>
