@@ -168,6 +168,31 @@ export default function Lanyard() {
   const [opacity, setOpacity] = useState(1)
 
   useEffect(() => {
+    // Play doberman barking sound when Lanyard appears
+    const barkSound = new Audio('https://actions.google.com/sounds/v1/animals/dog_barking.ogg');
+    barkSound.volume = 0.5;
+    
+    // Attempt to play (might be blocked by browser autoplay policy if no prior interaction)
+    const playPromise = barkSound.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log("Autoplay prevented for barking sound. User needs to interact first.", error);
+      });
+    }
+
+    // Stop after 3 seconds
+    const stopTimer = setTimeout(() => {
+      barkSound.pause();
+      barkSound.currentTime = 0;
+    }, 3000);
+
+    return () => {
+      clearTimeout(stopTimer);
+      barkSound.pause();
+    };
+  }, [])
+
+  useEffect(() => {
     const handleScroll = () => {
       const footer = document.querySelector('.site-footer')
       if (footer) {
