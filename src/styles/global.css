@@ -241,12 +241,21 @@ nav{
   will-change:transform,opacity;
 }
 .eyebrow{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:rgba(79,124,255,0.14);
-  border:0.5px solid rgba(138,180,255,0.36);
-  color:#D7E6FF;font-size:.72rem;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:.38rem 1.1rem;border-radius:20px;margin-bottom:1.75rem;
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:rgba(255, 255, 255, 0.03);
+  border:1px solid rgba(255, 255, 255, 0.12);
+  color:#FFFFFF;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:.45rem 1.4rem;
+  border-radius:50px;
+  margin-bottom:2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .js-ready .eyebrow{opacity:0;transform:translateY(20px)}
 .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:dot-blink 1.5s ease-in-out infinite;}
