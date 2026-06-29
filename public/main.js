@@ -490,8 +490,12 @@ document.querySelectorAll('[data-target]').forEach(a => {
     const targetId = a.dataset.target;
     const target = document.getElementById(targetId);
     if(target){
-      const top = target.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      if(typeof lenis !== 'undefined' && lenis) {
+        lenis.scrollTo(target, { offset: -80 });
+      } else {
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
     } else {
       window.location.href = '/#' + targetId;
     }
@@ -501,8 +505,12 @@ document.querySelectorAll('[data-target]').forEach(a => {
 function focusStrategyCall(){
   const target = document.getElementById('cta-inner');
   if(!target) return;
-  const top = target.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  if(typeof lenis !== 'undefined' && lenis) {
+    lenis.scrollTo(target, { offset: -80 });
+  } else {
+    const top = target.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
   target.classList.add('is-targeted');
   window.clearTimeout(window.__strategyCallFocusTimer);
   window.__strategyCallFocusTimer = window.setTimeout(() => {
