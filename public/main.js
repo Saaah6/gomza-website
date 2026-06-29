@@ -431,25 +431,7 @@ if (!isMobile) {
     scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub: 1.4 }
   });
 
-  gsap.to('.cta-bg-glow', {
-    scale: 1.08, opacity: 0.95, ease:'sine.inOut',
-    repeat: -1, yoyo: true, duration: 2.8
-  });
 
-  gsap.fromTo('#beam-group-1',
-    { x: -260, y: -30, rotate: -4 },
-    { x: 260, y: -30, rotate: 6, duration: 24, ease: 'none', repeat: -1 }
-  );
-
-  gsap.fromTo('#beam-group-2',
-    { x: -320, y: 20, rotate: 2 },
-    { x: 320, y: 20, rotate: -4, duration: 28, ease: 'none', repeat: -1, delay: -8 }
-  );
-
-  gsap.fromTo('#beam-group-3',
-    { x: -280, y: -10, rotate: -2 },
-    { x: 280, y: -10, rotate: 3, duration: 30, ease: 'none', repeat: -1, delay: -15 }
-  );
 }
 
 // ── Smooth nav background

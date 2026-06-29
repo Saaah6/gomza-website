@@ -4,9 +4,12 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   integrations: [react()],
+  build: {
+    inlineStylesheets: 'always'
+  },
   vite: {
     build: {
-      sourcemap: false
+      sourcemap: true
     }
   }
 });
