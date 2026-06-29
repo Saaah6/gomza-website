@@ -1783,3 +1783,7 @@ footer{
 .cta-inner h2 { transform: translateZ(40px); }
 .cta-inner p { transform: translateZ(30px); }
 .cta-inner .btn-primary { transform: translateZ(50px); }
+@media(max-width:768px) {
+  .btn-primary, .btn-ghost, .nav-cta, .gen-btn { white-space: normal; height: auto; padding: 1rem 1.5rem; }
+  .mob-overlay { display: none; } /* Ensuring this is hidden unless active */
+}
