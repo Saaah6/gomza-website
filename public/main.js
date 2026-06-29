@@ -36,8 +36,8 @@ gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
 });
 gsap.ticker.lagSmoothing(0);
-// Cap at 30fps for low-tier devices, 60fps for high-tier
-gsap.ticker.fps(deviceTier === 'low-tier' ? 30 : 60);
+// Cap at 60fps for all devices to ensure smooth animations
+gsap.ticker.fps(60);
 
 // Prevent mobile scroll glitches when address bar hides/shows
 ScrollTrigger.config({ ignoreMobileResize: true });
