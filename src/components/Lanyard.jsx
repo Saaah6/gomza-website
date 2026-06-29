@@ -168,51 +168,6 @@ export default function Lanyard() {
   const [opacity, setOpacity] = useState(1)
 
   useEffect(() => {
-    const barkSound = new Audio('https://actions.google.com/sounds/v1/animals/dog_barking.ogg');
-    barkSound.volume = 0.5;
-    let played = false;
-
-    const playSound = () => {
-      if (played) return;
-      const playPromise = barkSound.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          played = true;
-          setTimeout(() => {
-            barkSound.pause();
-            barkSound.currentTime = 0;
-          }, 3000);
-        }).catch(err => console.log(err));
-      }
-      window.removeEventListener('pointerdown', playSound);
-      window.removeEventListener('keydown', playSound);
-      window.removeEventListener('scroll', playSound);
-    };
-
-    const immediatePlay = barkSound.play();
-    if (immediatePlay !== undefined) {
-      immediatePlay.then(() => {
-        played = true;
-        setTimeout(() => {
-          barkSound.pause();
-          barkSound.currentTime = 0;
-        }, 3000);
-      }).catch(() => {
-        window.addEventListener('pointerdown', playSound);
-        window.addEventListener('keydown', playSound);
-        window.addEventListener('scroll', playSound, { once: true });
-      });
-    }
-
-    return () => {
-      barkSound.pause();
-      window.removeEventListener('pointerdown', playSound);
-      window.removeEventListener('keydown', playSound);
-      window.removeEventListener('scroll', playSound);
-    };
-  }, [])
-
-  useEffect(() => {
     const handleScroll = () => {
       const footer = document.querySelector('.site-footer')
       if (footer) {

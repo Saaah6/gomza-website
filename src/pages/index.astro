@@ -107,6 +107,16 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 <!-- HERO -->
 <section id="hero" style="position: relative; overflow: hidden;">
   <Lanyard client:only="react" />
+  <audio id="dobermanBark" src="https://actions.google.com/sounds/v1/animals/dog_barking.ogg" autoplay></audio>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bark = document.getElementById('dobermanBark');
+      if(bark) {
+        bark.volume = 0.5;
+        setTimeout(() => { bark.pause(); bark.currentTime = 0; }, 3000);
+      }
+    });
+  </script>
   <div class="hero-glow" style="pointer-events: none; z-index: 1;"></div>
   <div class="hero-glow2" style="pointer-events: none; z-index: 1;"></div>
   <div class="eyebrow" id="eyebrow" style="position: relative; z-index: 2;">
