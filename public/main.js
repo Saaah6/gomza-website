@@ -515,6 +515,23 @@ document.querySelectorAll('a[href*="#"]').forEach(a => {
   });
 });
 
+// Handle hash on page load for smooth scrolling libraries
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash) {
+    const target = document.getElementById(window.location.hash.substring(1));
+    if (target) {
+      setTimeout(() => {
+        if(typeof lenis !== 'undefined' && lenis) {
+          lenis.scrollTo(target, { offset: -80, immediate: true });
+        } else {
+          const top = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+        }
+      }, 300);
+    }
+  }
+});
+
 function focusStrategyCall(){
   const target = document.getElementById('cta-inner');
   if(!target) return;

@@ -6,7 +6,7 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     build: {
-      sourcemap: true
+      sourcemap: false
     }
   }
 });
