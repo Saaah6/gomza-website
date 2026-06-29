@@ -96,7 +96,7 @@ const {
     <!-- Image or Premium Placeholder -->
     <div class="image-placeholder">
       {imageUrl !== "/assets/placeholder-dashboard.png" ? (
-        <img src={imageUrl} alt={`${brand} Campaign Performance`} loading="lazy" />
+        <img loading="lazy" decoding="async" src={imageUrl} alt={`${brand} Campaign Performance`} loading="lazy" />
       ) : (
         <div class="premium-dummy-image">
           <div class="abstract-chart">

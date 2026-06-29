@@ -109,7 +109,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 <!-- HERO -->
 <section id="hero" style="position: relative; overflow: hidden;">
   <LanyardWrapper client:idle />
-  <audio id="dobermanBark" src="/assets/dog_barking.ogg" autoplay style="display:none;"></audio>
+  <audio id="dobermanBark" src="/assets/dog_barking.ogg" preload="none" style="display:none;"></audio>
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
       const bark = document.getElementById('dobermanBark');
@@ -188,7 +188,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
     <div class="label reveal">How We Work</div>
     <div class="stitle reveal" style="display: flex; align-items: center; gap: 1rem;">
       Client Onboarding
-      <img src="/assets/professional_human_icon.png" alt="Professional Expert" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(41,211,255,0.4); box-shadow: 0 0 20px rgba(41,211,255,0.2);" />
+      <img loading="lazy" decoding="async" src="/assets/professional_human_icon.png" alt="Professional Expert" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(41,211,255,0.4); box-shadow: 0 0 20px rgba(41,211,255,0.2);" />
     </div>
     
     <div class="process-timeline reveal" style="margin-top: 3rem; position: relative; padding-left: 2rem;">
