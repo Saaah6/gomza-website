@@ -1816,3 +1816,15 @@ footer{
   box-shadow: 0 2px 10px rgba(0,0,0,0.4), inset 0 2px 4px rgba(0,0,0,0.5) !important;
   transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
+
+/* Doberman Custom Cursor - Native OS level for perfect smoothness */
+body, html {
+  cursor: url('/assets/doberman_cursor.png') 16 16, auto !important;
+}
+
+a, button, input, select, textarea, 
+.btn-primary, .btn-ghost, .nav-cta, 
+.nav-links a, .case-study-trigger,
+.social-link, .modal-close {
+  cursor: url('/assets/doberman_cursor.png') 16 16, pointer !important;
+}
