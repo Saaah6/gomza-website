@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Lanyard from '../components/Lanyard.jsx';
+import LanyardWrapper from '../components/LanyardWrapper.jsx';
 import CaseStudyCard from '../components/CaseStudyCard.astro';
 ---
 <Layout title="Gomza | Marketing for Real Estate & SaaS">
@@ -108,7 +108,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 
 <!-- HERO -->
 <section id="hero" style="position: relative; overflow: hidden;">
-  <Lanyard client:only="react" />
+  <LanyardWrapper client:only="react" />
   <audio id="dobermanBark" src="/assets/dog_barking.ogg" autoplay style="display:none;"></audio>
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
@@ -195,7 +195,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
       <div class="niche-icon ni-re">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </div>
-      <h3>Real Estate</h3>
+      <h2>Real Estate</h2>
       <p>From independent brokers to large developers. We generate qualified leads, build brand authority, and fill pipelines. Whether you're selling homes or commercial properties.</p>
       <div class="tags">
         <span class="tag t-re">Lead Generation</span>
@@ -211,7 +211,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
       <div class="niche-icon ni-saas">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       </div>
-      <h3>SaaS</h3>
+      <h2>SaaS</h2>
       <p>Pre seed to Series B. We help software companies reduce CAC, increase trial to paid conversion, and build organic pipelines that compound over time.</p>
       <div class="tags">
         <span class="tag t-saas">Demo Bookings</span>
@@ -241,31 +241,31 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
     <div class="srv" id="s1">
       <div class="card-num">[01]</div>
       <div class="srv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-      <h4>Paid Ads</h4>
+      <h3>Paid Ads</h3>
       <p>Meta & Google campaigns built around your ICP. Every rupee tracked to pipeline and ROI.</p>
     </div>
     <div class="srv" id="s2">
       <div class="card-num">[02]</div>
       <div class="srv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-2.5 5-8 5-8 5-8 5"/><path d="M22 4l-7 7-4-4-7 7"/></svg></div>
-      <h4>Social Media</h4>
+      <h3>Social Media</h3>
       <p>Content that builds authority and generates inbound, not just vanity metrics.</p>
     </div>
     <div class="srv" id="s3">
       <div class="card-num">[03]</div>
       <div class="srv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
-      <h4>SEO & Content</h4>
+      <h3>SEO & Content</h3>
       <p>Rank for keywords your buyers use. Organic traffic that compounds month over month.</p>
     </div>
     <div class="srv" id="s4">
       <div class="card-num">[04]</div>
       <div class="srv-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-      <h4>Email Marketing</h4>
+      <h3>Email Marketing</h3>
       <p>Nurture sequences, onboarding flows, and re engagement campaigns that convert automatically.</p>
     </div>
     <div class="srv srv-gtm" id="s5">
       <div class="card-num">[05 / DEPLOY]</div>
       <div class="srv-icon srv-icon-gtm"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-      <h4>GTM Engineering</h4>
+      <h3>GTM Engineering</h3>
       <p>SaaS only. We find your true ICP, build targeted outbound funnels, and engineer pipeline from scratch using the best tools in the stack.</p>
       <div class="gtm-tools">
         <span class="gtm-tool">Clay</span>
