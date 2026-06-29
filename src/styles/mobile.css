@@ -1,0 +1,36 @@
+﻿/* mobile.css - High performance mobile overrides */
+@media (max-width: 768px) {
+  /* Fix hero content pushing up under the navbar due to flex-center on small heights */
+  #hero {
+    min-height: 100svh !important;
+    justify-content: flex-start !important;
+    padding-top: 120px !important; 
+    padding-bottom: 80px !important;
+  }
+
+  /* Disable expensive backdrop-filters (blur) on mobile to drastically increase scroll FPS */
+  .srv-card, .case-study-card, .process-card, .glass-panel, .niche-card, .hero-glow, .hero-glow2 {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* Increase opacity since blur is removed to maintain readability */
+    background: rgba(15, 20, 35, 0.98) !important; 
+  }
+
+  /* Hide decorative glows that cause repaints */
+  .hero-glow, .hero-glow2, .cta-bg-glow {
+    display: none !important;
+  }
+
+  /* Ensure text wraps safely */
+  h1 { font-size: clamp(2rem, 10vw, 2.8rem) !important; line-height: 1.2 !important; }
+  .stitle { font-size: 2rem !important; }
+
+  /* Mobile menu specific fixes */
+  .mob-overlay {
+    backdrop-filter: none !important;
+    background: rgba(6, 10, 22, 0.98) !important;
+  }
+  
+  /* Fix nav overlap */
+  nav { background: rgba(6, 10, 22, 0.95) !important; backdrop-filter: none !important; }
+}
