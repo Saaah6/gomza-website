@@ -483,9 +483,18 @@ if (!isMobile) {
 })();
 
 // ── Nav link smooth scroll
-document.querySelectorAll('a[href^="/#"]').forEach(a => {
+document.querySelectorAll('a[href*="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const url = new URL(a.href, window.location.origin);
+    if (!url.hash) return;
+    
+    // If not the same page, let browser navigate naturally
+    const currentPath = window.location.pathname;
+    const linkPath = url.pathname;
+    if (linkPath !== currentPath && linkPath !== currentPath.replace(/\/$/, '') && linkPath !== currentPath + '/') {
+      return; 
+    }
+
     const targetId = url.hash.substring(1);
     const target = document.getElementById(targetId);
     if(target){
@@ -497,7 +506,6 @@ document.querySelectorAll('a[href^="/#"]').forEach(a => {
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
       }
     }
-    // If target doesn't exist on this page, let normal browser navigation occur
   });
 });
 
@@ -815,13 +823,34 @@ async function generateCopy(){
 
   // Mobile drawer nav links
   document.querySelectorAll('.mob-link').forEach(a => {
-    a.addEventListener('click', () => {
-      const target = document.getElementById(a.dataset.target);
-      close();
+    a.addEventListener('click', (e) => {
+      const url = new URL(a.href, window.location.origin);
+      if (!url.hash) {
+        close();
+        return;
+      }
+      
+      const targetId = url.hash.substring(1);
+      const target = document.getElementById(targetId);
+      
+      const currentPath = window.location.pathname;
+      const linkPath = url.pathname;
+      if (linkPath !== currentPath && linkPath !== currentPath.replace(/\/$/, '') && linkPath !== currentPath + '/') {
+         // Different page. Close drawer and let browser navigate.
+         close();
+         return;
+      }
+      
       if(target){
+        e.preventDefault();
+        close();
         setTimeout(() => {
-          const top = target.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+          if(typeof lenis !== 'undefined' && lenis) {
+            lenis.scrollTo(target, { offset: -80 });
+          } else {
+            const top = target.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+          }
         }, 380); // wait for drawer close animation
       }
     });
