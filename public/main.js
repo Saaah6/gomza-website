@@ -483,22 +483,21 @@ if (!isMobile) {
 })();
 
 // ── Nav link smooth scroll
-document.querySelectorAll('[data-target]').forEach(a => {
-  a.style.cursor = 'pointer';
+document.querySelectorAll('a[href^="/#"]').forEach(a => {
   a.addEventListener('click', e => {
-    e.preventDefault();
-    const targetId = a.dataset.target;
+    const url = new URL(a.href, window.location.origin);
+    const targetId = url.hash.substring(1);
     const target = document.getElementById(targetId);
     if(target){
+      e.preventDefault();
       if(typeof lenis !== 'undefined' && lenis) {
         lenis.scrollTo(target, { offset: -80 });
       } else {
         const top = target.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
       }
-    } else {
-      window.location.href = '/#' + targetId;
     }
+    // If target doesn't exist on this page, let normal browser navigation occur
   });
 });
 
