@@ -14,7 +14,31 @@ import '../styles/global.css';
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content={description}/>
+<meta name="keywords" content="marketing agency, real estate marketing, SaaS marketing, performance marketing, SEO, digital growth, Gomza, lead generation, b2b saas" />
+<meta name="author" content="Gomza / DigitalEditz" />
 <title>{title}</title>
+
+<!-- Canonical URL -->
+<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gomza.vercel.app').href} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site || 'https://gomza.vercel.app').href} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL('/assets/doberman_face.png', Astro.site || 'https://gomza.vercel.app').href} />
+<meta property="og:site_name" content="Gomza" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={new URL(Astro.url.pathname, Astro.site || 'https://gomza.vercel.app').href} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL('/assets/doberman_face.png', Astro.site || 'https://gomza.vercel.app').href} />
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#0a1122" />
+
 <link rel="icon" type="image/png" href="/assets/doberman_face.png"/>
 <link rel="apple-touch-icon" href="/assets/doberman_face.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
