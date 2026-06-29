@@ -459,7 +459,14 @@ if (!isMobile) {
   const progress = document.getElementById('scroll-progress');
   let ticking = false;
   function updateNav(){
+    // READ phase
     const s = window.scrollY;
+    let maxScroll = 0;
+    if(progress){
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    }
+    
+    // WRITE phase
     if(s > 60){
       nav.style.background = 'rgba(0,0,0,0.95)';
       nav.style.boxShadow = '0 1px 0 rgba(255,255,255,0.05)';
@@ -468,7 +475,6 @@ if (!isMobile) {
       nav.style.boxShadow = 'none';
     }
     if(progress){
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const pct = maxScroll > 0 ? (s / maxScroll) * 100 : 0;
       progress.style.width = pct + '%';
     }
