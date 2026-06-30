@@ -2192,9 +2192,13 @@ body.light-mode .fl span { color: #F4A62A !important; }
 
 /* CTA SECTION - light mode redesign */
 body.light-mode .cta-inner {
-  background: #FFFFFF !important;
-  border: 1px solid rgba(59, 111, 240, 0.15) !important;
-  box-shadow: 0 4px 40px rgba(15,23,42,0.08), 0 0 0 1px rgba(59,111,240,0.08) !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4)) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1px solid rgba(138, 180, 255, 0.3) !important;
+  border-right: 1px solid rgba(138, 180, 255, 0.3) !important;
+  box-shadow: 0 30px 60px rgba(59,111,240,0.15), inset 0 2px 8px rgba(255,255,255,1) !important;
 }
 body.light-mode .cta-inner::before {
   background: linear-gradient(90deg, transparent, rgba(59,111,240,0.7), rgba(200,134,10,0.5), transparent) !important;
