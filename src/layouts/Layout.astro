@@ -71,27 +71,48 @@ import '../styles/mobile.css';
 </script>
 <script defer src="/main.min.js?v=4"></script>
 <script is:inline>
-  /* ── THEME TOGGLE (inline, runs immediately) ── */
+  /* -- THEME TOGGLE 3-WAY: dark > light > system -- */
   (function(){
+    var THEMES = ['dark', 'light', 'system'];
+    function getSystemPref() {
+      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    function applyTheme(theme) {
+      var effective = theme === 'system' ? getSystemPref() : theme;
+      document.body.classList.toggle('light-mode', effective === 'light');
+      document.documentElement.classList.toggle('light-mode', effective === 'light');
+    }
+    function updateIcon(btn, theme) {
+      if (!btn) return;
+      btn.querySelectorAll('.theme-icon').forEach(function(el){ el.style.display = 'none'; });
+      var map = { dark: 'icon-moon', light: 'icon-sun', system: 'icon-system' };
+      var iconEl = btn.querySelector('.' + (map[theme] || 'icon-moon'));
+      if (iconEl) iconEl.style.display = 'block';
+      var labels = { dark: 'Dark mode', light: 'Light mode', system: 'System default' };
+      btn.setAttribute('title', labels[theme] || '');
+    }
+    var saved;
+    try { saved = localStorage.getItem('theme') || 'dark'; } catch(e) { saved = 'dark'; }
+    if (THEMES.indexOf(saved) === -1) saved = 'dark';
+    applyTheme(saved);
     try {
-      if (localStorage.getItem('theme') === 'light') {
-        document.documentElement.classList.add('light-mode');
-        document.body && document.body.classList.add('light-mode');
-      }
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function() {
+        var cur; try { cur = localStorage.getItem('theme'); } catch(e) { cur = 'dark'; }
+        if (cur === 'system') applyTheme('system');
+      });
     } catch(e) {}
     document.addEventListener('DOMContentLoaded', function() {
       var themeBtn = document.getElementById('theme-toggle');
       if (!themeBtn) return;
-      // Set initial icon state
-      var isLight = document.body.classList.contains('light-mode');
-      themeBtn.querySelector('.sun-icon').style.display = isLight ? 'none' : 'block';
-      themeBtn.querySelector('.moon-icon').style.display = isLight ? 'block' : 'none';
+      var cur; try { cur = localStorage.getItem('theme') || 'dark'; } catch(e) { cur = 'dark'; }
+      if (THEMES.indexOf(cur) === -1) cur = 'dark';
+      updateIcon(themeBtn, cur);
       themeBtn.addEventListener('click', function() {
-        document.body.classList.toggle('light-mode');
-        var light = document.body.classList.contains('light-mode');
-        try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch(e) {}
-        themeBtn.querySelector('.sun-icon').style.display = light ? 'none' : 'block';
-        themeBtn.querySelector('.moon-icon').style.display = light ? 'block' : 'none';
+        var idx = THEMES.indexOf(cur);
+        cur = THEMES[(idx + 1) % THEMES.length];
+        try { localStorage.setItem('theme', cur); } catch(e) {}
+        applyTheme(cur);
+        updateIcon(themeBtn, cur);
       });
     });
   })();
