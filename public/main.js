@@ -493,6 +493,25 @@ document.querySelectorAll('a[href*="#"]').forEach(a => {
 
 // Handle hash on page load for smooth scrolling libraries
 document.addEventListener('DOMContentLoaded', () => {
+  // PWA Navbar Smart Scroll Logic
+  let lastScrollY = window.scrollY;
+  const navbar = document.getElementById('navbar');
+  
+  window.addEventListener('scroll', () => {
+    if (!navbar) return;
+    // Don't hide navbar at the very top
+    if (window.scrollY <= 50) {
+      navbar.classList.remove('nav-hidden');
+    } else if (window.scrollY > lastScrollY) {
+      // Scrolling down
+      navbar.classList.add('nav-hidden');
+    } else {
+      // Scrolling up
+      navbar.classList.remove('nav-hidden');
+    }
+    lastScrollY = window.scrollY;
+  }, { passive: true });
+
   if (window.location.hash) {
     const target = document.getElementById(window.location.hash.substring(1));
     if (target) {
