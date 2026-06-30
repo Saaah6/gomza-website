@@ -50,6 +50,10 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
+h1, h2, h3 {
+  font-family: 'Playfair Display', 'Manrope', Georgia, serif !important;
+}
+
 /* ── PREMIUM MICRO-DETAILS ── */
 ::selection {
   background: rgba(79,124,255,0.3);
