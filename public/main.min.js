@@ -1171,3 +1171,20 @@ function downloadAIImage(){
     });
   });
 })();
+
+
+/* ── THEME TOGGLE ── */
+(function(){
+  const themeBtn = document.getElementById('theme-toggle');
+  if(themeBtn) {
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'light') {
+      document.body.classList.add('light-mode');
+    }
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+      localStorage.setItem('theme', theme);
+    });
+  }
+})();

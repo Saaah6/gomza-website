@@ -1837,3 +1837,36 @@ a, button, input, select, textarea,
 .social-link, .modal-close {
   cursor: url('/assets/doberman_cursor.png') 16 16, pointer !important;
 }
+
+
+/* ── LIGHT MODE ── */
+body.light-mode {
+  --navy: #f8fafc;
+  --navy2: #f1f5f9;
+  --navy3: #e2e8f0;
+  --white: #0f172a;
+  --blue-glow: rgba(59, 130, 246, 0.15);
+  --gold-dim: rgba(245, 158, 11, 0.1);
+  --muted: rgba(15, 23, 42, 0.7);
+  --faint: rgba(15, 23, 42, 0.08);
+}
+.theme-toggle {
+  background: var(--navy3);
+  border: 1px solid var(--faint);
+  color: var(--white);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+.theme-toggle:hover {
+  background: var(--blue-glow);
+  transform: scale(1.05);
+}
+.moon-icon { display: none; }
+body.light-mode .moon-icon { display: block; }
+body.light-mode .sun-icon { display: none; }
