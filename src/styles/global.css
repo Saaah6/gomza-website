@@ -388,13 +388,7 @@ h1 .gold{
   will-change:transform;
 }
 .tools-track:hover{animation-play-state:paused}
-.tools-label{
-  text-align:center;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:.9rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
-  color:#FFFFFF;margin-bottom:.72rem;
-  text-shadow:0 0 18px rgba(138,180,255,0.68), 0 0 34px rgba(41,211,255,0.24);
-}
+
 @keyframes tickerScroll{
   0%{transform:translateX(0)}
   100%{transform:translateX(-50%)}
@@ -430,7 +424,47 @@ h1 .gold{
 
 /* ── SECTIONS ── */
 .section{position:relative;z-index:1;padding:5rem 3rem;max-width:1200px;margin:0 auto}
-.label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:.75rem}
+/* ── BUBBLY GLASS LABELS ── */
+.label, .tools-label {
+  display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: 50px;
+  background: linear-gradient(180deg, rgba(79,124,255,0.4), rgba(79,124,255,0.1));
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.6), inset 0 -2px 6px rgba(0,0,0,0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.label::after, .tools-label::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  animation: badge-shine 4s infinite;
+}
+@keyframes badge-shine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+body.light-mode .label, body.light-mode .tools-label {
+  background: linear-gradient(180deg, rgba(79,124,255,0.2), rgba(79,124,255,0.05));
+  border-color: rgba(79,124,255,0.4);
+  color: var(--blue-bright);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.05), inset 0 2px 4px rgba(255,255,255,1), inset 0 -2px 6px rgba(0,0,0,0.05);
+}
 .stitle{
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(1.9rem,3.5vw,3rem);
