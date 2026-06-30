@@ -2131,7 +2131,7 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
 
 .theme-toggle {
   position: fixed;
-  top: 26px;
+  top: 33px;
   left: calc(50% + 520px);
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
@@ -2142,11 +2142,29 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 9999;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 16px rgba(255,255,255,0.05), inset 0 1px 1px rgba(255,255,255,0.3);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+.theme-toggle:hover::after {
+  left: 150%;
+}
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 6px 20px rgba(255,255,255,0.1), inset 0 1px 1px rgba(255,255,255,0.4);
+  transform: scale(1.1);
 }
 @media (max-width: 1150px) {
   .theme-toggle {
@@ -2155,7 +2173,7 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
     top: 42px;
   }
 }
-.theme-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
 body.light-mode .theme-toggle {
   background: rgba(255,255,255,0.8);
   border: 1px solid rgba(15,23,42,0.1);
