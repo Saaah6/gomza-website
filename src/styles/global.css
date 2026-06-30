@@ -2444,6 +2444,186 @@ body.light-mode .faq-answer a:hover {
   text-decoration-color: var(--blue-bright);
 }
 
+/* Pricing Section */
+.pricing-section {
+  padding: 8rem 0;
+  position: relative;
+  background: var(--navy);
+  border-top: .5px solid rgba(251,253,255,0.05);
+}
+.pricing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+.pricing-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+@media (min-width: 900px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.pricing-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  color: #0F172A;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(200,134,10,0.2);
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card.featured {
+  background: linear-gradient(135deg, #ffffff, #fdfcf9);
+  border: 2px solid var(--gold);
+  transform: scale(1.02);
+  margin-bottom: 3rem;
+}
+.pricing-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 6px;
+  background: linear-gradient(90deg, var(--gold), #f59e0b);
+}
+.pricing-card.dark-theme {
+  background: var(--navy2);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+}
+.pricing-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pricing-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--blue-bright);
+  margin: 1rem 0 0.2rem;
+}
+.pricing-card.featured .pricing-price {
+  color: var(--gold);
+}
+.pricing-usdt {
+  font-size: 1rem;
+  color: rgba(15,23,42,0.6);
+  font-weight: 600;
+}
+.pricing-card.dark-theme .pricing-usdt {
+  color: rgba(255,255,255,0.6);
+}
+.pricing-list {
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+  flex-grow: 1;
+}
+.pricing-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  color: rgba(15,23,42,0.8);
+}
+.pricing-card.dark-theme .pricing-list li {
+  color: rgba(255,255,255,0.8);
+}
+.pricing-list li svg {
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.pricing-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #0F172A;
+}
+.pricing-card.dark-theme h3 {
+  color: var(--white);
+}
+
+.btn-shiny {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+  color: var(--white);
+  padding: 1.2rem 3rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(59,111,240,0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+.btn-shiny:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(59,111,240,0.6);
+  color: var(--white);
+}
+.btn-shiny::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  animation: shine 3s infinite;
+}
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+.enterprise-banner {
+  background: linear-gradient(135deg, rgba(15,23,42,0.8), rgba(2,4,10,0.9));
+  border: 1px solid rgba(138,180,255,0.15);
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+.enterprise-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle at center, rgba(59,111,240,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
   /* Disable expensive backdrop-filters on mobile */
