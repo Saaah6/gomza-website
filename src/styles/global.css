@@ -1981,6 +1981,8 @@ body.light-mode .eyebrow {
 body.light-mode .eyebrow-dot { background: #3B6FF0 !important; box-shadow: 0 0 8px rgba(59,111,240,0.5) !important; }
 body.light-mode #h1 { color: #0F172A !important; }
 body.light-mode .hero-sub { color: rgba(15,23,42,0.6) !important; }
+body.light-mode .met-num { color: #0F172A !important; }
+body.light-mode .met-label { color: rgba(15,23,42,0.6) !important; }
 body.light-mode .btn-primary {
   background: linear-gradient(135deg, #3B6FF0, #2952C8) !important;
   color: #fff !important;
