@@ -38,7 +38,7 @@ const {
       {objective && (
         <p class="csc-objective">{objective}</p>
       )}
-      <div class="csc-desktop-hint">Hover to view details &rarr;</div>
+      <div class="csc-desktop-hint"><span class="blink-text">Click to view details &rarr;</span></div>
     </div>
 
     <div class="case-study-image-wrapper">
@@ -200,7 +200,7 @@ const {
     transition: opacity 0.3s ease;
   }
 
-  .case-study-card:hover .csc-desktop-hint {
+  .case-study-card.is-expanded .csc-desktop-hint {
     opacity: 0;
   }
 
@@ -271,7 +271,7 @@ const {
     gap: 24px;
   }
 
-  .case-study-card:hover .csc-expandable-content {
+  .case-study-card.is-expanded .csc-expandable-content {
     grid-template-rows: 1fr;
     opacity: 1;
     padding: 0 36px 36px 36px;
@@ -405,4 +405,30 @@ const {
       grid-template-columns: 1fr;
     }
   }
+
+  .blink-text {
+    animation: blinker 2s linear infinite;
+  }
+  @keyframes blinker {
+    50% { opacity: 0.3; }
+  }
+  .case-study-card {
+    cursor: pointer;
+  }
 </style>
+
+
+<script>
+  // Add click to expand functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.case-study-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // close others if desired, or just toggle this one
+        // document.querySelectorAll('.case-study-card').forEach(c => {
+        //   if (c !== card) c.classList.remove('is-expanded');
+        // });
+        card.classList.toggle('is-expanded');
+      });
+    });
+  });
+</script>

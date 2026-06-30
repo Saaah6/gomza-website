@@ -968,17 +968,21 @@ h1 .gold{
 }
 .cta-inner h2{
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(1.8rem,4vw,3rem);
-  font-weight:700;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;
   letter-spacing:-0.03em;
-  margin-bottom:.9rem;
+  margin-bottom:1.2rem;
   position:relative;
-  color: #fff;
+  background: linear-gradient(180deg, #ffffff 30%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 10px 20px rgba(255,255,255,0.1));
 }
 .cta-inner p{
-  color:var(--muted);
-  margin-bottom:2.25rem;
-  font-size:1rem;
+  color:rgba(255,255,255,0.75);
+  margin-bottom:2.5rem;
+  font-size:1.1rem;
+  line-height:1.6;
   position:relative;
 }
 
