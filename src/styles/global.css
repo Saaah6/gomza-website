@@ -2384,6 +2384,10 @@ body.light-mode .case-study-desc, body.light-mode .csc-objective {
 .faq-icon {
   font-size: 1.5rem;
   font-weight: 300;
+  font-family: 'Manrope', sans-serif;
+  line-height: 1;
+  display: flex;
+  align-items: center;
   transition: transform 0.3s ease;
   color: var(--blue);
 }
