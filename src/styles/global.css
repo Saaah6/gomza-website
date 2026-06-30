@@ -2674,6 +2674,17 @@ body.light-mode .badge-shiny:hover {
   pointer-events: none;
 }
 
+/* Light mode overrides for Enterprise Banner */
+body.light-mode .enterprise-banner h2, 
+body.light-mode .enterprise-banner h3, 
+body.light-mode .enterprise-banner p,
+body.light-mode .enterprise-banner div {
+  color: var(--white) !important;
+}
+body.light-mode .enterprise-banner h2 {
+  color: var(--gold) !important;
+}
+
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
   /* Disable expensive backdrop-filters on mobile */
