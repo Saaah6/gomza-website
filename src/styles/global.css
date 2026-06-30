@@ -2155,27 +2155,33 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
 
 /* THEME TOGGLE BUTTON */
 .theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
   color: #fff;
   cursor: pointer;
-  padding: 10px;
+  padding: 12px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  margin-left: 10px;
-  flex-shrink: 0;
+  z-index: 9999;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .theme-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
 body.light-mode .theme-toggle {
-  background: rgba(15,23,42,0.06);
-  border: 1px solid rgba(15,23,42,0.14);
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(15,23,42,0.1);
   color: #0F172A;
+  box-shadow: 0 10px 20px rgba(15,23,42,0.1);
 }
 body.light-mode .theme-toggle:hover {
-  background: rgba(59,111,240,0.1);
+  background: #fff;
   border-color: rgba(59,111,240,0.3);
 }
 
