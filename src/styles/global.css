@@ -2194,9 +2194,11 @@ body.light-mode #svg-beams {
 }
 
 /* LIGHT MODE FIXES FOR LOGO AND CARDS */
-body.light-mode .logo > div:first-child,
-body.light-mode .fl-text {
+body.light-mode .logo div {
   color: #0D0D14 !important;
+}
+body.light-mode .fl-text {
+  color: rgba(13,13,20,0.58) !important;
 }
 body.light-mode .case-study-title {
   background: linear-gradient(90deg, #1A103C, #4B33A8) !important;
