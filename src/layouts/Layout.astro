@@ -55,6 +55,18 @@ import '../styles/mobile.css';
 <script defer src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof VanillaTilt !== 'undefined') {
+      VanillaTilt.init(document.querySelectorAll(".btn-primary, .btn-ghost, .nav-cta, .gen-btn"), {
+        max: 15,
+        speed: 400,
+        scale: 1.05
+      });
+    }
+  });
+</script>
+
 </head>
 <body>
 <slot />
