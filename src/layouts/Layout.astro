@@ -57,7 +57,7 @@ import '../styles/mobile.css';
 
 <script defer>
   document.addEventListener('DOMContentLoaded', () => {
-    if (typeof VanillaTilt !== 'undefined') {
+    if (typeof VanillaTilt !== 'undefined' && window.innerWidth >= 768) {
       VanillaTilt.init(document.querySelectorAll(".btn-primary, .btn-ghost, .nav-cta, .gen-btn"), {
         max: 15,
         speed: 400,

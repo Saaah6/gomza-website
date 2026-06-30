@@ -2435,3 +2435,17 @@ body.light-mode .faq-answer a:hover {
   color: var(--blue-bright);
   text-decoration-color: var(--blue-bright);
 }
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  /* Disable expensive backdrop-filters on mobile */
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Disable expensive hover/shine animations on mobile */
+  .btn-primary::after, .nav-cta-link::after, .btn-ghost::after {
+    display: none !important;
+  }
+}
