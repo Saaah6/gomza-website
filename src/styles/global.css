@@ -2199,9 +2199,10 @@ body.light-mode .fl-text {
   color: #0D0D14 !important;
 }
 body.light-mode .case-study-title {
-  background: none !important;
-  color: #0D0D14 !important;
-  -webkit-text-fill-color: #0D0D14 !important;
+  background: linear-gradient(90deg, #1A103C, #4B33A8) !important;
+  color: transparent !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 body.light-mode .cs-section h4 {
   color: #0D0D14 !important;
