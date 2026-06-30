@@ -1841,19 +1841,75 @@ a, button, input, select, textarea,
 
 /* ── LIGHT MODE ── */
 body.light-mode {
-  --navy: #f8fafc;
-  --navy2: #f1f5f9;
-  --navy3: #e2e8f0;
+  --navy: #f0f4ff;
+  --navy2: #e8eeff;
+  --navy3: #d8e2ff;
   --white: #0f172a;
-  --blue-glow: rgba(59, 130, 246, 0.15);
-  --gold-dim: rgba(245, 158, 11, 0.1);
-  --muted: rgba(15, 23, 42, 0.7);
+  --blue: #2563eb;
+  --blue-bright: #1d4ed8;
+  --blue-glow: rgba(37, 99, 235, 0.2);
+  --gold: #d97706;
+  --gold-dim: rgba(217, 119, 6, 0.12);
+  --aqua: #0891b2;
+  --rose: #e11d48;
+  --muted: rgba(15, 23, 42, 0.65);
   --faint: rgba(15, 23, 42, 0.08);
 }
+body.light-mode {
+  background: #f0f4ff !important;
+  color: #0f172a !important;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+/* Navbar */
+body.light-mode #navbar {
+  background: rgba(240, 244, 255, 0.92) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1) !important;
+}
+body.light-mode #navbar a { color: #0f172a !important; }
+body.light-mode .nav-cta {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  color: #fff !important;
+}
+/* Cards, sections, containers */
+body.light-mode .niche-card,
+body.light-mode .proof-card,
+body.light-mode .srv,
+body.light-mode .case-study-card,
+body.light-mode .cro-glass,
+body.light-mode .ai-gen-section {
+  background: rgba(255,255,255,0.8) !important;
+  border-color: rgba(15,23,42,0.1) !important;
+  color: #0f172a !important;
+}
+/* Text overrides */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode p,
+body.light-mode span,
+body.light-mode li {
+  color: inherit;
+}
+body.light-mode .eyebrow { 
+  background: rgba(37,99,235,0.1) !important;
+  border-color: rgba(37,99,235,0.3) !important;
+  color: #2563eb !important;
+}
+/* Footer */
+body.light-mode footer { background: #e8eeff !important; color: #0f172a !important; }
+/* SVG beams - hide in light mode */
+body.light-mode #svg-beams { opacity: 0.08 !important; }
+body.light-mode #three-bg { opacity: 0.05 !important; }
+/* Scrollbar */
+body.light-mode ::-webkit-scrollbar-track { background: #f0f4ff; }
+body.light-mode ::-webkit-scrollbar-thumb { background: rgba(15,23,42,0.2); }
+
+/* Theme toggle button */
 .theme-toggle {
-  background: var(--navy3);
-  border: 1px solid var(--faint);
-  color: var(--white);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
@@ -1862,11 +1918,18 @@ body.light-mode {
   justify-content: center;
   transition: all 0.3s ease;
   margin-left: 10px;
+  flex-shrink: 0;
 }
 .theme-toggle:hover {
-  background: var(--blue-glow);
-  transform: scale(1.05);
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+body.light-mode .theme-toggle {
+  background: rgba(15,23,42,0.08);
+  border: 1px solid rgba(15,23,42,0.15);
+  color: #0f172a;
 }
 .moon-icon { display: none; }
 body.light-mode .moon-icon { display: block; }
 body.light-mode .sun-icon { display: none; }
+
