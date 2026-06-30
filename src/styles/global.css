@@ -1929,7 +1929,7 @@ body.light-mode .theme-toggle {
   border: 1px solid rgba(15,23,42,0.15);
   color: #0f172a;
 }
-.moon-icon { display: none; }
-body.light-mode .moon-icon { display: block; }
-body.light-mode .sun-icon { display: none; }
+.moon-icon, .sun-icon { display: none; }
+.theme-icon { display: none; }
+/* JS will set display:block on the active icon */
 
