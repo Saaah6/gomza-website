@@ -1003,6 +1003,18 @@ footer{
 }
 .fl{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-0.03em;color:var(--white)}
 .fl span{color:var(--gold)}
+.shine-letter {
+  display: inline-block;
+  background: linear-gradient(110deg, currentColor 40%, rgba(255,255,255,0.8) 50%, currentColor 60%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine-text-sweep 3s infinite linear;
+}
+@keyframes shine-text-sweep {
+  0% { background-position: 300% 0; }
+  100% { background-position: -300% 0; }
+}
 .cta-inner.is-targeted{
   box-shadow:0 0 0 1px rgba(138,180,255,0.45), 0 0 60px rgba(79,124,255,0.22);
 }
