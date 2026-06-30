@@ -108,7 +108,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 
 <!-- HERO -->
 <section id="hero" style="position: relative; overflow: hidden;">
-  <LanyardWrapper client:idle />
+  <LanyardWrapper client:media="(min-width: 1024px)" />
   <audio id="dobermanBark" src="/assets/dog_barking.ogg" preload="none" style="display:none;"></audio>
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
