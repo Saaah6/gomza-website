@@ -2444,6 +2444,56 @@ body.light-mode .faq-answer a:hover {
   text-decoration-color: var(--blue-bright);
 }
 
+/* Shiny Glass Badge */
+.badge-shiny {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.badge-shiny::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+.badge-shiny:hover::after {
+  left: 150%;
+}
+.badge-shiny:hover {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+body.light-mode .badge-shiny {
+  background: rgba(200, 134, 10, 0.1);
+  border-color: rgba(200, 134, 10, 0.3);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+}
+body.light-mode .badge-shiny::after {
+  background: linear-gradient(90deg, transparent, rgba(200, 134, 10, 0.3), transparent);
+}
+body.light-mode .badge-shiny:hover {
+  background: rgba(200, 134, 10, 0.2);
+}
+
 /* Pricing Section */
 .pricing-section {
   padding: 8rem 0;
