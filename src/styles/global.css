@@ -2366,7 +2366,7 @@ body.light-mode .case-study-desc, body.light-mode .csc-objective {
 }
 .faq-question {
   padding: 1.5rem;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Playfair Display', 'Manrope', Georgia, serif;
   font-weight: 600;
   font-size: 1.1rem;
   color: var(--white);
