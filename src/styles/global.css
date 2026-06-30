@@ -2131,7 +2131,7 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
 
 .theme-toggle {
   position: fixed;
-  top: 20px;
+  top: 26px;
   left: calc(50% + 520px);
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
