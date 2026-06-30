@@ -1100,6 +1100,38 @@ function downloadAIImage(){
   const cursor = document.getElementById('custom-cursor');
   if(!cursor) return;
 
+  const phrases = ["I am Gomza", "I build brands", "I drive growth", "I run ads", "I write copy"];
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeCursor() {
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (isDeleting) {
+      cursor.textContent = currentPhrase.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      cursor.textContent = currentPhrase.substring(0, charIndex + 1);
+      charIndex++;
+    }
+
+    let typeSpeed = isDeleting ? 30 : 80;
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+      typeSpeed = 1500; 
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      typeSpeed = 400; 
+    }
+
+    setTimeout(typeCursor, typeSpeed);
+  }
+  
+  typeCursor();
+
   // Track mouse and cursor coordinates
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
