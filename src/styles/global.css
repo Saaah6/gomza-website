@@ -2369,6 +2369,8 @@ body.light-mode .case-study-desc, body.light-mode .csc-objective {
   justify-content: space-between;
   align-items: center;
   list-style: none; /* Hide default arrow */
+  text-align: left;
+  gap: 1rem;
 }
 .faq-question::-webkit-details-marker {
   display: none; /* Hide default arrow in WebKit */
