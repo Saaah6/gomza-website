@@ -2129,11 +2129,10 @@ body.light-mode .step-desc { color: rgba(15,23,42,0.62) !important; }
 body.light-mode .step-line { background: rgba(15,23,42,0.12) !important; }
 body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4px rgba(59,111,240,0.15) !important; }
 
-/* THEME TOGGLE BUTTON */
 .theme-toggle {
   position: fixed;
   top: 20px;
-  right: 20px;
+  left: calc(50% + 520px);
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
   color: #fff;
@@ -2148,6 +2147,12 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
   box-shadow: 0 10px 20px rgba(0,0,0,0.3);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+@media (max-width: 1150px) {
+  .theme-toggle {
+    left: auto;
+    right: 20px;
+  }
 }
 .theme-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
 body.light-mode .theme-toggle {
