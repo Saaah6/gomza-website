@@ -36,3 +36,11 @@ npm run build
 ## 🎨 Design Philosophy
 
 Gomza rejects the standard "SaaS boilerplate" look. It utilizes deep, rich navy backgrounds (`#030712`), gold accents (`#FFB547`), and subtle glassmorphism to create an immersive, expensive aesthetic. The design is meticulously crafted to inspire trust and authority for high-ticket client acquisition.
+
+## 📄 Documentation & Proof of Work
+
+As part of the continuous optimization and development of the Gomza platform, several strategic plans, technical walkthroughs, and SEO audits have been documented. These serve as proof of work for the advanced capabilities engineered into this project.
+
+- [Comprehensive SEO, AEO & GEO Audit](docs/seo_aeo_geo_audit.md): A deep-dive analysis of the site's semantic structure and Generative Engine Optimization readiness.
+- [AEO & GEO Implementation Plan](docs/implementation_plan.md): The strategic proposal for capturing Google's "People Also Ask" snippets.
+- [SEO Implementation Walkthrough](docs/walkthrough.md): The technical summary of the JSON-LD schemas and FAQ structural additions successfully deployed to production.
