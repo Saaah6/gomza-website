@@ -2151,7 +2151,8 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
 @media (max-width: 1150px) {
   .theme-toggle {
     left: auto;
-    right: 20px;
+    right: 110px;
+    top: 28px;
   }
 }
 .theme-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
