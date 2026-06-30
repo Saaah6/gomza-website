@@ -67,6 +67,109 @@ import '../styles/mobile.css';
   });
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://gomza.vercel.app/#organization",
+      "name": "Gomza",
+      "url": "https://gomza.vercel.app",
+      "logo": "https://gomza.vercel.app/assets/doberman_face.png",
+      "description": "Innovative marketing agency shaping the future of Real Estate & SaaS.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@gomza.com",
+        "contactType": "customer support"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://gomza.vercel.app/#website",
+      "url": "https://gomza.vercel.app",
+      "name": "Gomza - AI-powered Marketing for Real Estate & SaaS.",
+      "publisher": {
+        "@id": "https://gomza.vercel.app/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://gomza.vercel.app/#webpage",
+      "url": "https://gomza.vercel.app",
+      "name": "Gomza | Performance Marketing Agency",
+      "isPartOf": {
+        "@id": "https://gomza.vercel.app/#website"
+      },
+      "about": {
+        "@id": "https://gomza.vercel.app/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://gomza.vercel.app/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://gomza.vercel.app"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://gomza.vercel.app/#services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Case Studies",
+          "item": "https://gomza.vercel.app/#case-studies"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://gomza.vercel.app/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which marketing channels provide the best ROI for SaaS companies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For B2B SaaS, the best ROI typically comes from a strategic mix of SEO for long-term organic acquisition, targeted LinkedIn Ads for account-based marketing, and high-intent Google Ads for immediate lead generation. Gomza customizes this channel mix based on your specific CAC (Customer Acquisition Cost) targets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can SaaS brands improve Customer Acquisition Cost (CAC) and retention?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Improving CAC involves Conversion Rate Optimization (CRO) to maximize the value of existing traffic and precise audience targeting to eliminate wasted ad spend. For retention, we focus on post-click experiences and lifecycle email marketing to keep users engaged. <a href='https://gomza.vercel.app/#services'>Learn more about our services</a>."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do Real Estate agencies optimize their online presence to attract local buyers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Local SEO is paramount for Real Estate. We optimize your Google Business Profile, create hyper-local landing pages, and run geotargeted social media and PPC campaigns to ensure you appear when local buyers and sellers are searching for properties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much of a Real Estate marketing budget should be allocated to digital vs. traditional?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "While traditional marketing (flyers, signs) is still relevant for local brand awareness, digital marketing should comprise 60-80% of your budget to ensure measurable ROI, targeted lead generation, and scalable growth. Gomza helps balance this distribution for maximum impact."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <slot />
