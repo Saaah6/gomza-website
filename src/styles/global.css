@@ -2074,3 +2074,11 @@ body.light-mode .cta-inner .btn-primary {
 body.light-mode .cta-inner.is-targeted {
   box-shadow: 0 0 0 1px rgba(59,111,240,0.3), 0 0 60px rgba(59,111,240,0.12) !important;
 }
+
+
+/* SVG BEAMS - visible in light mode */
+body.light-mode #svg-beams {
+  opacity: 0.35 !important;
+  filter: none !important;
+  mix-blend-mode: multiply !important;
+}
