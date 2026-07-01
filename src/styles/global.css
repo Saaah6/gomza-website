@@ -2447,7 +2447,7 @@ body.light-mode .case-study-desc, body.light-mode .csc-objective {
 }
 .faq-answer {
   padding: 0 1.5rem 1.5rem;
-  color: rgba(251,253,255,0.65);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.95rem;
   line-height: 1.7;
 }
@@ -2573,21 +2573,21 @@ body.light-mode .badge-shiny:hover {
   }
 }
 .pricing-card {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 16px;
   padding: 2.5rem;
-  color: #0F172A;
+  color: var(--white);
   box-shadow: 0 10px 40px rgba(0,0,0,0.15);
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
-  border: 1px solid rgba(200,134,10,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
 }
 .pricing-card.featured {
-  background: linear-gradient(135deg, #ffffff, #fdfcf9);
-  border: 2px solid var(--gold);
+  background: rgba(212, 175, 55, 0.03);
+  border: 1px solid var(--gold);
   transform: scale(1.02);
   margin-bottom: 3rem;
 }
@@ -2631,7 +2631,7 @@ body.light-mode .badge-shiny:hover {
 }
 .pricing-usdt {
   font-size: 1rem;
-  color: rgba(15,23,42,0.6);
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 600;
 }
 .pricing-card.dark-theme .pricing-usdt {
