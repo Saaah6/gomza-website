@@ -19,12 +19,13 @@ function Airliner() {
     if (thrust1Ref.current) thrust1Ref.current.scale.set(flicker, flicker, flicker + Math.random());
     if (thrust2Ref.current) thrust2Ref.current.scale.set(flicker, flicker, flicker + Math.random());
     
-    // Dynamic flight movements (banking and pitching)
+    // Dynamic flight movements (banking, pitching, and bobbing)
     if (planeRef.current) {
       const t = state.clock.elapsedTime;
       planeRef.current.rotation.z = 0.05 + Math.sin(t * 0.6) * 0.15;
       planeRef.current.rotation.x = 0.1 + Math.sin(t * 0.4) * 0.08;
       planeRef.current.rotation.y = -0.25 + Math.sin(t * 0.3) * 0.05;
+      planeRef.current.position.y = Math.sin(t * 0.8) * 0.15; // Vertical bobbing
     }
   });
 
@@ -101,29 +102,29 @@ function Airliner() {
         />
       </mesh>
       
-      {/* --- WINGS (Swept Boxes) --- */}
-      <group position={[0, -0.5, 0.2]}>
+      {/* --- WINGS (Swept and Tapered) --- */}
+      <group position={[0, -0.4, 0.5]}>
         {/* Left Wing */}
-        <group position={[-3.5, 0, -0.8]} rotation={[0, -0.4, 0.1]}>
-          <mesh>
-            <boxGeometry args={[7.0, 0.15, 1.8]} />
+        <group position={[-2.8, 0, -1.2]} rotation={[0, -0.4, 0]}>
+          <mesh rotation={[0, 0, Math.PI / 2]} scale={[1, 1, 0.08]}>
+            <cylinderGeometry args={[0.3, 1.8, 6.0, 4]} />
             <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
           </mesh>
           {/* Winglet */}
-          <mesh position={[-3.5, 0.4, -0.2]} rotation={[0, 0, -1.2]}>
-             <boxGeometry args={[1.2, 0.08, 1.2]} />
+          <mesh position={[-2.9, 0.4, 0]} rotation={[0, 0, -0.2]}>
+             <boxGeometry args={[0.08, 1.0, 0.6]} />
              <meshStandardMaterial color={COLOR_RED} />
           </mesh>
         </group>
         {/* Right Wing */}
-        <group position={[3.5, 0, -0.8]} rotation={[0, 0.4, -0.1]}>
-          <mesh>
-            <boxGeometry args={[7.0, 0.15, 1.8]} />
+        <group position={[2.8, 0, -1.2]} rotation={[0, 0.4, 0]}>
+          <mesh rotation={[0, 0, -Math.PI / 2]} scale={[1, 1, 0.08]}>
+            <cylinderGeometry args={[0.3, 1.8, 6.0, 4]} />
             <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
           </mesh>
           {/* Winglet */}
-          <mesh position={[3.5, 0.4, -0.2]} rotation={[0, 0, 1.2]}>
-             <boxGeometry args={[1.2, 0.08, 1.2]} />
+          <mesh position={[2.9, 0.4, 0]} rotation={[0, 0, 0.2]}>
+             <boxGeometry args={[0.08, 1.0, 0.6]} />
              <meshStandardMaterial color={COLOR_RED} />
           </mesh>
         </group>
@@ -281,7 +282,23 @@ function Airliner() {
         </group>
       </group>
 
-      {/* --- LANDING GEAR (Retracted for flight) --- */}
+      {/* --- LANDING GEAR (Tucked/Retracted Doors) --- */}
+      <group position={[0, -0.7, 0]}>
+        {/* Front Gear Door */}
+        <mesh position={[0, 0, 2.0]}>
+          <boxGeometry args={[0.3, 0.05, 0.8]} />
+          <meshStandardMaterial color={COLOR_CYAN} roughness={0.3} metalness={0.2} />
+        </mesh>
+        {/* Main Gear Doors (Left & Right) */}
+        <mesh position={[-0.4, 0, -0.5]}>
+          <boxGeometry args={[0.5, 0.05, 1.2]} />
+          <meshStandardMaterial color={COLOR_CYAN} roughness={0.3} metalness={0.2} />
+        </mesh>
+        <mesh position={[0.4, 0, -0.5]}>
+          <boxGeometry args={[0.5, 0.05, 1.2]} />
+          <meshStandardMaterial color={COLOR_CYAN} roughness={0.3} metalness={0.2} />
+        </mesh>
+      </group>
     </group>
   );
 }
