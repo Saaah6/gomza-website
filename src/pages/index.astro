@@ -777,84 +777,94 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 
     const slides = [
       {
-        badge: 'Real Estate',
-        title: 'Premium 3 BHK Estate',
-        desc: 'Problem: Finding the perfect luxury home takes months. Solution: Exclusive access to off-market premium estates before they list.',
-        price: 'Starting at $2.4M',
-        btn: 'Schedule Viewing',
-        bg: '/assets/images/billboard-bg.png'
-      },
-      {
-        badge: 'B2B SaaS',
-        title: 'Tired of Data Silos?',
-        desc: 'Problem: Teams disconnected. Solution: Unify your enterprise data instantly with our AI-powered analytics hub.',
-        price: 'Enterprise Analytics',
-        btn: 'Start Free Trial',
-        bg: '/assets/images/saas_realistic.png'
-      },
-      {
-        badge: 'Developer Tools',
-        title: 'Ship Code Faster',
-        desc: 'Problem: Slow builds delaying deployment. Solution: Next-gen cloud infrastructure with instant edge routing.',
-        price: 'Deploy in Seconds',
-        btn: 'Read Documentation',
-        bg: '/assets/images/dev_tools.png'
-      },
-      {
-        badge: 'Web3 / Crypto',
-        title: 'Institutional DeFi',
-        desc: 'Problem: Unsafe, low-yield treasury management. Solution: Audited, institutional-grade DeFi staking protocols.',
-        price: 'Over $5B TVL',
-        btn: 'Connect Wallet',
-        bg: '/assets/images/crypto_web3.png'
-      },
-      {
-        badge: 'FinTech',
-        title: 'Wealth Management',
-        desc: 'Problem: Fragmented portfolios across multiple apps. Solution: One unified dashboard for all your global assets.',
-        price: '0% Management Fee',
-        btn: 'Open Account',
-        bg: '/assets/images/fintech.png'
-      },
-      {
-        badge: 'E-Commerce',
-        title: 'Timeless Luxury',
-        desc: 'Problem: Settling for mass-produced quality. Solution: Handcrafted Swiss chronographs built for generations.',
-        price: 'Limited Edition',
-        btn: 'Shop Collection',
-        bg: '/assets/images/ecommerce.png'
-      },
-      {
-        badge: 'Enterprise AI',
-        title: 'Automate Workflows',
-        desc: 'Problem: Manual data entry slowing operations. Solution: Custom trained LLMs that process and route documents instantly.',
-        price: 'AI That Works',
-        btn: 'Request Demo',
-        bg: '/assets/images/ai.png'
-      },
-      {
-        badge: 'Cyber Security',
-        title: 'Zero-Trust Cloud',
-        desc: 'Problem: Increasing ransomware threats. Solution: Military-grade holographic encryption and active threat neutralization.',
-        price: 'Secure Your Stack',
-        btn: 'Run Audit',
-        bg: '/assets/images/cyber_security.png'
-      },
-      {
-        badge: 'HealthTech',
-        title: 'Precision Medicine',
-        desc: 'Problem: Inefficient patient data tracking. Solution: AI-driven biometric tracking and real-time medical insights.',
-        price: 'FDA Approved',
+        adType: 'fb',
+        badge: 'Mumbai Luxury',
+        title: 'Sea-Facing Penthouse',
+        desc: 'Problem: Finding exclusivity in Mumbai takes years. Solution: Instant access to off-market Worli Sea Face penthouses.',
+        price: '₹24 Cr+',
         btn: 'Learn More',
-        bg: '/assets/images/health_tech.png'
+        bg: '/assets/images/mumbai_penthouse.png'
       },
       {
-        badge: 'EdTech',
-        title: 'Executive Leadership',
-        desc: 'Problem: Generic training programs lacking impact. Solution: Masterclasses taught by industry titans with actionable frameworks.',
-        price: 'Annual Pass: $999',
-        btn: 'Start Learning',
-        bg: '/assets/images/ed_tech.png'
+        adType: 'google-call',
+        badge: 'Delhi NCR',
+        title: 'Premium Golf Villas',
+        desc: 'Problem: Crowded luxury segments. Solution: Private 1-acre golf villas in exclusive NCR enclaves.',
+        price: '₹15 Cr+',
+        btn: 'Call to Book Viewing',
+        bg: '/assets/images/delhi_villa.png'
+      },
+      {
+        adType: 'google-search',
+        badge: 'Bangalore Tech Park',
+        title: 'High-Rise Apartments',
+        desc: 'Ad · luxury-homes.in/bangalore\nProblem: Long commutes. Solution: Walk-to-work ultra-luxury apartments next to major tech parks.',
+        price: '₹4.5 Cr',
+        btn: 'View Floor Plans',
+        bg: '/assets/images/bangalore_apartments.png'
+      },
+      {
+        adType: 'linkedin',
+        badge: 'Pune IT Hub',
+        title: 'Smart Condos',
+        desc: 'Problem: Outdated condo features. Solution: Next-gen smart homes integrated with IoT for the modern professional.',
+        price: '₹2.8 Cr',
+        btn: 'Download Brochure',
+        bg: '/assets/images/pune_condo.png'
+      },
+      {
+        adType: 'ig-story',
+        badge: 'Hyderabad',
+        title: 'Gated Community',
+        desc: 'Problem: Lack of community amenities. Solution: 50-acre master-planned community with international clubhouses.',
+        price: '₹3.2 Cr',
+        btn: 'Swipe Up to Visit',
+        bg: '/assets/images/hyderabad_community.png'
+      },
+      {
+        adType: 'youtube',
+        badge: 'Chennai Coast',
+        title: 'Sea-facing Apartments',
+        desc: 'Problem: No clear ocean views. Solution: 100% unobstructed Bay of Bengal views from every balcony.',
+        price: '₹5.5 Cr',
+        btn: 'Skip Ad',
+        bg: '/assets/images/chennai_seaface.png'
+      },
+      {
+        adType: 'fb',
+        badge: 'Kolkata Heritage',
+        title: 'Luxury Heritage Homes',
+        desc: 'Problem: Modern homes lack character. Solution: Restored colonial-era mansions with ultra-modern interiors.',
+        price: '₹8 Cr',
+        btn: 'View Gallery',
+        bg: '/assets/images/kolkata_heritage.png'
+      },
+      {
+        adType: 'google-search',
+        badge: 'Ahmedabad',
+        title: 'High-Rise Smart Homes',
+        desc: 'Ad · premium-living.in/ahmedabad\nProblem: Inefficient energy use. Solution: IGBC Platinum certified green homes with automated climate control.',
+        price: '₹3.5 Cr',
+        btn: 'Book Consultation',
+        bg: '/assets/images/ahmedabad_smart.png'
+      },
+      {
+        adType: 'fb',
+        badge: 'Goa',
+        title: 'Luxury Holiday Villas',
+        desc: 'Problem: Finding reliable rental yields. Solution: Managed holiday villas with guaranteed 8% ROI and personal usage.',
+        price: '₹6 Cr',
+        btn: 'Invest Now',
+        bg: '/assets/images/goa_villa.png'
+      },
+      {
+        adType: 'google-call',
+        badge: 'Jaipur',
+        title: 'Royal Estate Plots',
+        desc: 'Problem: Unclear land titles. Solution: 100% legally clear, RERA-approved premium villa plots near historic landmarks.',
+        price: '₹1.5 Cr+',
+        btn: 'Call Sales Team',
+        bg: '/assets/images/jaipur_estate.png'
       }
     ];
 
@@ -870,17 +880,66 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
       setTimeout(() => {
         const slide = slides[currentSlide];
         
-        bBadge.innerText = slide.badge;
-        bTitle.innerText = slide.title;
-        bDesc.innerText = slide.desc;
-        bPrice.innerText = slide.price;
-        bBtn.innerText = slide.btn;
+        // Build dynamic HTML based on adType
+        let newHTML = '';
+        
+        if (slide.adType === 'google-search') {
+          newHTML = `
+            <div class="ad-mockup-search" style="text-align: left; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 10px;">
+              <div style="font-family: Arial, sans-serif; font-size: 14px; color: #202124; margin-bottom: 4px;">
+                <span style="font-weight: bold;">Ad</span> · ${slide.desc.split('\n')[0].replace('Ad · ', '')}
+              </div>
+              <h3 style="font-family: Arial, sans-serif; font-size: 20px; color: #1a0dab; margin: 0 0 4px 0; cursor: pointer; text-decoration: none;">${slide.badge} - ${slide.title}</h3>
+              <p style="font-family: Arial, sans-serif; font-size: 14px; color: #4d5156; margin: 0 0 8px 0; line-height: 1.4;">${slide.desc.split('\n')[1] || slide.desc}</p>
+              <div style="font-family: Arial, sans-serif; font-size: 14px; color: #70757a;">Price: ${slide.price}</div>
+            </div>
+          `;
+        } else if (slide.adType === 'google-call') {
+          newHTML = `
+             <div class="ad-mockup-call" style="text-align: left; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #1a73e8; margin-top: 10px;">
+              <div>
+                <div style="font-family: Arial, sans-serif; font-size: 12px; color: #202124; margin-bottom: 2px;"><span style="font-weight: bold;">Ad</span> · ${slide.badge}</div>
+                <h3 style="font-family: Arial, sans-serif; font-size: 16px; color: #1a0dab; margin: 0 0 4px 0;">${slide.title}</h3>
+                <p style="font-family: Arial, sans-serif; font-size: 12px; color: #4d5156; margin: 0;">${slide.desc}</p>
+              </div>
+              <div style="background: #e8f0fe; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 10px; cursor: pointer;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1a73e8"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+              </div>
+            </div>
+          `;
+        } else if (slide.adType === 'youtube') {
+           newHTML = `
+            <div style="position: relative; width: 100%; height: 250px; border: 2px solid rgba(255,255,255,0.2); border-radius: 8px; overflow: hidden; display: flex; align-items: flex-end; padding: 15px;">
+               <div style="position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; font-family: sans-serif; font-size: 14px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  ${slide.btn}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+               </div>
+               <div style="text-align: left; max-width: 70%;">
+                  <span class="estate-badge" style="margin-bottom: 5px;">${slide.badge}</span>
+                  <h3 class="estate-title" style="font-size: 1.5rem; margin-bottom: 5px;">${slide.title}</h3>
+                  <p class="estate-desc" style="font-size: 0.85rem; margin-bottom: 0;">${slide.desc}</p>
+               </div>
+            </div>
+           `;
+        }
+        else {
+          // Default Social Media / Visual style
+          newHTML = `
+            <span class="estate-badge" id="billboard-badge">${slide.badge}</span>
+            <h3 class="estate-title" id="billboard-title">${slide.title}</h3>
+            <p class="estate-desc" id="billboard-desc">${slide.desc}</p>
+            <div class="estate-price" id="billboard-price">${slide.price}</div>
+            <button class="estate-btn" id="billboard-btn">${slide.btn}</button>
+          `;
+        }
+        
+        contentWrapper.innerHTML = newHTML;
         
         // Update background inline (accounting for dark mode overlay)
         if (isLampDark) {
-          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('${slide.bg}')`;
+          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('\${slide.bg}')\`;
         } else {
-          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('${slide.bg}')`;
+          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('\${slide.bg}')\`;
         }
 
         // Fade in
@@ -897,9 +956,9 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
          const slideIndex = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
          const slide = slides[slideIndex];
          if (isLampDark) {
-          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('${slide.bg}')`;
+          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('\${slide.bg}')\`;
         } else {
-          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('${slide.bg}')`;
+          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('\${slide.bg}')\`;
         }
       });
     }
