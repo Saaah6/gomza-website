@@ -122,6 +122,7 @@ const states = [
     <li><a href="/#niches">Industries</a></li>
     <li><a href="/#case-studies">Case Studies</a></li>
     <li><a href="/#projects">Projects</a></li>
+    <li><a href="/blog">Blog</a></li>
     <li><a href="/#proof">Work</a></li>
   </ul>
   <a href="https://form.typeform.com/to/S1It3Kbv" target="_blank" rel="noopener" class="nav-cta nav-cta-link">Book a Call</a>
@@ -145,6 +146,7 @@ const states = [
     <li><a class="mob-link" href="/#niches">Industries</a></li>
     <li><a class="mob-link" href="/#case-studies">Case Studies</a></li>
     <li><a class="mob-link" href="/#projects">Projects</a></li>
+    <li><a class="mob-link" href="/blog">Blog</a></li>
     <li><a class="mob-link" href="/#proof">Work</a></li>
   </ul>
   <a href="https://form.typeform.com/to/S1It3Kbv" target="_blank" rel="noopener" class="btn-primary mob-cta">Book a Call</a>
@@ -760,16 +762,16 @@ const states = [
 
   <div class="street-lamp-container reveal">
     <!-- Street Lamp Pole & Light -->
-    <div class="street-lamp" id="street-lamp-toggle" style="cursor: pointer;" title="Click to toggle light">
+    <div class="street-lamp" id="street-lamp-toggle" role="button" tabindex="0" aria-label="Toggle Street Lamp Lighting" title="Click to toggle light">
       <div class="lamp-head"></div>
       <div class="lamp-light-cone"></div>
     </div>
     
     <!-- 3D Billboard Diversion -->
-    <div class="billboard-container" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-perspective="1000">
-      <div class="billboard-inner">
+    <div class="billboard-container" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-perspective="1000" role="region" aria-label="Ad Mockup Showcase">
+      <div class="billboard-inner" id="billboard-inner" role="img" aria-label="Rotating Marketing Mockups Background">
         <div class="billboard-glow"></div>
-        <div class="billboard-content" id="billboard-content-wrapper" style="transition: opacity 0.5s ease;">
+        <div class="billboard-content" id="billboard-content-wrapper" aria-live="polite" aria-atomic="true" style="transition: opacity 0.5s ease;">
           <span class="estate-badge" id="billboard-badge">Just Listed</span>
           <h3 class="estate-title" id="billboard-title">Premium 3 BHK Estate</h3>
           <p class="estate-desc" id="billboard-desc">Panoramic views, smart home integrated, and private luxury amenities. Experience the pinnacle of modern living.</p>
@@ -794,12 +796,18 @@ const states = [
     
     let isLampDark = false;
     if (lampToggle && showcaseSection) {
-      lampToggle.addEventListener('click', () => {
+      const toggleLamp = () => {
         isLampDark = showcaseSection.classList.toggle('is-dark');
-        
-        // Reset and play the real sound effect
         switchSound.currentTime = 0;
         switchSound.play().catch(e => console.log('Audio play failed:', e));
+      };
+      
+      lampToggle.addEventListener('click', toggleLamp);
+      lampToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleLamp();
+        }
       });
     }
 
@@ -922,25 +930,25 @@ const states = [
         
         if (slide.adType === 'google-search') {
           newHTML = `
-            <div class="ad-mockup-search" style="text-align: left; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 10px;">
-              <div style="font-family: Arial, sans-serif; font-size: 14px; color: #202124; margin-bottom: 4px;">
-                <span style="font-weight: bold;">Ad</span> · ${slide.desc.split('\n')[0].replace('Ad · ', '')}
+            <div class="ad-mockup-search" style="text-align: left; background: rgba(15,23,42,0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); margin-top: 10px;">
+              <div style="font-family: Arial, sans-serif; font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 4px;">
+                <span style="font-weight: bold; color: #fff;">Ad</span> · ${slide.desc.split('\n')[0].replace('Ad · ', '')}
               </div>
-              <h3 style="font-family: Arial, sans-serif; font-size: 20px; color: #1a0dab; margin: 0 0 4px 0; cursor: pointer; text-decoration: none;">${slide.badge} - ${slide.title}</h3>
-              <p style="font-family: Arial, sans-serif; font-size: 14px; color: #4d5156; margin: 0 0 8px 0; line-height: 1.4;">${slide.desc.split('\n')[1] || slide.desc}</p>
-              <div style="font-family: Arial, sans-serif; font-size: 14px; color: #70757a;">Price: ${slide.price}</div>
+              <h3 style="font-family: Arial, sans-serif; font-size: 20px; color: #8ab4f8; margin: 0 0 4px 0; cursor: pointer; text-decoration: none;">${slide.badge} - ${slide.title}</h3>
+              <p style="font-family: Arial, sans-serif; font-size: 14px; color: #bdc1c6; margin: 0 0 8px 0; line-height: 1.4;">${slide.desc.split('\n')[1] || slide.desc}</p>
+              <div style="font-family: Arial, sans-serif; font-size: 14px; color: rgba(255,255,255,0.5);">Price: ${slide.price}</div>
             </div>
           `;
         } else if (slide.adType === 'google-call') {
           newHTML = `
-             <div class="ad-mockup-call" style="text-align: left; background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #1a73e8; margin-top: 10px;">
+             <div class="ad-mockup-call" style="text-align: left; background: rgba(15,23,42,0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #8ab4f8; margin-top: 10px;">
               <div>
-                <div style="font-family: Arial, sans-serif; font-size: 12px; color: #202124; margin-bottom: 2px;"><span style="font-weight: bold;">Ad</span> · ${slide.badge}</div>
-                <h3 style="font-family: Arial, sans-serif; font-size: 16px; color: #1a0dab; margin: 0 0 4px 0;">${slide.title}</h3>
-                <p style="font-family: Arial, sans-serif; font-size: 12px; color: #4d5156; margin: 0;">${slide.desc}</p>
+                <div style="font-family: Arial, sans-serif; font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 2px;"><span style="font-weight: bold; color: #fff;">Ad</span> · ${slide.badge}</div>
+                <h3 style="font-family: Arial, sans-serif; font-size: 16px; color: #8ab4f8; margin: 0 0 4px 0;">${slide.title}</h3>
+                <p style="font-family: Arial, sans-serif; font-size: 12px; color: #bdc1c6; margin: 0;">${slide.desc}</p>
               </div>
-              <div style="background: #e8f0fe; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 10px; cursor: pointer;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1a73e8"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+              <div style="background: rgba(138,180,248,0.15); border: 1px solid rgba(138,180,248,0.3); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 10px; cursor: pointer;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#8ab4f8"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
               </div>
             </div>
           `;
@@ -960,22 +968,22 @@ const states = [
            `;
         } else if (slide.adType === 'linkedin') {
            newHTML = `
-            <div style="background: #fff; border-radius: 8px; overflow: hidden; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; width: 100%;">
-              <div style="padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e0e0e0;">
+            <div style="background: rgba(15,23,42,0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; text-align: left; box-shadow: 0 8px 32px rgba(0,0,0,0.4); display: flex; flex-direction: column; width: 100%;">
+              <div style="padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <div style="width: 40px; height: 40px; background: #0a66c2; color: #fff; font-weight: bold; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 18px;">G</div>
                 <div>
-                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #000;">Gomza Real Estate</div>
-                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 12px; color: #666666;">Promoted</div>
+                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #fff;">Gomza Real Estate</div>
+                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 12px; color: rgba(255,255,255,0.5);">Promoted</div>
                 </div>
               </div>
-              <div style="padding: 12px 16px; font-family: -apple-system, system-ui, sans-serif; font-size: 14px; color: #000; line-height: 1.5;">
+              <div style="padding: 12px 16px; font-family: -apple-system, system-ui, sans-serif; font-size: 14px; color: rgba(255,255,255,0.9); line-height: 1.5;">
                 ${slide.desc}
               </div>
               <div style="height: 120px; background: transparent;"></div>
-              <div style="background: #f3f2ef; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e0e0e0;">
+              <div style="background: rgba(0,0,0,0.3); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);">
                 <div>
-                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 12px; color: #666666; margin-bottom: 2px;">${slide.badge}</div>
-                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #000;">${slide.title}</div>
+                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 2px;">${slide.badge}</div>
+                  <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #fff;">${slide.title}</div>
                 </div>
                 <button style="background: #0a66c2; color: #fff; border: none; padding: 6px 16px; border-radius: 24px; font-weight: 600; font-size: 14px; cursor: pointer;">${slide.btn}</button>
               </div>
@@ -1216,9 +1224,9 @@ const states = [
   <div class="footer-divider"></div>
 
   <!-- Local SEO Links -->
-  <div style="padding: 0 5% 1rem 5%;">
+  <div style="padding: 0 5% 1rem 5%; text-align: center;">
     <p style="color: rgba(251,253,255,0.7); font-size: 0.85rem; margin-bottom: 1rem; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1px;">Service Locations</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem 1.2rem; max-width: 1200px; margin: 0 auto;">
       {states.map(state => (
         <a href={`/location/${state.toLowerCase().replace(/\\s+/g, '-')}`} style="color: rgba(251,253,255,0.5); font-size: 0.75rem; text-decoration: none; transition: color 0.3s ease;">
           {state}
@@ -1228,9 +1236,9 @@ const states = [
   </div>
 
   <!-- International SEO Links -->
-  <div style="padding: 0 5% 2rem 5%;">
+  <div style="padding: 0 5% 2rem 5%; text-align: center;">
     <p style="color: rgba(251,253,255,0.7); font-size: 0.85rem; margin-bottom: 1rem; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1px;">International Markets</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem 1.2rem; max-width: 1200px; margin: 0 auto;">
       <a href="/us" style="color: rgba(251,253,255,0.5); font-size: 0.75rem; text-decoration: none; transition: color 0.3s ease;">United States (US)</a>
       <a href="/uk" style="color: rgba(251,253,255,0.5); font-size: 0.75rem; text-decoration: none; transition: color 0.3s ease;">United Kingdom (UK)</a>
       <a href="/ae" style="color: rgba(251,253,255,0.5); font-size: 0.75rem; text-decoration: none; transition: color 0.3s ease;">Dubai (UAE)</a>
