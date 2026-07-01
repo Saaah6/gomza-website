@@ -3,7 +3,7 @@ title: "The B2B SaaS Growth Trap: Traffic Without Pipeline"
 description: "You're getting thousands of visitors to your SaaS website, but no one is booking a demo. Here is how to use direct-response engineering to build a pipeline that actually converts."
 pubDate: 2026-07-01
 author: "Gomza Growth Team"
-image: "/assets/placeholder-dashboard.png"
+image: "/assets/doberman_face.png"
 tags: ["B2B SaaS", "Demand Gen", "SEO", "Direct Response"]
 ---
 
