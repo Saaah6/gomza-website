@@ -190,9 +190,9 @@ const states = [
 </section>
 
 <!-- TOOLS TICKER -->
-<div class="tools-ticker-wrap">
+<div class="tools-ticker-wrap" style="text-align: center;">
   <div class="tools-label">Tools We Use</div>
-  <div class="tools-track" id="tools-track">
+  <div class="tools-track" id="tools-track" style="text-align: left;">
     <div class="tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg>Clay</div>
     <div class="tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 100 18A9 9 0 0012 3z"/><path d="M9 9l6 6M15 9l-6 6"/></svg>Claude AI</div>
     <div class="tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 003 3h6a3 3 0 003-3V9"/></svg>AI Workflows</div>
@@ -782,7 +782,7 @@ const states = [
   </div>
 </section>
 
-<script>
+<script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     // --- LAMP TOGGLE LOGIC ---
     const lampToggle = document.getElementById('street-lamp-toggle');
