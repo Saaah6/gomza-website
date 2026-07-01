@@ -1,46 +1,30 @@
 ---
 
 export async function getStaticPaths() {
-  const states = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", 
-    "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", 
-    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
-    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
-    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", 
-    "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+  const regions = [
+    { code: 'us', name: 'USA', full: 'United States' },
+    { code: 'uk', name: 'UK', full: 'United Kingdom' },
+    { code: 'ae', name: 'Dubai', full: 'United Arab Emirates' }
   ];
   
-  return states.map((state) => {
+  return regions.map((r) => {
     return {
-      params: { state: state.toLowerCase().replace(/\s+/g, '-') },
-      props: { stateName: state },
+      params: { region: r.code },
+      props: { regionCode: r.code, regionName: r.name, regionFull: r.full },
     };
   });
 }
 
-const { stateName } = Astro.props;
-
-let profile = "general";
-const businessFirst = ["Maharashtra", "Gujarat", "Haryana"];
-const techSavvy = ["Karnataka", "Tamil Nadu", "Telangana", "Delhi", "Andhra Pradesh"];
-const trustOriented = ["West Bengal", "Odisha", "Madhya Pradesh", "Bihar", "Jharkhand", "Chhattisgarh", "Uttar Pradesh", "Rajasthan", "Punjab"];
-const tourismDriven = ["Goa", "Himachal Pradesh", "Uttarakhand", "Kerala", "Sikkim", "Andaman and Nicobar Islands", "Lakshadweep"];
-
-if (businessFirst.includes(stateName)) profile = "business-first";
-else if (techSavvy.includes(stateName)) profile = "tech-savvy";
-else if (trustOriented.includes(stateName)) profile = "trust-oriented";
-else if (tourismDriven.includes(stateName)) profile = "tourism-driven";
+const { regionCode, regionName, regionFull } = Astro.props;
 
 let heroSubtext = "{heroSubtext}";
 
-if (profile === "business-first") {
-  heroSubtext = `Lower your Customer Acquisition Cost (CAC) and maximize ROI with data-backed performance marketing designed specifically for ${stateName}'s competitive landscape.`;
-} else if (profile === "tech-savvy") {
-  heroSubtext = `Accelerate your pipeline with AI-driven lead routing, seamless CRM integrations, and digital-first campaigns tailored for ${stateName}'s fast-paced tech ecosystem.`;
-} else if (profile === "trust-oriented") {
-  heroSubtext = `Build unshakeable brand authority and RERA-compliant transparency that wins deep community trust across ${stateName}.`;
-} else if (profile === "tourism-driven") {
-  heroSubtext = `Capture high-intent investors and holiday-home buyers in ${stateName} with stunning visual storytelling and targeted campaigns.`;
+if (regionCode === "us") {
+  heroSubtext = "Lower your Customer Acquisition Cost (CAC) and scale your B2B SaaS MRR with SOC2-compliant data pipelines and aggressive performance marketing tailored for the US market.";
+} else if (regionCode === "uk") {
+  heroSubtext = "Accelerate your pipeline with GDPR-compliant marketing automation, seamless CRM integrations, and premium brand positioning tailored for the UK.";
+} else if (regionCode === "ae") {
+  heroSubtext = "Capture high-net-worth expat investors for off-plan luxury real estate in Dubai with stunning visual storytelling and high-intent performance campaigns.";
 }
 
 import Layout from '../layouts/Layout.astro';
@@ -1144,61 +1128,48 @@ const states = [
 </section>
 
 
-<!-- LOCAL SEO FAQ SECTION -->
-<section id="local-faq" style="padding: 5rem 5%; background: var(--bg); border-top: 1px solid rgba(255,255,255,0.05);">
+<!-- INTERNATIONAL SEO FAQ SECTION -->
+<section id="intl-faq" style="padding: 5rem 5%; background: var(--bg); border-top: 1px solid rgba(255,255,255,0.05);">
   <div class="section" style="max-width: 800px; margin: 0 auto;">
-    <div class="label reveal">Local Insights</div>
-    <h2 class="stitle reveal" style="margin-top: 1rem; margin-bottom: 3rem; font-size: 2.5rem;">Growing Your Business in {stateName}</h2>
+    <div class="label reveal">Market Insights</div>
+    <h2 class="stitle reveal" style="margin-top: 1rem; margin-bottom: 3rem; font-size: 2.5rem;">Growing Your Business in {regionFull}</h2>
     
     <div class="faq-list">
-      {profile === 'business-first' && (
+      {regionCode === 'us' && (
         <div style="display: flex; flex-direction: column; gap: 2rem;">
           <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How do you reduce Customer Acquisition Cost (CAC) in {stateName}?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">In highly competitive, business-first markets like {stateName}, we shift focus from generic reach to high-intent data. By optimizing your funnel for conversion rate rather than just click-through rate, and implementing strict lead qualification workflows, we typically drop CAC by 30-40% within the first quarter.</p>
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How do you reduce Customer Acquisition Cost (CAC) in the US?</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">The US market is highly saturated. We shift focus from generic top-of-funnel reach to high-intent, bottom-of-funnel data. By optimizing for conversion rate and implementing strict lead qualification workflows, we typically drop CAC by 30-40%.</p>
           </div>
           <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">What is the expected ROI for B2B SaaS campaigns here?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">B2B buyers in {stateName} evaluate software like a strict business deal. We structure campaigns around hard metrics and case studies, aiming for a minimum 3x ROAS pipeline generated within 90 days.</p>
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">Do you support SOC2 compliant data pipelines?</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Yes. We understand the strict data privacy and compliance requirements for US-based B2B SaaS companies and structure our marketing analytics and CRM integrations accordingly.</p>
           </div>
         </div>
       )}
 
-      {profile === 'tech-savvy' && (
+      {regionCode === 'uk' && (
         <div style="display: flex; flex-direction: column; gap: 2rem;">
           <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">Which CRM and Lead integrations work best in {stateName}?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Tech hubs demand speed. We integrate platforms like Salesforce, HubSpot, and custom API webhook layers to instantly route leads from Meta and Google Ads directly to your sales team's mobile devices in real-time.</p>
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">Is your marketing approach GDPR compliant?</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Absolutely. Our lead generation, email automation, and cookie tracking implementations are built ground-up to be strictly GDPR compliant for the UK market.</p>
           </div>
           <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How does AI marketing apply to local SaaS growth?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">We deploy AI-driven programmatic advertising and automated conversational agents (like ManyChat) to qualify B2B leads 24/7, matching the digital-first expectations of {stateName}'s ecosystem.</p>
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How do you position premium real estate in the UK?</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">We rely heavily on localized SEO, high-end visual storytelling, and targeted programmatic advertising on premium publisher networks to reach high-net-worth buyers in London and across the UK.</p>
           </div>
         </div>
       )}
 
-      {profile === 'trust-oriented' && (
+      {regionCode === 'ae' && (
         <div style="display: flex; flex-direction: column; gap: 2rem;">
           <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How do you market RERA-compliant projects in {stateName}?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Trust is the primary currency here. We build transparent, community-driven marketing campaigns that highlight your RERA numbers, structural warranties, and past delivered projects to overcome local market skepticism.</p>
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How do you market off-plan luxury properties in Dubai?</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Dubai real estate is heavily driven by expat and foreign investment. We run multi-lingual performance campaigns targeting high-net-worth individuals globally (UK, India, Russia, USA), emphasizing guaranteed rental yields and tax-free investments.</p>
           </div>
           <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">Are long-term organic strategies viable here?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Absolutely. Because buyers in {stateName} take longer to convert and rely heavily on word-of-mouth, our SEO and community-building services lay the foundation for sustainable, long-term brand authority.</p>
-          </div>
-        </div>
-      )}
-
-      {profile === 'tourism-driven' && (
-        <div style="display: flex; flex-direction: column; gap: 2rem;">
-          <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">How do you target out-of-state buyers for {stateName} properties?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">We run highly targeted performance campaigns in major metros (like Delhi and Mumbai) to capture high-net-worth individuals looking for second homes or holiday rentals in {stateName}, using aspirational visual storytelling.</p>
-          </div>
-          <div class="faq-item">
-            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">Do you handle visual content creation?</h3>
-            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Yes. Selling real estate in a tourism hub requires cinematic quality. We optimize your high-end drone footage, 3D walkthroughs, and lifestyle imagery to maximize conversion rates on paid social.</p>
+            <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 0.8rem; font-family: 'Space Grotesk', sans-serif;">Do you provide CRM integrations for Dubai brokers?</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Yes. We integrate directly with local real estate CRMs (like Property Finder integrations, Salesforce, etc.) to ensure no lead leakage and immediate agent follow-up.</p>
           </div>
         </div>
       )}
