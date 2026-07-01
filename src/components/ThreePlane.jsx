@@ -208,10 +208,21 @@ function Airliner() {
           <cylinderGeometry args={[0.48, 0.35, 0.3, 32]} />
           <meshStandardMaterial color="#334155" roughness={0.8} metalness={0.8} />
         </mesh>
-        <group ref={thrust1Ref} position={[0, 0, -1.3]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.25, 0.4, 0.8, 32]} />
-            <meshBasicMaterial color="#38bdf8" transparent opacity={0.7} />
+        <group ref={thrust1Ref} position={[0, 0, -1.1]}>
+          {/* Outer orange flame */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.6]}>
+            <coneGeometry args={[0.28, 1.5, 32]} />
+            <meshBasicMaterial color="#f97316" transparent opacity={0.5} />
+          </mesh>
+          {/* Middle yellow flame */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.4]}>
+            <coneGeometry args={[0.18, 0.9, 32]} />
+            <meshBasicMaterial color="#facc15" transparent opacity={0.8} />
+          </mesh>
+          {/* Inner white-hot core */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.2]}>
+            <coneGeometry args={[0.08, 0.5, 16]} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0.9} />
           </mesh>
         </group>
       </group>
@@ -251,10 +262,21 @@ function Airliner() {
           <cylinderGeometry args={[0.48, 0.35, 0.3, 32]} />
           <meshStandardMaterial color="#334155" roughness={0.8} metalness={0.8} />
         </mesh>
-        <group ref={thrust2Ref} position={[0, 0, -1.3]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.25, 0.4, 0.8, 32]} />
-            <meshBasicMaterial color="#38bdf8" transparent opacity={0.7} />
+        <group ref={thrust2Ref} position={[0, 0, -1.1]}>
+          {/* Outer orange flame */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.6]}>
+            <coneGeometry args={[0.28, 1.5, 32]} />
+            <meshBasicMaterial color="#f97316" transparent opacity={0.5} />
+          </mesh>
+          {/* Middle yellow flame */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.4]}>
+            <coneGeometry args={[0.18, 0.9, 32]} />
+            <meshBasicMaterial color="#facc15" transparent opacity={0.8} />
+          </mesh>
+          {/* Inner white-hot core */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.2]}>
+            <coneGeometry args={[0.08, 0.5, 16]} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0.9} />
           </mesh>
         </group>
       </group>
