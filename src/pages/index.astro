@@ -732,12 +732,12 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
     <div class="billboard-container" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-perspective="1000">
       <div class="billboard-inner">
         <div class="billboard-glow"></div>
-        <div class="billboard-content">
-          <span class="estate-badge">Just Listed</span>
-          <h3 class="estate-title">Premium 3 BHK Estate</h3>
-          <p class="estate-desc">Panoramic views, smart home integrated, and private luxury amenities. Experience the pinnacle of modern living.</p>
-          <div class="estate-price">Starting at $2.4M</div>
-          <button class="estate-btn">Schedule Viewing</button>
+        <div class="billboard-content" id="billboard-content-wrapper" style="transition: opacity 0.5s ease;">
+          <span class="estate-badge" id="billboard-badge">Just Listed</span>
+          <h3 class="estate-title" id="billboard-title">Premium 3 BHK Estate</h3>
+          <p class="estate-desc" id="billboard-desc">Panoramic views, smart home integrated, and private luxury amenities. Experience the pinnacle of modern living.</p>
+          <div class="estate-price" id="billboard-price">Starting at $2.4M</div>
+          <button class="estate-btn" id="billboard-btn">Schedule Viewing</button>
         </div>
       </div>
       <div class="billboard-stand"></div>
@@ -747,6 +747,7 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // --- LAMP TOGGLE LOGIC ---
     const lampToggle = document.getElementById('street-lamp-toggle');
     const showcaseSection = document.getElementById('ad-showcase-section');
     
@@ -754,20 +755,163 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
     const switchSound = new Audio('/assets/sounds/switch.ogg');
     switchSound.volume = 1.0;
     
+    let isLampDark = false;
     if (lampToggle && showcaseSection) {
       lampToggle.addEventListener('click', () => {
-        showcaseSection.classList.toggle('is-dark');
+        isLampDark = showcaseSection.classList.toggle('is-dark');
         
         // Reset and play the real sound effect
         switchSound.currentTime = 0;
         switchSound.play().catch(e => console.log('Audio play failed:', e));
       });
     }
+
+    // --- BILLBOARD CAROUSEL LOGIC ---
+    const billboardInner = document.getElementById('billboard-inner');
+    const contentWrapper = document.getElementById('billboard-content-wrapper');
+    const bBadge = document.getElementById('billboard-badge');
+    const bTitle = document.getElementById('billboard-title');
+    const bDesc = document.getElementById('billboard-desc');
+    const bPrice = document.getElementById('billboard-price');
+    const bBtn = document.getElementById('billboard-btn');
+
+    const slides = [
+      {
+        badge: 'Real Estate',
+        title: 'Premium 3 BHK Estate',
+        desc: 'Panoramic views, smart home integrated, and private luxury amenities. Experience the pinnacle of modern living.',
+        price: 'Starting at $2.4M',
+        btn: 'Schedule Viewing',
+        bg: '/assets/images/billboard-bg.png'
+      },
+      {
+        badge: 'B2B SaaS',
+        title: 'Tired of Data Silos?',
+        desc: 'Problem: Teams disconnected. Solution: Unify your enterprise data instantly with our AI-powered analytics hub.',
+        price: 'Enterprise Analytics',
+        btn: 'Start Free Trial',
+        bg: '/assets/images/saas_realistic.png'
+      },
+      {
+        badge: 'Developer Tools',
+        title: 'Ship Code Faster',
+        desc: 'Problem: Slow builds. Solution: Next-gen cloud infrastructure with instant deployments and native edge routing.',
+        price: 'Deploy in Seconds',
+        btn: 'Read Documentation',
+        bg: '/assets/images/dev_tools.png'
+      },
+      {
+        badge: 'Web3 / Crypto',
+        title: 'Institutional DeFi',
+        desc: 'Secure, high-yield staking protocols built for enterprise treasuries. Audited smart contracts with deep liquidity.',
+        price: 'Over $5B TVL',
+        btn: 'Connect Wallet',
+        bg: '/assets/images/crypto_web3.png'
+      },
+      {
+        badge: 'FinTech',
+        title: 'Wealth Management',
+        desc: 'Problem: Fragmented portfolios. Solution: One unified dashboard for all your global assets, stocks, and private equity.',
+        price: '0% Management Fee',
+        btn: 'Open Account',
+        bg: '/assets/images/fintech.png'
+      },
+      {
+        badge: 'E-Commerce',
+        title: 'Timeless Luxury',
+        desc: 'Handcrafted Swiss chronographs built for generations. Discover the new midnight titanium collection.',
+        price: 'Limited Edition',
+        btn: 'Shop Collection',
+        bg: '/assets/images/ecommerce.png'
+      },
+      {
+        badge: 'Enterprise AI',
+        title: 'Automate Workflows',
+        desc: 'Problem: Manual data entry. Solution: Custom trained LLMs that ingest, process, and route your documents instantly.',
+        price: 'AI That Works',
+        btn: 'Request Demo',
+        bg: '/assets/images/ai.png'
+      },
+      {
+        badge: 'Cyber Security',
+        title: 'Zero-Trust Cloud',
+        desc: 'Problem: Increasing ransomware threats. Solution: Military-grade holographic encryption and active threat neutralization.',
+        price: 'Secure Your Stack',
+        btn: 'Run Audit',
+        bg: '/assets/images/cyber_security.png'
+      },
+      {
+        badge: 'HealthTech',
+        title: 'Precision Medicine',
+        desc: 'AI-driven biometric tracking and genomic analysis. Empowering doctors with real-time patient insights.',
+        price: 'FDA Approved',
+        btn: 'Learn More',
+        bg: '/assets/images/health_tech.png'
+      },
+      {
+        badge: 'EdTech',
+        title: 'Executive Leadership',
+        desc: 'Masterclasses taught by industry titans. Learn the exact frameworks used to scale billion-dollar companies.',
+        price: 'Annual Pass: $999',
+        btn: 'Start Learning',
+        bg: '/assets/images/ed_tech.png'
+      }
+    ];
+
+    let currentSlide = 0;
+
+    function updateSlide() {
+      if (!billboardInner || !contentWrapper) return;
+      
+      // Fade out
+      contentWrapper.style.opacity = '0';
+      billboardInner.style.transition = 'background-image 0.5s ease-in-out';
+      
+      setTimeout(() => {
+        const slide = slides[currentSlide];
+        
+        bBadge.innerText = slide.badge;
+        bTitle.innerText = slide.title;
+        bDesc.innerText = slide.desc;
+        bPrice.innerText = slide.price;
+        bBtn.innerText = slide.btn;
+        
+        // Update background inline (accounting for dark mode overlay)
+        if (isLampDark) {
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('${slide.bg}')`;
+        } else {
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('${slide.bg}')`;
+        }
+
+        // Fade in
+        contentWrapper.style.opacity = '1';
+        
+        currentSlide = (currentSlide + 1) % slides.length;
+      }, 500); // Wait for fade out
+    }
+
+    // Hook into lamp toggle to instantly update background overlay so it doesn't wait for next slide
+    if (lampToggle && billboardInner) {
+      lampToggle.addEventListener('click', () => {
+         // Re-apply the current slide's background with the new lighting overlay immediately
+         const slideIndex = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+         const slide = slides[slideIndex];
+         if (isLampDark) {
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('${slide.bg}')`;
+        } else {
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('${slide.bg}')`;
+        }
+      });
+    }
+
+    // Start carousel
+    setInterval(updateSlide, 5000);
+    // Initialize first advance
+    setTimeout(updateSlide, 5000);
   });
 </script>
 
 <!-- Final CTA Section -->
-<div class="cta-section">
   <div class="cta-inner" id="cta-inner" data-tilt data-tilt-max="2" data-tilt-speed="400">
     <div class="cta-bg-glow"></div>
     <h2 class="reveal" style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; color: var(--white);">Ready to Build a Brand That Scales?</h2>
