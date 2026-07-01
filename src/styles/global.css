@@ -552,6 +552,19 @@ body.light-mode .label, body.light-mode .tools-label {
   padding: 2.25rem 2rem;
   transition: all .3s ease;
   grid-column: span 2;
+  overflow: hidden;
+}
+.srv::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: all 0.8s ease;
+  pointer-events: none;
 }
 .js-ready .srv {
   opacity: 0;
@@ -560,6 +573,10 @@ body.light-mode .label, body.light-mode .tools-label {
 .srv:hover {
   background: rgba(255, 255, 255, 0.02);
   box-shadow: inset 0 0 20px rgba(138, 180, 255, 0.03);
+}
+.srv:hover::after {
+  left: 150%;
+  transition: all 0.8s ease;
 }
 .srv-icon {
   margin-bottom: 1.15rem;
