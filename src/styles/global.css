@@ -2933,6 +2933,44 @@ body.light-mode .enterprise-banner h2 {
   opacity: 0.3;
 }
 
+/* Light mode overrides for Ad Showcase */
+body.light-mode .ad-showcase-section {
+  background: var(--white) !important;
+}
+body.light-mode .ad-showcase-intro h2 {
+  color: var(--blue) !important;
+}
+body.light-mode .ad-showcase-intro p {
+  color: rgba(15,23,42,0.7) !important;
+}
+body.light-mode .ad-showcase-intro .label {
+  color: var(--blue-bright) !important;
+  border-color: rgba(79,124,255,0.3) !important;
+}
+body.light-mode .estate-title {
+  color: var(--white); /* Keep white for contrast against images */
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+body.light-mode .estate-price {
+  color: var(--gold);
+  text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+}
+body.light-mode .estate-desc {
+  color: rgba(255,255,255,0.95);
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+body.light-mode .estate-btn {
+  background: linear-gradient(135deg, #fff, #eee);
+  color: #000;
+}
+body.light-mode .street-lamp {
+  background: #333;
+}
+body.light-mode .billboard-stand {
+  background: linear-gradient(to right, #444, #666, #444);
+}
+
 .street-lamp, .lamp-head, .lamp-light-cone, .billboard-inner, .billboard-glow, .estate-badge, .estate-btn, .estate-title, .estate-desc, .estate-price {
   transition: all 0.5s ease;
 }
