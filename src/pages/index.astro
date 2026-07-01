@@ -732,16 +732,16 @@ const states = [
 
   <div class="street-lamp-container reveal">
     <!-- Street Lamp Pole & Light -->
-    <div class="street-lamp" id="street-lamp-toggle" style="cursor: pointer;" title="Click to toggle light">
+    <div class="street-lamp" id="street-lamp-toggle" role="button" tabindex="0" aria-label="Toggle Street Lamp Lighting" title="Click to toggle light">
       <div class="lamp-head"></div>
       <div class="lamp-light-cone"></div>
     </div>
     
     <!-- 3D Billboard Diversion -->
-    <div class="billboard-container" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-perspective="1000">
-      <div class="billboard-inner">
+    <div class="billboard-container" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-perspective="1000" role="region" aria-label="Ad Mockup Showcase">
+      <div class="billboard-inner" id="billboard-inner" role="img" aria-label="Rotating Marketing Mockups Background">
         <div class="billboard-glow"></div>
-        <div class="billboard-content" id="billboard-content-wrapper" style="transition: opacity 0.5s ease;">
+        <div class="billboard-content" id="billboard-content-wrapper" aria-live="polite" aria-atomic="true" style="transition: opacity 0.5s ease;">
           <span class="estate-badge" id="billboard-badge">Just Listed</span>
           <h3 class="estate-title" id="billboard-title">Premium 3 BHK Estate</h3>
           <p class="estate-desc" id="billboard-desc">Panoramic views, smart home integrated, and private luxury amenities. Experience the pinnacle of modern living.</p>
@@ -766,12 +766,18 @@ const states = [
     
     let isLampDark = false;
     if (lampToggle && showcaseSection) {
-      lampToggle.addEventListener('click', () => {
+      const toggleLamp = () => {
         isLampDark = showcaseSection.classList.toggle('is-dark');
-        
-        // Reset and play the real sound effect
         switchSound.currentTime = 0;
         switchSound.play().catch(e => console.log('Audio play failed:', e));
+      };
+      
+      lampToggle.addEventListener('click', toggleLamp);
+      lampToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleLamp();
+        }
       });
     }
 

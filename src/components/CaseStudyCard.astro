@@ -9,6 +9,7 @@ interface Props {
   results?: string[];
   services?: string[];
   imageUrl?: string;
+  imageAlt?: string;
 }
 
 const { 
@@ -20,7 +21,8 @@ const {
   strategy, 
   results, 
   services,
-  imageUrl = "/assets/placeholder-dashboard.png" 
+  imageUrl = "/assets/placeholder-dashboard.png",
+  imageAlt
 } = Astro.props;
 ---
 
@@ -49,7 +51,7 @@ const {
       </div>
       <div class="image-placeholder">
         {imageUrl !== "/assets/placeholder-dashboard.png" ? (
-          <img loading="lazy" decoding="async" src={imageUrl} alt={`${brand} Campaign Performance`} />
+          <img loading="lazy" decoding="async" src={imageUrl} alt={imageAlt || `${brand} Campaign Performance Dashboard`} />
         ) : (
           <div class="premium-dummy-image">
             <div class="abstract-chart">
