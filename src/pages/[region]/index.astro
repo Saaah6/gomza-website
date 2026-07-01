@@ -1206,17 +1206,17 @@ const states = [
         <a href="#services" class="glass-link">Services</a>
         <a href="#niches" class="glass-link">Industries</a>
         <a href="#case-studies" class="glass-link">Case Studies</a>
-        <a href="/tool" class="cro-glass" style="color: #F4A62A;">
-          CRO Tool
-          <span style="display: block; font-size: 0.65rem; color: rgba(251,253,255,0.7); margin-top: 4px; text-transform: none; letter-spacing: normal;">Try our free conversion optimizer</span>
+        <a href="/tool" style="display: inline-flex; flex-direction: column; padding: 0.6rem 1rem; background: rgba(244,166,42,0.03); border: 1px solid rgba(244,166,42,0.15); border-radius: 8px; text-decoration: none; transition: all 0.3s ease; margin-top: 0.5rem;" onmouseover="this.style.background='rgba(244,166,42,0.08)'; this.style.borderColor='rgba(244,166,42,0.3)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(244,166,42,0.03)'; this.style.borderColor='rgba(244,166,42,0.15)'; this.style.transform='translateY(0)';">
+          <span style="color: #F4A62A; font-weight: 600; font-size: 0.9rem;">CRO Tool</span>
+          <span style="display: block; font-size: 0.7rem; color: rgba(251,253,255,0.7); margin-top: 4px;">Try our free conversion optimizer</span>
         </a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;">
         <a href="#" class="glass-link">LinkedIn</a>
         <a href="#" class="glass-link">Twitter</a>
-        <a href="/blog" class="cro-glass" style="margin-top: 1rem; color: #2D8CFF;">
-          Blog
-          <span style="display: block; font-size: 0.65rem; color: rgba(251,253,255,0.7); margin-top: 4px; text-transform: none; letter-spacing: normal;">Growth Strategies & Insights</span>
+        <a href="/blog" style="display: inline-flex; flex-direction: column; padding: 0.6rem 1rem; background: rgba(45,140,255,0.03); border: 1px solid rgba(45,140,255,0.15); border-radius: 8px; text-decoration: none; transition: all 0.3s ease; margin-top: 0.5rem;" onmouseover="this.style.background='rgba(45,140,255,0.08)'; this.style.borderColor='rgba(45,140,255,0.3)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(45,140,255,0.03)'; this.style.borderColor='rgba(45,140,255,0.15)'; this.style.transform='translateY(0)';">
+          <span style="color: #2D8CFF; font-weight: 600; font-size: 0.9rem;">Blog</span>
+          <span style="display: block; font-size: 0.7rem; color: rgba(251,253,255,0.7); margin-top: 4px;">Growth Strategies & Insights</span>
         </a>
       </div>
     </div>
@@ -1228,9 +1228,9 @@ const states = [
   <!-- Local SEO Links -->
   <div style="padding: 0 5% 1rem 5%;">
     <p style="color: rgba(251,253,255,0.7); font-size: 0.85rem; margin-bottom: 1rem; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 1px;">Service Locations</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem 1.2rem; max-width: 1200px; margin: 0 auto;">
       {states.map(state => (
-        <a href={`/location/${state.toLowerCase().replace(/\\s+/g, '-')}`} style="color: rgba(251,253,255,0.5); font-size: 0.75rem; text-decoration: none; transition: color 0.3s ease;">
+        <a href={`/location/${state.toLowerCase().replace(/\\s+/g, '-')}`} style="color: rgba(251,253,255,0.6); font-size: 0.75rem; text-decoration: none; transition: all 0.3s ease; padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 50px;" onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.color='#fff'; this.style.borderColor='rgba(255,255,255,0.15)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.color='rgba(251,253,255,0.6)'; this.style.borderColor='rgba(255,255,255,0.05)';">
           {state}
         </a>
       ))}
