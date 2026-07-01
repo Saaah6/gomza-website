@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
 
 function Airliner() {
+  const planeRef = useRef();
   const fan1Ref = useRef();
   const fan2Ref = useRef();
   const thrust1Ref = useRef();
@@ -17,6 +18,17 @@ function Airliner() {
     const flicker = 0.8 + Math.random() * 0.4;
     if (thrust1Ref.current) thrust1Ref.current.scale.set(flicker, flicker, flicker + Math.random());
     if (thrust2Ref.current) thrust2Ref.current.scale.set(flicker, flicker, flicker + Math.random());
+    
+    // Dynamic flight movements (banking and pitching)
+    if (planeRef.current) {
+      const t = state.clock.elapsedTime;
+      // Gentle banking left and right
+      planeRef.current.rotation.z = 0.05 + Math.sin(t * 0.6) * 0.15;
+      // Gentle pitch up and down
+      planeRef.current.rotation.x = 0.1 + Math.sin(t * 0.4) * 0.08;
+      // Slight yaw
+      planeRef.current.rotation.y = -0.25 + Math.sin(t * 0.3) * 0.05;
+    }
   });
 
   // Colors based on the reference image
@@ -26,8 +38,8 @@ function Airliner() {
   const COLOR_GREY = "#475569"; // wings, gear struts
 
   return (
-    // Base rotation to show off the plane
-    <group rotation={[0.1, -0.25, 0.05]} scale={0.65}>
+    // Base rotation to show off the plane, dynamically updated in useFrame
+    <group ref={planeRef} rotation={[0.1, -0.25, 0.05]} scale={0.65}>
       
       {/* --- FUSELAGE --- */}
       <group position={[0, 0, 0]}>
