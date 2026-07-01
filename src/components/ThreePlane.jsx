@@ -88,7 +88,17 @@ function Airliner() {
       {/* --- COCKPIT WINDOWS --- */}
       <mesh position={[0, 0.6, 3.2]} rotation={[0.4, 0, 0]} scale={[1, 0.4, 1]}>
         <sphereGeometry args={[0.7, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2.5]} />
-        <meshStandardMaterial color="#020617" roughness={0.1} metalness={0.9} transparent opacity={0.7} />
+        <meshPhysicalMaterial 
+          color="#0f172a" 
+          transmission={0.95} 
+          opacity={1} 
+          metalness={0.3} 
+          roughness={0.05} 
+          ior={1.5} 
+          thickness={0.1}
+          clearcoat={1.0}
+          clearcoatRoughness={0.1}
+        />
       </mesh>
       
       {/* --- WINGS (Swept Boxes) --- */}
