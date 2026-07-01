@@ -194,6 +194,8 @@ export default function Lanyard() {
     }}>
       <Canvas 
         camera={{ position: [0, 0, 13], fov: 35 }} 
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
       >
         <ResponsiveCamera />
         <ambientLight intensity={1} />

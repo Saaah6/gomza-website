@@ -29,7 +29,11 @@ if (!isMobile) {
     infinite: false,
   });
   window.lenis = lenis;
-  lenis.on('scroll', ScrollTrigger.update);
+  // Merge both scroll listeners into one callback
+  lenis.on('scroll', (e) => {
+    window.__lenisScroll = e.animatedScroll || e.scroll || window.scrollY;
+    ScrollTrigger.update();
+  });
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });
@@ -40,11 +44,6 @@ gsap.ticker.fps(60);
 
 // Prevent mobile scroll glitches when address bar hides/shows
 ScrollTrigger.config({ ignoreMobileResize: true });
-
-// Keep __lenisScroll in sync for Three.js background
-if(lenis) lenis.on('scroll', (e) => {
-  window.__lenisScroll = e.animatedScroll || e.scroll || window.scrollY;
-});
 
 /* ═══════════════════════════════
    THREE.JS BACKGROUND SCENE
@@ -156,143 +155,115 @@ function initThree(){
     isHovered = false;
   });
 
-  // Colors
+  // Colors — pre-allocated OUTSIDE the loop to avoid GC churn every frame
   const colorBlue = new THREE.Color(0x4F7CFF);
   const colorGold = new THREE.Color(0xFFB547);
   const colorDark = new THREE.Color(0x0F1A33);
+  const localColor = new THREE.Color(); // reused per vertex, never re-allocated
 
-  // ── RESIZE ──
+  // ── RESIZE — debounced so it doesn't fire on every pixel ──
+  let resizeTimer;
   window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }, 150);
   });
 
   let time = 0;
-  function animate(){
-    requestAnimationFrame(animate);
-    time += 0.008;
+  // Pause Three.js when tab is hidden — saves GPU/CPU
+  // Use restartLoop IIFE for proper cancelAnimationFrame support
+  (function restartLoop(){
+    let afId;
+    function loop(){
+      afId = requestAnimationFrame(loop);
+      time += 0.008;
 
-    // Smooth mouse interpolation
-    const aspect = window.innerWidth / window.innerHeight;
-    const vWidth = 500 * aspect;
-    const vHeight = 500;
-    if (isHovered) {
-      targetMouse3D.set(mouseX * vWidth * 0.65, -mouseY * vHeight * 0.6, 0);
-    } else {
-      targetMouse3D.set(Math.sin(time * 0.5) * 120, Math.cos(time * 0.3) * 80, 0);
-    }
-    mouse3D.lerp(targetMouse3D, 0.06);
-
-    // Calculate current positions of all vertices
-    const vertices = [];
-    const maxDist = 220;
-
-    for(let j = 0; j < rows; j++){
-      for(let i = 0; i < cols; i++){
-        const idx = j * cols + i;
-        const base = baseVertices[idx];
-
-        let x = base.ox;
-        let y = base.oy;
-        let z = Math.sin(x * 0.003 + time * 1.2) * Math.cos(y * 0.0035 + time * 1.0) * 45 
-              + Math.sin(x * 0.008 - time * 1.5) * 12;
-
-        const dx = x - mouse3D.x;
-        const dy = y - mouse3D.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        const localColor = colorBlue.clone();
-        if(dist < maxDist){
-          const force = (1 - dist / maxDist);
-          z += force * force * 110;
-          x += (dx / (dist + 0.1)) * force * 22;
-          y += (dy / (dist + 0.1)) * force * 22;
-
-          localColor.lerp(colorGold, force * 0.95);
-        } else {
-          const edgeDist = Math.sqrt(x*x + y*y);
-          const maxEdge = Math.sqrt(gridWidth*gridWidth + gridHeight*gridHeight) * 0.5;
-          const edgeForce = Math.min(edgeDist / maxEdge, 1);
-          localColor.lerp(colorDark, edgeForce * 0.6);
-        }
-
-        vertices.push({ x, y, z, color: localColor });
-
-        pointPositions[idx * 3]     = x;
-        pointPositions[idx * 3 + 1] = y;
-        pointPositions[idx * 3 + 2] = z;
-
-        pointColors[idx * 3]     = localColor.r;
-        pointColors[idx * 3 + 1] = localColor.g;
-        pointColors[idx * 3 + 2] = localColor.b;
+      const aspect = window.innerWidth / window.innerHeight;
+      const vWidth = 500 * aspect;
+      const vHeight = 500;
+      if (isHovered) {
+        targetMouse3D.set(mouseX * vWidth * 0.65, -mouseY * vHeight * 0.6, 0);
+      } else {
+        targetMouse3D.set(Math.sin(time * 0.5) * 120, Math.cos(time * 0.3) * 80, 0);
       }
-    }
-    pointGeo.attributes.position.needsUpdate = true;
-    pointGeo.attributes.color.needsUpdate = true;
+      mouse3D.lerp(targetMouse3D, 0.06);
 
-    // Update line segment vertices
-    let lineIdx = 0;
-    for(let j = 0; j < rows; j++){
-      for(let i = 0; i < cols; i++){
-        const idx = j * cols + i;
-        const pA = vertices[idx];
-
-        if(i < cols - 1){
-          const pB = vertices[idx + 1];
-          linePositions[lineIdx * 3]     = pA.x;
-          linePositions[lineIdx * 3 + 1] = pA.y;
-          linePositions[lineIdx * 3 + 2] = pA.z;
-          lineColors[lineIdx * 3]        = pA.color.r;
-          lineColors[lineIdx * 3 + 1]    = pA.color.g;
-          lineColors[lineIdx * 3 + 2]    = pA.color.b;
-          lineIdx++;
-
-          linePositions[lineIdx * 3]     = pB.x;
-          linePositions[lineIdx * 3 + 1] = pB.y;
-          linePositions[lineIdx * 3 + 2] = pB.z;
-          lineColors[lineIdx * 3]        = pB.color.r;
-          lineColors[lineIdx * 3 + 1]    = pB.color.g;
-          lineColors[lineIdx * 3 + 2]    = pB.color.b;
-          lineIdx++;
-        }
-
-        if(j < rows - 1){
-          const pC = vertices[idx + cols];
-          linePositions[lineIdx * 3]     = pA.x;
-          linePositions[lineIdx * 3 + 1] = pA.y;
-          linePositions[lineIdx * 3 + 2] = pA.z;
-          lineColors[lineIdx * 3]        = pA.color.r;
-          lineColors[lineIdx * 3 + 1]    = pA.color.g;
-          lineColors[lineIdx * 3 + 2]    = pA.color.b;
-          lineIdx++;
-
-          linePositions[lineIdx * 3]     = pC.x;
-          linePositions[lineIdx * 3 + 1] = pC.y;
-          linePositions[lineIdx * 3 + 2] = pC.z;
-          lineColors[lineIdx * 3]        = pC.color.r;
-          lineColors[lineIdx * 3 + 1]    = pC.color.g;
-          lineColors[lineIdx * 3 + 2]    = pC.color.b;
-          lineIdx++;
+      const vertices = [];
+      const maxDist = 220;
+      for(let j = 0; j < rows; j++){
+        for(let i = 0; i < cols; i++){
+          const idx = j * cols + i;
+          const base = baseVertices[idx];
+          let x = base.ox, y = base.oy;
+          let z = Math.sin(x * 0.003 + time * 1.2) * Math.cos(y * 0.0035 + time * 1.0) * 45
+                + Math.sin(x * 0.008 - time * 1.5) * 12;
+          const dx = x - mouse3D.x, dy = y - mouse3D.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          localColor.copy(colorBlue);
+          if(dist < maxDist){
+            const force = (1 - dist / maxDist);
+            z += force * force * 110;
+            x += (dx / (dist + 0.1)) * force * 22;
+            y += (dy / (dist + 0.1)) * force * 22;
+            localColor.lerp(colorGold, force * 0.95);
+          } else {
+            const edgeDist = Math.sqrt(x*x + y*y);
+            const maxEdge = Math.sqrt(gridWidth*gridWidth + gridHeight*gridHeight) * 0.5;
+            localColor.lerp(colorDark, Math.min(edgeDist / maxEdge, 1) * 0.6);
+          }
+          vertices.push({ x, y, z, color: { r: localColor.r, g: localColor.g, b: localColor.b } });
+          pointPositions[idx*3]=x; pointPositions[idx*3+1]=y; pointPositions[idx*3+2]=z;
+          pointColors[idx*3]=localColor.r; pointColors[idx*3+1]=localColor.g; pointColors[idx*3+2]=localColor.b;
         }
       }
+      pointGeo.attributes.position.needsUpdate = true;
+      pointGeo.attributes.color.needsUpdate = true;
+
+      let lineIdx = 0;
+      for(let j = 0; j < rows; j++){
+        for(let i = 0; i < cols; i++){
+          const idx = j * cols + i;
+          const pA = vertices[idx];
+          if(i < cols - 1){
+            const pB = vertices[idx + 1];
+            linePositions[lineIdx*3]=pA.x; linePositions[lineIdx*3+1]=pA.y; linePositions[lineIdx*3+2]=pA.z;
+            lineColors[lineIdx*3]=pA.color.r; lineColors[lineIdx*3+1]=pA.color.g; lineColors[lineIdx*3+2]=pA.color.b;
+            lineIdx++;
+            linePositions[lineIdx*3]=pB.x; linePositions[lineIdx*3+1]=pB.y; linePositions[lineIdx*3+2]=pB.z;
+            lineColors[lineIdx*3]=pB.color.r; lineColors[lineIdx*3+1]=pB.color.g; lineColors[lineIdx*3+2]=pB.color.b;
+            lineIdx++;
+          }
+          if(j < rows - 1){
+            const pC = vertices[idx + cols];
+            linePositions[lineIdx*3]=pA.x; linePositions[lineIdx*3+1]=pA.y; linePositions[lineIdx*3+2]=pA.z;
+            lineColors[lineIdx*3]=pA.color.r; lineColors[lineIdx*3+1]=pA.color.g; lineColors[lineIdx*3+2]=pA.color.b;
+            lineIdx++;
+            linePositions[lineIdx*3]=pC.x; linePositions[lineIdx*3+1]=pC.y; linePositions[lineIdx*3+2]=pC.z;
+            lineColors[lineIdx*3]=pC.color.r; lineColors[lineIdx*3+1]=pC.color.g; lineColors[lineIdx*3+2]=pC.color.b;
+            lineIdx++;
+          }
+        }
+      }
+      lineGeo.attributes.position.needsUpdate = true;
+      lineGeo.attributes.color.needsUpdate = true;
+
+      gridLines.rotation.y = Math.sin(time * 0.15) * 0.08;
+      gridLines.rotation.x = -0.3 + Math.cos(time * 0.1) * 0.05;
+      gridPoints.rotation.copy(gridLines.rotation);
+      camera.position.z = 500 - (window.__lenisScroll || 0) * 0.12;
+      renderer.render(scene, camera);
     }
-    lineGeo.attributes.position.needsUpdate = true;
-    lineGeo.attributes.color.needsUpdate = true;
+    loop();
+    // Pause when tab is hidden — significant GPU/battery saving
+    document.addEventListener('visibilitychange', () => {
+      if(document.hidden) { cancelAnimationFrame(afId); }
+      else { loop(); }
+    });
+  })(); // end restartLoop IIFE
 
-    gridLines.rotation.y = Math.sin(time * 0.15) * 0.08;
-    gridLines.rotation.x = -0.3 + Math.cos(time * 0.1) * 0.05;
-    gridPoints.rotation.copy(gridLines.rotation);
-
-    camera.position.z = 500 - (window.__lenisScroll || 0) * 0.12;
-
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  document.addEventListener('visibilitychange', () => {
-    if(document.hidden) renderer.setAnimationLoop(null);
-  });
   })(); // end inner IIFE
 } // end initThree
 
@@ -1238,4 +1209,39 @@ function downloadAIImage(){
       localStorage.setItem('theme', theme);
     });
   }
+})();
+
+/* ── VANILLA TILT INIT (moved from Layout.astro inline script) ── */
+if (typeof VanillaTilt !== 'undefined' && window.innerWidth >= 768) {
+  VanillaTilt.init(document.querySelectorAll(".btn-primary, .btn-ghost, .nav-cta, .gen-btn"), {
+    max: 15,
+    speed: 400,
+    scale: 1.05
+  });
+} else {
+  // Defer init until VanillaTilt is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof VanillaTilt !== 'undefined' && window.innerWidth >= 768) {
+      VanillaTilt.init(document.querySelectorAll(".btn-primary, .btn-ghost, .nav-cta, .gen-btn"), {
+        max: 15, speed: 400, scale: 1.05
+      });
+    }
+  });
+}
+
+/* ── LAZY BACKGROUND IMAGE LOADER (for location cards & data-bg elements) ── */
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  const lazyBgs = document.querySelectorAll('[data-bg]');
+  if (!lazyBgs.length) return;
+  const bgObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        el.style.backgroundImage = `url('${el.dataset.bg}')`;
+        bgObserver.unobserve(el);
+      }
+    });
+  }, { rootMargin: '200px 0px' }); // Start loading 200px before visible
+  lazyBgs.forEach(el => bgObserver.observe(el));
 })();

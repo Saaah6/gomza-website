@@ -31,6 +31,7 @@ a{text-decoration:none;color:inherit}
   background:linear-gradient(90deg, var(--blue), var(--gold));
   z-index:10001;pointer-events:none;
   box-shadow:0 0 10px var(--gold);
+  will-change:width;
 }
 html{font-size:19px}
 html, body{
@@ -52,6 +53,12 @@ body{
 
 h1, h2, h3 {
   font-family: 'Playfair Display', 'Manrope', Georgia, serif !important;
+}
+
+/* ── PERFORMANCE: Off-screen sections skip paint/layout until visible ── */
+.dark-section, #process, #services, #case-studies, #proof, #projects, #cta-inner, #blog-section, #locations-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
 }
 
 /* ── PREMIUM MICRO-DETAILS ── */
@@ -98,6 +105,7 @@ h1, h2, h3 {
   transform-origin: 50% 50%;
   animation: contrailPulse 4s ease-in-out infinite alternate;
   opacity: 0.85;
+  will-change: transform, opacity;
 }
 @keyframes contrailPulse {
   0%   { opacity: 0.6; transform: rotate(-14deg) scaleX(0.96) translateZ(0); }
@@ -168,6 +176,7 @@ h1, h2, h3 {
   pointer-events: none;
   animation: planeGlowPulse 6s ease-in-out infinite;
   border-radius: 50%;
+  will-change: transform, opacity;
 }
 @keyframes planeGlowPulse {
   0%, 100% { opacity: 0.7; transform: scale(1); }
@@ -246,7 +255,6 @@ nav {
   border-radius: 9999px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.05);
   transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background 0.3s ease;
-  will-change: transform;
 }
 nav.nav-hidden {
   transform: translate(-50%, -150%);
@@ -379,14 +387,12 @@ nav.nav-hidden {
   width:700px;height:500px;
   background:radial-gradient(ellipse at center,rgba(79,124,255,0.02) 0%,transparent 70%);
   pointer-events:none;
-  will-change:transform,opacity;
 }
 .hero-glow2{
   position:absolute;bottom:0;left:20%;
   width:400px;height:300px;
   background:radial-gradient(ellipse at center,rgba(255,181,71,0.015) 0%,transparent 70%);
   pointer-events:none;
-  will-change:transform,opacity;
 }
 .eyebrow{
   display:inline-flex;align-items:center;gap:.6rem;
@@ -527,7 +533,6 @@ h1 .gold{
   box-shadow:0 10px 26px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.18);
   transition:transform .25s, box-shadow .25s, border-color .25s, color .25s;
   cursor:default;
-  /* backdrop-filter removed from chips — causes jank when many are animating */
 }
 .tool-chip:nth-child(5n+1){background:linear-gradient(135deg, rgba(79,124,255,0.42), rgba(138,180,255,0.16)); border-color:rgba(138,180,255,0.46)}
 .tool-chip:nth-child(5n+2){background:linear-gradient(135deg, rgba(255,181,71,0.38), rgba(255,220,140,0.14)); border-color:rgba(255,200,96,0.48)}
@@ -538,7 +543,7 @@ h1 .gold{
 .tool-chip svg{width:17px;height:17px;flex-shrink:0;opacity:1;transition:opacity .25s, transform .25s}
 .tool-chip:hover svg{opacity:1;transform:scale(1.05)}
 .tool-chip svg,.niche-icon svg,.srv-icon svg,.tab svg,.star{
-  transform-box:fill-box;transform-origin:center;will-change:transform;
+  transform-box:fill-box;transform-origin:center;
 }
 
 /* ── WAVE DIVIDER ── */
@@ -610,8 +615,8 @@ body.light-mode .label, body.light-mode .tools-label {
   border:1px solid rgba(138,180,255,0.12);
   border-radius:12px;
   padding:2.25rem;
-  transition:all .3s ease;
-  will-change:transform;
+  transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  contain: layout style;
 }
 .js-ready .niche-card{opacity:0;transform:translateY(40px)}
 .niche-card:hover{

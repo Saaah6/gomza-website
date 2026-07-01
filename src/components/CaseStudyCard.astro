@@ -1,6 +1,4 @@
 ---
-import ThreePlane from './ThreePlane.jsx';
-
 interface Props {
   platform: string;
   brand: string;
@@ -52,11 +50,7 @@ const {
         <span class="dot green"></span>
       </div>
       <div class="image-placeholder">
-        {imageUrl === "/assets/indigo_airlines.png" ? (
-          <div style="width: 100%; height: 100%; position: relative; background: #0f172a; overflow: hidden; border-radius: 8px;">
-            <ThreePlane client:load />
-          </div>
-        ) : imageUrl !== "/assets/placeholder-dashboard.png" ? (
+        {imageUrl !== "/assets/placeholder-dashboard.png" ? (
           <img loading="lazy" decoding="async" src={imageUrl} alt={imageAlt || `${brand} Campaign Performance Dashboard`} />
         ) : (
           <div class="premium-dummy-image">
