@@ -2993,7 +2993,7 @@ body.light-mode .billboard-stand {
 /* The user requested the .label sweep animation on all buttons/toggles on hover */
 .btn-primary, .btn-ghost, .nav-cta, .nav-cta-link, .estate-btn, .gen-btn, .img-gen-btn, .tool-chip, .industry-chip, .tab {
   position: relative;
-  overflow: hidden;
+  /* Removed overflow: hidden because it breaks 3D tilt context and clickability */
 }
 
 .btn-primary:hover::after, 
@@ -3008,12 +3008,17 @@ body.light-mode .billboard-stand {
 .tab:hover::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent) !important;
-  transform: skewX(-20deg) !important;
-  animation: badge-shine 1.5s infinite !important;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%) !important;
+  background-size: 300% 100% !important;
+  animation: button-shine-bg 1.5s infinite linear !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
   pointer-events: none;
+}
+
+@keyframes button-shine-bg {
+  0% { background-position: 200% 0; }
+  100% { background-position: -100% 0; }
 }
