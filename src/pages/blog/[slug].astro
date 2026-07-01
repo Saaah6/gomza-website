@@ -14,31 +14,54 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={`${entry.data.title} | Gomza Insights`}>
-  <main style="background: var(--bg); min-height: 100vh; padding: 120px 5% 5rem 5%;">
-    <article style="max-width: 800px; margin: 0 auto;">
-      
+  <main style="background: var(--navy); min-height: 100vh; padding: 120px 0 5rem 0; position: relative; overflow: hidden;">
+    <!-- Ambient background glows -->
+    <div style="position: fixed; top: 10%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(79,124,255,0.04) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
+    <div style="position: fixed; bottom: 10%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.03) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
+
+    <article style="max-width: 780px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 1;">
+
+      <!-- Header -->
       <div style="margin-bottom: 3rem; text-align: center;" class="reveal">
-         <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-            {entry.data.tags.map((tag: string) => (
-                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); border: 1px solid rgba(200,134,10,0.3); padding: 0.3rem 0.8rem; border-radius: 50px;">{tag}</span>
-            ))}
-         </div>
-         <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.5rem); color: #fff; margin-bottom: 1.5rem; line-height: 1.2;">{entry.data.title}</h1>
-         <div style="color: rgba(255,255,255,0.5); font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
-            <span>By {entry.data.author}</span>
-            <span>&bull;</span>
-            <time>{entry.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-         </div>
+        <!-- Tags -->
+        <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          {entry.data.tags.map((tag: string) => (
+            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); border: 1px solid rgba(212,175,55,0.3); background: rgba(212,175,55,0.06); padding: 0.3rem 0.9rem; border-radius: 50px; font-weight: 600;">{tag}</span>
+          ))}
+        </div>
+
+        <!-- Title -->
+        <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.02em;">{entry.data.title}</h1>
+
+        <!-- Meta -->
+        <div style="color: rgba(255,255,255,0.4); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-family: 'Space Grotesk', sans-serif;">
+          <span style="color: rgba(255,255,255,0.6); font-weight: 500;">By {entry.data.author}</span>
+          <span style="color: rgba(255,255,255,0.2);">·</span>
+          <time>{entry.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        </div>
+
+        <!-- Accent line -->
+        <div style="width: 50px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto 0; box-shadow: 0 0 10px rgba(212,175,55,0.5);"></div>
       </div>
 
+      <!-- Hero Image -->
       {entry.data.image && (
-        <div style="width: 100%; height: 400px; border-radius: 16px; overflow: hidden; margin-bottom: 4rem; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5);" class="reveal">
-          <img src={entry.data.image} alt={entry.data.title} style="width: 100%; height: 100%; object-fit: cover;" />
+        <div style="width: 100%; height: 420px; border-radius: 20px; overflow: hidden; margin-bottom: 4rem; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03); position: relative;" class="reveal">
+          <img src={entry.data.image} alt={entry.data.title} style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(2,4,10,0.7) 100%);"></div>
         </div>
       )}
 
-      <div class="blog-content reveal" style="color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+      <!-- Blog Content -->
+      <div class="blog-content reveal">
         <Content />
+      </div>
+
+      <!-- Back to blog -->
+      <div style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
+        <a href="/blog" style="display: inline-flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.5); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#F4A62A';" onmouseout="this.style.color='rgba(255,255,255,0.5)';">
+          ← Back to all articles
+        </a>
       </div>
 
     </article>
@@ -46,32 +69,87 @@ const { Content } = await entry.render();
 </Layout>
 
 <style is:global>
-  .blog-content h1, .blog-content h2, .blog-content h3 {
+  .blog-content {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.1rem;
+    line-height: 1.9;
     font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .blog-content h1, .blog-content h2, .blog-content h3 {
+    font-family: 'Playfair Display', serif;
     color: #fff;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
+    margin-top: 3.5rem;
+    margin-bottom: 1.2rem;
     line-height: 1.3;
+    letter-spacing: -0.01em;
   }
   .blog-content h1 { font-size: 2.2rem; }
-  .blog-content h2 { font-size: 1.8rem; }
-  .blog-content h3 { font-size: 1.4rem; }
-  
-  .blog-content p {
-    margin-bottom: 1.5rem;
+  .blog-content h2 {
+    font-size: 1.7rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  
+  .blog-content h3 {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .blog-content p {
+    margin-bottom: 1.6rem;
+  }
+
+  .blog-content a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    transition: border-color 0.2s ease;
+  }
+  .blog-content a:hover {
+    border-color: var(--gold);
+  }
+
   .blog-content ul, .blog-content ol {
     margin-bottom: 2rem;
     padding-left: 1.5rem;
   }
-  
+
   .blog-content li {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.9rem;
+    color: rgba(255,255,255,0.7);
   }
-  
+
   .blog-content strong {
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
+  }
+
+  .blog-content em {
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+  }
+
+  .blog-content blockquote {
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(212,175,55,0.05);
+    border-radius: 0 8px 8px 0;
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+  }
+
+  .blog-content hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 3rem 0;
+  }
+
+  .blog-content code {
+    background: rgba(255,255,255,0.06);
+    color: var(--gold);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
   }
 </style>
