@@ -1,0 +1,177 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Partnership | Gomza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/global.css">
+  <style>
+    body {
+      background: #030712; /* Deep dark background */
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .apply-container {
+      width: 100%;
+      max-width: 700px;
+      padding: 4rem 2rem;
+      box-sizing: border-box;
+    }
+    .brand-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .brand-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      background: linear-gradient(135deg, #FFDF91 0%, #D4AF37 50%, #8A6327 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 1rem 0;
+      letter-spacing: -0.02em;
+    }
+    .brand-header p {
+      font-family: 'Space Grotesk', sans-serif;
+      color: rgba(255,255,255,0.6);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .form-group {
+      margin-bottom: 2rem;
+    }
+    .form-group label {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 0.8rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      outline: none;
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(212,175,55,0.5); /* Gold focus */
+      box-shadow: 0 0 20px rgba(212,175,55,0.1);
+    }
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+    select.form-control option {
+      background: #0f172a;
+      color: #fff;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(135deg, #D4AF37 0%, #8A6327 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 3rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    .back-link:hover {
+      color: rgba(255,255,255,0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="apply-container">
+    <div class="brand-header">
+      <a href="/" style="display: inline-block; margin-bottom: 2rem;">
+         <img src="/logo.svg" alt="Gomza" style="height: 30px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';" />
+         <span style="display:none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: 4px; color: #fff;">GOM<span style="color: var(--gold);">ZA</span></span>
+      </a>
+      <h1>Partner With Us</h1>
+      <p>We are highly selective about the clients we onboard. Please complete the application below to see if we are a mutual fit.</p>
+    </div>
+
+    <form action="/success" method="POST" name="gomza_application" data-netlify="true">
+      <input type="hidden" name="form-name" value="gomza_application" />
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" class="form-control" required placeholder="John Doe">
+      </div>
+      
+      <div class="form-group">
+        <label for="company">Company Name & URL</label>
+        <input type="text" id="company" name="company" class="form-control" required placeholder="Acme Corp - acme.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Work Email</label>
+        <input type="email" id="email" name="email" class="form-control" required placeholder="john@acme.com">
+      </div>
+
+      <div class="form-group">
+        <label for="budget">Current Monthly Marketing Budget</label>
+        <select id="budget" name="budget" class="form-control" required>
+          <option value="" disabled selected>Select your budget range</option>
+          <option value="5k-10k">$5,000 - $10,000 / month</option>
+          <option value="10k-25k">$10,000 - $25,000 / month</option>
+          <option value="25k-50k">$25,000 - $50,000 / month</option>
+          <option value="50k+">$50,000+ / month</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="bottleneck">What is the #1 bottleneck in your pipeline right now?</label>
+        <textarea id="bottleneck" name="bottleneck" class="form-control" rows="4" required placeholder="e.g., We get traffic but no demo bookings..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+
+    <div style="text-align: center;">
+      <a href="/" class="back-link">&larr; Return to Homepage</a>
+    </div>
+  </div>
+</body>
+</html>
