@@ -74,18 +74,23 @@ function Airliner() {
         <meshStandardMaterial color="#020617" roughness={0.1} metalness={0.9} transparent opacity={0.6} />
       </mesh>
       
-      {/* --- WINGS --- */}
+      {/* --- WINGS (Tapered & Swept) --- */}
       <group position={[0, -0.5, 0.2]}>
         {/* Left Wing */}
-        <mesh position={[-3.5, 0, -0.8]} rotation={[0, -0.4, 0.1]}>
-          <boxGeometry args={[7.0, 0.15, 1.8]} />
-          <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
-        </mesh>
+        <group position={[-3.5, 0, -0.8]} rotation={[0, -0.3, 0.1]}>
+          {/* A 4-sided cylinder rotated and squashed creates a perfect tapered wing (trapezoid) */}
+          <mesh rotation={[0, Math.PI / 4, Math.PI / 2]} scale={[1, 1, 0.08]}>
+            <cylinderGeometry args={[0.6, 2.0, 7.0, 4]} />
+            <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
+          </mesh>
+        </group>
         {/* Right Wing */}
-        <mesh position={[3.5, 0, -0.8]} rotation={[0, 0.4, -0.1]}>
-          <boxGeometry args={[7.0, 0.15, 1.8]} />
-          <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
-        </mesh>
+        <group position={[3.5, 0, -0.8]} rotation={[0, 0.3, -0.1]}>
+          <mesh rotation={[0, Math.PI / 4, Math.PI / 2]} scale={[1, 1, 0.08]}>
+            <cylinderGeometry args={[0.6, 2.0, 7.0, 4]} />
+            <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
+          </mesh>
+        </group>
       </group>
       
       {/* --- TAIL FIN --- */}
@@ -115,16 +120,22 @@ function Airliner() {
         </mesh>
       </group>
       
-      {/* --- HORIZONTAL STABILIZERS --- */}
+      {/* --- HORIZONTAL STABILIZERS (Tapered) --- */}
       <group position={[0, 0.2, -3.6]}>
-        <mesh position={[-1.8, 0, 0]} rotation={[0, -0.3, 0]}>
-          <boxGeometry args={[3.5, 0.1, 1.0]} />
-          <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
-        </mesh>
-        <mesh position={[1.8, 0, 0]} rotation={[0, 0.3, 0]}>
-          <boxGeometry args={[3.5, 0.1, 1.0]} />
-          <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
-        </mesh>
+        {/* Left Stabilizer */}
+        <group position={[-1.8, 0, 0]} rotation={[0, -0.3, 0]}>
+          <mesh rotation={[0, Math.PI / 4, Math.PI / 2]} scale={[1, 1, 0.08]}>
+            <cylinderGeometry args={[0.3, 1.2, 3.5, 4]} />
+            <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
+          </mesh>
+        </group>
+        {/* Right Stabilizer */}
+        <group position={[1.8, 0, 0]} rotation={[0, 0.3, 0]}>
+          <mesh rotation={[0, Math.PI / 4, Math.PI / 2]} scale={[1, 1, 0.08]}>
+            <cylinderGeometry args={[0.3, 1.2, 3.5, 4]} />
+            <meshStandardMaterial color={COLOR_GREY} roughness={0.4} metalness={0.2} />
+          </mesh>
+        </group>
       </group>
       
       {/* --- ENGINE 1 (Left Under Wing) --- */}
@@ -229,56 +240,7 @@ function Airliner() {
         </group>
       </group>
 
-      {/* --- LANDING GEAR --- */}
-      {/* Nose Gear */}
-      <group position={[0, -1.2, 2.0]}>
-        <mesh position={[0, -0.6, 0]}>
-          <cylinderGeometry args={[0.08, 0.08, 1.2, 8]} />
-          <meshStandardMaterial color="#94a3b8" />
-        </mesh>
-        {/* Wheels */}
-        <mesh position={[-0.2, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.25, 0.25, 0.1, 12]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
-        <mesh position={[0.2, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.25, 0.25, 0.1, 12]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
-      </group>
-      
-      {/* Main Gear Left */}
-      <group position={[-1.2, -1.1, -0.5]}>
-        <mesh position={[0, -0.6, 0]}>
-          <cylinderGeometry args={[0.1, 0.1, 1.2, 8]} />
-          <meshStandardMaterial color="#94a3b8" />
-        </mesh>
-        {/* Wheels (4-wheel bogey simplified to 2) */}
-        <mesh position={[-0.25, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.15, 12]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
-        <mesh position={[0.25, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.15, 12]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
-      </group>
-
-      {/* Main Gear Right */}
-      <group position={[1.2, -1.1, -0.5]}>
-        <mesh position={[0, -0.6, 0]}>
-          <cylinderGeometry args={[0.1, 0.1, 1.2, 8]} />
-          <meshStandardMaterial color="#94a3b8" />
-        </mesh>
-        <mesh position={[-0.25, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.15, 12]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
-        <mesh position={[0.25, -1.2, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.3, 0.3, 0.15, 12]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
-      </group>
+      {/* --- LANDING GEAR (Retracted for flight) --- */}
 
     </group>
   );
