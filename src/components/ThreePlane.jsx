@@ -71,7 +71,7 @@ function Airliner() {
       {/* --- COCKPIT WINDOWS --- */}
       <mesh position={[0, 0.6, 3.2]} rotation={[0.4, 0, 0]} scale={[1, 0.4, 1]}>
         <sphereGeometry args={[0.7, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2.5]} />
-        <meshStandardMaterial color="#000000" roughness={0.1} metalness={0.9} />
+        <meshStandardMaterial color="#020617" roughness={0.1} metalness={0.9} transparent opacity={0.6} />
       </mesh>
       
       {/* --- WINGS --- */}
@@ -134,9 +134,9 @@ function Airliner() {
           <boxGeometry args={[0.2, 0.8, 0.8]} />
           <meshStandardMaterial color={COLOR_GREY} />
         </mesh>
-        {/* Engine Nacelle */}
+        {/* Aerodynamic Engine Nacelle */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.6, 0.6, 2.2, 16]} />
+          <cylinderGeometry args={[0.62, 0.5, 2.2, 16]} />
           <meshStandardMaterial color={COLOR_BLACK} roughness={0.3} metalness={0.4} />
         </mesh>
         {/* Red Intake Rim */}
@@ -144,29 +144,36 @@ function Airliner() {
           <cylinderGeometry args={[0.62, 0.62, 0.15, 16]} />
           <meshStandardMaterial color={COLOR_RED} roughness={0.3} />
         </mesh>
-        {/* Intake Inner Hole */}
+        {/* Silver Intake Inner Lip */}
         <mesh position={[0, 0, 1.05]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.55, 0.55, 0.1, 16]} />
-          <meshStandardMaterial color="#000000" roughness={0.9} />
+          <meshStandardMaterial color="#94a3b8" roughness={0.4} metalness={0.8} />
         </mesh>
-        {/* Spinning Fans */}
+        {/* Spinning Turbofans */}
         <group ref={fan1Ref} position={[0, 0, 1.02]}>
-          {[...Array(6)].map((_, i) => (
-            <mesh key={i} rotation={[0, 0, (i * Math.PI) / 3]}>
-              <boxGeometry args={[1.0, 0.05, 0.02]} />
-              <meshStandardMaterial color="#94a3b8" metalness={0.8} />
+          {/* High-density fan blades (12 blades) */}
+          {[...Array(12)].map((_, i) => (
+            <mesh key={i} rotation={[0, 0, (i * Math.PI) / 6]}>
+              <boxGeometry args={[1.05, 0.08, 0.02]} />
+              <meshStandardMaterial color="#334155" metalness={0.8} roughness={0.4} />
             </mesh>
           ))}
-          <mesh>
-            <sphereGeometry args={[0.2, 8, 8]} />
-            <meshStandardMaterial color="#ffffff" metalness={0.8} />
+          {/* Pointed Spinner Cone */}
+          <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.05]}>
+            <cylinderGeometry args={[0, 0.18, 0.4, 16]} />
+            <meshStandardMaterial color="#f8fafc" metalness={0.6} />
           </mesh>
         </group>
+        {/* Rear Exhaust Nozzle */}
+        <mesh position={[0, 0, -1.1]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.48, 0.35, 0.3, 16]} />
+          <meshStandardMaterial color="#334155" roughness={0.8} metalness={0.8} />
+        </mesh>
         {/* Pulsing Jet Thrust */}
-        <group ref={thrust1Ref} position={[0, 0, -1.2]}>
+        <group ref={thrust1Ref} position={[0, 0, -1.3]}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.4, 0.6, 0.8, 12]} />
-            <meshBasicMaterial color="#38bdf8" transparent opacity={0.6} />
+            <cylinderGeometry args={[0.25, 0.4, 0.8, 12]} />
+            <meshBasicMaterial color="#38bdf8" transparent opacity={0.7} />
           </mesh>
         </group>
       </group>
@@ -178,9 +185,9 @@ function Airliner() {
           <boxGeometry args={[0.2, 0.8, 0.8]} />
           <meshStandardMaterial color={COLOR_GREY} />
         </mesh>
-        {/* Engine Nacelle */}
+        {/* Aerodynamic Engine Nacelle */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.6, 0.6, 2.2, 16]} />
+          <cylinderGeometry args={[0.62, 0.5, 2.2, 16]} />
           <meshStandardMaterial color={COLOR_BLACK} roughness={0.3} metalness={0.4} />
         </mesh>
         {/* Red Intake Rim */}
@@ -188,29 +195,36 @@ function Airliner() {
           <cylinderGeometry args={[0.62, 0.62, 0.15, 16]} />
           <meshStandardMaterial color={COLOR_RED} roughness={0.3} />
         </mesh>
-        {/* Intake Inner Hole */}
+        {/* Silver Intake Inner Lip */}
         <mesh position={[0, 0, 1.05]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.55, 0.55, 0.1, 16]} />
-          <meshStandardMaterial color="#000000" roughness={0.9} />
+          <meshStandardMaterial color="#94a3b8" roughness={0.4} metalness={0.8} />
         </mesh>
-        {/* Spinning Fans */}
+        {/* Spinning Turbofans */}
         <group ref={fan2Ref} position={[0, 0, 1.02]}>
-          {[...Array(6)].map((_, i) => (
-            <mesh key={i} rotation={[0, 0, (i * Math.PI) / 3]}>
-              <boxGeometry args={[1.0, 0.05, 0.02]} />
-              <meshStandardMaterial color="#94a3b8" metalness={0.8} />
+          {/* High-density fan blades (12 blades) */}
+          {[...Array(12)].map((_, i) => (
+            <mesh key={i} rotation={[0, 0, (i * Math.PI) / 6]}>
+              <boxGeometry args={[1.05, 0.08, 0.02]} />
+              <meshStandardMaterial color="#334155" metalness={0.8} roughness={0.4} />
             </mesh>
           ))}
-          <mesh>
-            <sphereGeometry args={[0.2, 8, 8]} />
-            <meshStandardMaterial color="#ffffff" metalness={0.8} />
+          {/* Pointed Spinner Cone */}
+          <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.05]}>
+            <cylinderGeometry args={[0, 0.18, 0.4, 16]} />
+            <meshStandardMaterial color="#f8fafc" metalness={0.6} />
           </mesh>
         </group>
+        {/* Rear Exhaust Nozzle */}
+        <mesh position={[0, 0, -1.1]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.48, 0.35, 0.3, 16]} />
+          <meshStandardMaterial color="#334155" roughness={0.8} metalness={0.8} />
+        </mesh>
         {/* Pulsing Jet Thrust */}
-        <group ref={thrust2Ref} position={[0, 0, -1.2]}>
+        <group ref={thrust2Ref} position={[0, 0, -1.3]}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.4, 0.6, 0.8, 12]} />
-            <meshBasicMaterial color="#38bdf8" transparent opacity={0.6} />
+            <cylinderGeometry args={[0.25, 0.4, 0.8, 12]} />
+            <meshBasicMaterial color="#38bdf8" transparent opacity={0.7} />
           </mesh>
         </group>
       </group>
