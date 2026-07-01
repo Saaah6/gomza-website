@@ -1,4 +1,48 @@
 ---
+
+export async function getStaticPaths() {
+  const states = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", 
+    "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", 
+    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
+    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", 
+    "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+  ];
+  
+  return states.map((state) => {
+    return {
+      params: { state: state.toLowerCase().replace(/\s+/g, '-') },
+      props: { stateName: state },
+    };
+  });
+}
+
+const { stateName } = Astro.props;
+
+let profile = "general";
+const businessFirst = ["Maharashtra", "Gujarat", "Haryana"];
+const techSavvy = ["Karnataka", "Tamil Nadu", "Telangana", "Delhi", "Andhra Pradesh"];
+const trustOriented = ["West Bengal", "Odisha", "Madhya Pradesh", "Bihar", "Jharkhand", "Chhattisgarh", "Uttar Pradesh", "Rajasthan", "Punjab"];
+const tourismDriven = ["Goa", "Himachal Pradesh", "Uttarakhand", "Kerala", "Sikkim", "Andaman and Nicobar Islands", "Lakshadweep"];
+
+if (businessFirst.includes(stateName)) profile = "business-first";
+else if (techSavvy.includes(stateName)) profile = "tech-savvy";
+else if (trustOriented.includes(stateName)) profile = "trust-oriented";
+else if (tourismDriven.includes(stateName)) profile = "tourism-driven";
+
+let heroSubtext = "{heroSubtext}";
+
+if (profile === "business-first") {
+  heroSubtext = `Lower your Customer Acquisition Cost (CAC) and maximize ROI with data-backed performance marketing designed specifically for ${stateName}'s competitive landscape.`;
+} else if (profile === "tech-savvy") {
+  heroSubtext = `Accelerate your pipeline with AI-driven lead routing, seamless CRM integrations, and digital-first campaigns tailored for ${stateName}'s fast-paced tech ecosystem.`;
+} else if (profile === "trust-oriented") {
+  heroSubtext = `Build unshakeable brand authority and RERA-compliant transparency that wins deep community trust across ${stateName}.`;
+} else if (profile === "tourism-driven") {
+  heroSubtext = `Capture high-intent investors and holiday-home buyers in ${stateName} with stunning visual storytelling and targeted campaigns.`;
+}
+
 import Layout from '../layouts/Layout.astro';
 import LanyardWrapper from '../components/LanyardWrapper.jsx';
 import CaseStudyCard from '../components/CaseStudyCard.astro';
