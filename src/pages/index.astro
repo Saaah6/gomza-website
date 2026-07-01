@@ -1007,9 +1007,9 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
         
         // Update background inline (accounting for dark mode overlay)
         if (isLampDark) {
-          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('\${slide.bg}')\`;
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('${slide.bg}')`;
         } else {
-          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('\${slide.bg}')\`;
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('${slide.bg}')`;
         }
 
         // Fade in
@@ -1026,9 +1026,9 @@ import CaseStudyCard from '../components/CaseStudyCard.astro';
          const slideIndex = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
          const slide = slides[slideIndex];
          if (isLampDark) {
-          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('\${slide.bg}')\`;
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.95), rgba(0,0,0,0.98)), url('${slide.bg}')`;
         } else {
-          billboardInner.style.backgroundImage = \`linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('\${slide.bg}')\`;
+          billboardInner.style.backgroundImage = `linear-gradient(135deg, rgba(5,8,15,0.7), rgba(0,0,0,0.85)), url('${slide.bg}')`;
         }
       });
     }
