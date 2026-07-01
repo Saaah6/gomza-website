@@ -71,12 +71,135 @@ h1, h2, h3 {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.2)
 }
 
 /* ── THREE.JS BG ── */
 #three-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.35}
 #three-bg canvas{display:block;width:100%!important;height:100%!important}
+
+/* ── 3D DIAGONAL GREEN PLANE (IndiGo-inspired) ── */
+#plane-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Contrail SVG — stretched diagonally across the hero */
+#plane-contrail {
+  position: absolute;
+  top: 18%;
+  left: -8%;
+  width: 115%;
+  height: 40%;
+  transform: rotate(-14deg) translateZ(0);
+  transform-origin: 50% 50%;
+  animation: contrailPulse 4s ease-in-out infinite alternate;
+  opacity: 0.85;
+}
+@keyframes contrailPulse {
+  0%   { opacity: 0.6; transform: rotate(-14deg) scaleX(0.96) translateZ(0); }
+  100% { opacity: 1;   transform: rotate(-14deg) scaleX(1.04) translateZ(0); }
+}
+
+/* 3D perspective wrapper — positions the plane along the diagonal */
+#plane-3d-wrap {
+  position: absolute;
+  /* Fly from lower-left toward upper-right, matching contrail angle */
+  bottom: 22%;
+  right: 6%;
+  width: 220px;
+  height: 220px;
+  perspective: 600px;
+  perspective-origin: 40% 50%;
+  animation: planeFloat 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Subtle float & bank for the 3D illusion */
+@keyframes planeFloat {
+  0%   { transform: translateY(0px)   translateX(0px); }
+  25%  { transform: translateY(-8px)  translateX(4px); }
+  50%  { transform: translateY(-14px) translateX(0px); }
+  75%  { transform: translateY(-6px)  translateX(-4px); }
+  100% { transform: translateY(0px)   translateX(0px); }
+}
+
+/* The inner div carries the 3D rotation (banking effect + diagonal orientation) */
+#plane-3d {
+  width: 100%;
+  height: 100%;
+  transform:
+    rotateZ(-16deg)
+    rotateY(28deg)
+    rotateX(8deg)
+    scale(1);
+  transform-style: preserve-3d;
+  animation: planeBank 6s ease-in-out infinite;
+  will-change: transform;
+  filter: drop-shadow(0 6px 32px rgba(34,197,94,0.55))
+          drop-shadow(0 0 12px rgba(74,222,128,0.4));
+}
+@keyframes planeBank {
+  0%   { transform: rotateZ(-16deg) rotateY(28deg) rotateX(8deg)  scale(1); }
+  25%  { transform: rotateZ(-18deg) rotateY(32deg) rotateX(10deg) scale(1.01); }
+  50%  { transform: rotateZ(-14deg) rotateY(26deg) rotateX(6deg)  scale(1.015); }
+  75%  { transform: rotateZ(-18deg) rotateY(30deg) rotateX(9deg)  scale(1.005); }
+  100% { transform: rotateZ(-16deg) rotateY(28deg) rotateX(8deg)  scale(1); }
+}
+
+#plane-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Green ambient glow on the hero section when plane is present */
+#plane-scene::after {
+  content: '';
+  position: absolute;
+  bottom: 8%;
+  right: 4%;
+  width: 320px;
+  height: 180px;
+  background: radial-gradient(ellipse at 70% 60%, rgba(34,197,94,0.13) 0%, transparent 70%);
+  pointer-events: none;
+  animation: planeGlowPulse 6s ease-in-out infinite;
+  border-radius: 50%;
+}
+@keyframes planeGlowPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+
+/* Responsive: shrink on tablet */
+@media (max-width: 1024px) {
+  #plane-3d-wrap {
+    width: 160px;
+    height: 160px;
+    bottom: 18%;
+    right: 2%;
+  }
+  #plane-contrail {
+    opacity: 0.65;
+  }
+}
+
+/* Hide plane on small mobile to keep UI clean */
+@media (max-width: 600px) {
+  #plane-scene {
+    display: none;
+  }
+}
+
+/* Respect user reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  #plane-3d-wrap, #plane-3d, #plane-contrail, #plane-scene::after {
+    animation: none;
+  }
+}
 
 /* ── SVG BEAMS BG ── */
 #svg-beams{
