@@ -32,11 +32,21 @@ function Airplane() {
           <cylinderGeometry args={[0.7, 0.7, 4.0, 16]} />
           <meshStandardMaterial color="#f8fafc" roughness={0.2} metalness={0.5} />
         </mesh>
-        {/* Sleek Private Jet Nose */}
-        <mesh position={[0, 0, 1.5]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.02, 0.7, 2.5, 16]} />
-          <meshStandardMaterial color="#f1f5f9" roughness={0.2} metalness={0.5} />
-        </mesh>
+        
+        {/* Sleek Bullet Nose */}
+        <group position={[0, 0, 1.5]}>
+          {/* Tapered section */}
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.15, 0.7, 2.8, 16]} />
+            <meshStandardMaterial color="#f1f5f9" roughness={0.2} metalness={0.5} />
+          </mesh>
+          {/* Rounded tip */}
+          <mesh position={[0, 0, 1.4]} rotation={[Math.PI / 2, 0, 0]}>
+            <sphereGeometry args={[0.15, 16, 16]} />
+            <meshStandardMaterial color="#f1f5f9" roughness={0.2} metalness={0.5} />
+          </mesh>
+        </group>
+
         {/* Tapered Tail Cone */}
         <mesh position={[0, 0, -3.25]} rotation={[-Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.1, 0.7, 1.5, 16]} />
@@ -44,9 +54,9 @@ function Airplane() {
         </mesh>
       </group>
       
-      {/* STREAMLINED COCKPIT WINDOWS */}
-      <mesh position={[0, 0.45, 1.1]} rotation={[0.5, 0, 0]}>
-        <sphereGeometry args={[0.5, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2.8]} />
+      {/* STREAMLINED COCKPIT WINDOWS (Swept-back & Squashed) */}
+      <mesh position={[0, 0.45, 1.4]} rotation={[0.65, 0, 0]} scale={[1, 0.6, 1]}>
+        <sphereGeometry args={[0.55, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2.6]} />
         <meshStandardMaterial color="#020617" roughness={0.1} metalness={0.9} />
       </mesh>
       
