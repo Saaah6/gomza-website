@@ -434,14 +434,37 @@ const {
 
 
 <script>
-  // Add click to expand functionality and close on mouse leave
+  // Robust JavaScript expansion fallback
   const cards = document.querySelectorAll('.case-study-card');
   cards.forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('is-expanded');
-    });
-    card.addEventListener('mouseleave', () => {
+    const expandable = card.querySelector('.csc-expandable-content');
+    const inner = card.querySelector('.csc-inner-wrapper');
+    if(!expandable || !inner) return;
+
+    function expand() {
+      card.classList.add('is-expanded');
+      expandable.style.maxHeight = (inner.scrollHeight + 100) + 'px';
+      expandable.style.opacity = '1';
+    }
+
+    function collapse() {
       card.classList.remove('is-expanded');
+      expandable.style.maxHeight = '0px';
+      expandable.style.opacity = '0';
+    }
+
+    // Expand on hover for desktop
+    card.addEventListener('mouseenter', expand);
+    card.addEventListener('mouseleave', collapse);
+
+    // Toggle on click for mobile
+    card.addEventListener('click', (e) => {
+      if (window.innerWidth > 768) return;
+      if(card.classList.contains('is-expanded')) {
+        collapse();
+      } else {
+        expand();
+      }
     });
   });
 </script>
