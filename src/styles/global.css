@@ -246,7 +246,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   width: calc(100% - 40px);
-  max-width: 1000px;
+  max-width: 1200px;
   padding: 0.8rem 1.5rem;
   background: rgba(10, 15, 30, 0.55);
   backdrop-filter: blur(24px);
@@ -446,7 +446,7 @@ h1 .gold{
   display:inline-flex;align-items:center;justify-content:center;
   overflow:hidden;
   box-shadow:0 8px 24px rgba(79,124,255,0.3),inset 0 1px 1px rgba(255,255,255,0.2);
-  transition:all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   letter-spacing:.01em;
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
@@ -468,7 +468,7 @@ h1 .gold{
   overflow:hidden;
   text-transform:uppercase;
   letter-spacing:0.06em;
-  transition:all .2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
@@ -2406,6 +2406,24 @@ body.light-mode .theme-toggle {
 body.light-mode .theme-toggle::after {
   background: linear-gradient(90deg, transparent, rgba(59,111,240,0.25), transparent);
 }
+body.light-mode .cta-inner {
+  background: linear-gradient(135deg, #3B6FF0, #1e40af) !important;
+  box-shadow: 0 10px 40px rgba(59,111,240,0.2) !important;
+  border-color: rgba(59,111,240,0.3) !important;
+}
+body.light-mode .cta-inner h2 {
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  -webkit-background-clip: initial !important;
+  filter: none !important;
+}
+body.light-mode .cta-inner p { color: rgba(255,255,255,0.85) !important; }
+body.light-mode .cta-inner .btn-primary {
+  background: #ffffff !important;
+  color: #3B6FF0 !important;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.15) !important;
+}
 body.light-mode .theme-toggle:hover {
   background: #fff;
   border-color: rgba(59,111,240,0.3);
@@ -3199,3 +3217,6 @@ body.light-mode .billboard-stand {
   0% { background-position: 200% 0; }
   100% { background-position: -100% 0; }
 }
+
+body.light-mode .fld select, body.light-mode .fld input { background: #ffffff !important; border: 1px solid rgba(15,23,42,0.12) !important; color: #0F172A !important; }
+
