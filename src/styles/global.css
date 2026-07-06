@@ -3233,3 +3233,5 @@ body.light-mode .enterprise-banner { background: #ffffff !important; border-colo
 body.light-mode .enterprise-banner h3, body.light-mode .enterprise-banner p, body.light-mode .enterprise-banner div { color: #0F172A !important; }
 body.light-mode .enterprise-banner h2 { color: var(--gold) !important; }
 body.light-mode .enterprise-banner .enterprise-tag { background: rgba(15,23,42,0.04) !important; border-color: rgba(15,23,42,0.12) !important; color: #0F172A !important; }
+
+.enterprise-tag { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); color: #ffffff; }
