@@ -3251,3 +3251,13 @@ body.light-mode .ai-gen-section textarea::placeholder,
 body.light-mode .img-prompt-textarea::placeholder {
   color: rgba(15, 23, 42, 0.45) !important;
 }
+
+/* Fix footer text in light mode */
+body.light-mode footer .footer-col-left p,
+body.light-mode footer .footer-col-right a,
+body.light-mode footer .footer-col-right span {
+  color: #0F172A !important;
+}
+body.light-mode footer .footer-col-left .fl-text {
+  color: #0F172A !important;
+}
