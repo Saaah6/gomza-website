@@ -141,6 +141,7 @@ const {
     box-shadow: 0 10px 40px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05);
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     margin-bottom: 2rem;
+    cursor: pointer;
   }
   
   .case-study-card:hover {
@@ -401,7 +402,7 @@ const {
   @media (max-width: 768px) {
     /* Auto expand on mobile */
     .csc-expandable-content {
-      grid-template-rows: 1fr;
+      max-height: 2500px;
       opacity: 1;
     }
     .csc-inner-wrapper {
@@ -428,11 +429,7 @@ const {
   @keyframes blinker {
     50% { opacity: 0.3; }
   }
-  .case-study-card {
-    cursor: pointer;
-  }
 </style>
-
 
 <script is:inline>
   (function() {
@@ -459,7 +456,3 @@ const {
     }
   })();
 </script>
-
-<style>
-.case-study-card.is-expanded .csc-expandable-content { max-height: 2500px; opacity: 1; }
-</style>

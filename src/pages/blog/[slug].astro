@@ -24,10 +24,12 @@ const { Content } = await entry.render();
       <!-- Header -->
       <div style="margin-bottom: 3rem; text-align: center; position: relative;" class="reveal">
         <!-- Back button (Top Right) -->
-        <a href="/blog" class="back-btn" style="position: absolute; top: 0; right: 0; display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold); text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 0.5rem 1.2rem; border: 1px solid rgba(212,175,55,0.3); border-radius: 50px; background: rgba(212,175,55,0.05); transition: all 0.3s ease;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          Back
-        </a>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+          <a href="/blog" class="back-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold); text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 0.5rem 1.2rem; border: 1px solid rgba(212,175,55,0.3); border-radius: 50px; background: rgba(212,175,55,0.05); transition: all 0.3s ease; z-index: 10;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back
+          </a>
+        </div>
 
         <!-- Tags -->
         <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
