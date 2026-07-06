@@ -208,7 +208,8 @@ const {
     transition: opacity 0.3s ease;
   }
 
-  .case-study-card.is-expanded .csc-desktop-hint {
+  .case-study-card.is-expanded .csc-desktop-hint,
+  .case-study-card:hover .csc-desktop-hint {
     opacity: 0;
   }
 
@@ -279,7 +280,8 @@ const {
     gap: 24px;
   }
 
-  .case-study-card.is-expanded .csc-expandable-content {
+  .case-study-card.is-expanded .csc-expandable-content,
+  .case-study-card:hover .csc-expandable-content {
     grid-template-rows: 1fr;
     opacity: 1;
     padding: 0 36px 36px 36px;
