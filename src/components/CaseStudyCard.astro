@@ -266,10 +266,10 @@ const {
 
   /* Expandable Area Logic */
   .csc-expandable-content {
-    max-height: 0px;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.6s ease-in-out, opacity 0.5s ease-in-out;
+    transition: grid-template-rows 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease;
   }
 
   .csc-inner-wrapper {
@@ -277,17 +277,15 @@ const {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding: 0 36px 0 36px;
-    transition: padding 0.6s ease-in-out;
+    padding: 0 36px;
+    transition: padding 0.6s ease;
   }
 
-  .case-study-card.is-expanded .csc-expandable-content,
   .case-study-card:hover .csc-expandable-content {
-    max-height: 2000px;
+    grid-template-rows: 1fr;
     opacity: 1;
   }
 
-  .case-study-card.is-expanded .csc-inner-wrapper,
   .case-study-card:hover .csc-inner-wrapper {
     padding: 0 36px 36px 36px;
   }
@@ -404,6 +402,8 @@ const {
     .csc-expandable-content {
       grid-template-rows: 1fr;
       opacity: 1;
+    }
+    .csc-inner-wrapper {
       padding: 0 24px 24px 24px;
     }
     .csc-visible-header {
@@ -443,32 +443,9 @@ const {
         if(card.dataset.initialized) return;
         card.dataset.initialized = 'true';
 
-        const expandable = card.querySelector('.csc-expandable-content');
-        const inner = card.querySelector('.csc-inner-wrapper');
-        if(!expandable || !inner) return;
-
-        function expand() {
-          card.classList.add('is-expanded');
-          expandable.style.maxHeight = (inner.scrollHeight + 100) + 'px';
-          expandable.style.opacity = '1';
-        }
-
-        function collapse() {
-          card.classList.remove('is-expanded');
-          expandable.style.maxHeight = '0px';
-          expandable.style.opacity = '0';
-        }
-
         // Allow both hover and click on desktop for maximum compatibility
-        card.addEventListener('mouseenter', expand);
-        card.addEventListener('mouseleave', collapse);
-
         card.addEventListener('click', () => {
-          if(card.classList.contains('is-expanded')) {
-            collapse();
-          } else {
-            expand();
-          }
+          card.classList.toggle('is-expanded');
         });
       });
     }
