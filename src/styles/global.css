@@ -3243,3 +3243,11 @@ body.light-mode .billboard-inner span,
 body.light-mode .billboard-inner div {
   color: #fff !important;
 }
+
+/* Fix placeholders in light mode */
+body.light-mode .fld input::placeholder,
+body.light-mode .ai-gen-section input::placeholder,
+body.light-mode .ai-gen-section textarea::placeholder,
+body.light-mode .img-prompt-textarea::placeholder {
+  color: rgba(15, 23, 42, 0.45) !important;
+}
