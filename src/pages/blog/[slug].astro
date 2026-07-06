@@ -31,10 +31,10 @@ const { Content } = await entry.render();
         </div>
 
         <!-- Title -->
-        <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.02em;">{entry.data.title}</h1>
+        <h1 class="blog-page-title" style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.02em;">{entry.data.title}</h1>
 
         <!-- Meta -->
-        <div style="color: rgba(255,255,255,0.4); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-family: 'Space Grotesk', sans-serif;">
+        <div class="blog-page-meta" style="color: rgba(255,255,255,0.4); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-family: 'Space Grotesk', sans-serif;">
           <span style="color: rgba(255,255,255,0.6); font-weight: 500;">By {entry.data.author}</span>
           <span style="color: rgba(255,255,255,0.2);">·</span>
           <time>{entry.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
@@ -67,6 +67,21 @@ const { Content } = await entry.render();
     </article>
   </main>
 </Layout>
+
+<style is:global>
+  body.light-mode .blog-page-title {
+    background: none !important;
+    -webkit-text-fill-color: var(--navy) !important;
+    color: var(--navy) !important;
+  }
+  body.light-mode .blog-page-meta {
+    color: rgba(15, 23, 42, 0.7) !important;
+  }
+  body.light-mode .blog-page-meta span, 
+  body.light-mode .blog-page-meta time {
+    color: rgba(15, 23, 42, 0.7) !important;
+  }
+</style>
 
 <style is:global>
   .blog-content {
