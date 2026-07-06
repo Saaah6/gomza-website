@@ -2440,6 +2440,18 @@ body.light-mode .cta-inner h2 {
   -webkit-background-clip: initial !important;
   filter: none !important;
 }
+
+/* Responsive System Theme Icon */
+.sys-tablet, .sys-mobile { display: none; }
+@media (max-width: 1024px) {
+  .sys-desktop { display: none; }
+  .sys-tablet { display: block; }
+}
+@media (max-width: 600px) {
+  .sys-tablet { display: none; }
+  .sys-mobile { display: block; }
+}
+
 body.light-mode .cta-inner p { color: rgba(15,23,42,0.60) !important; }
 body.light-mode .cta-inner .btn-primary {
   background: linear-gradient(135deg, #3B6FF0, #2952C8) !important;
