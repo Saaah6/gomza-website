@@ -2027,7 +2027,11 @@ footer{
 .cta-inner { transform-style: preserve-3d; perspective: 1000px; }
 .cta-inner h2 { transform: translateZ(40px); }
 .cta-inner p { transform: translateZ(30px); }
-.cta-inner .btn-primary { transform: translateZ(50px); }
+.cta-inner .btn-primary { 
+  position: relative;
+  z-index: 50;
+  transform: translateZ(50px); 
+}
 @media(max-width:768px) {
   .btn-primary, .btn-ghost, .nav-cta, .gen-btn { white-space: normal; height: auto; padding: 1rem 1.5rem; }
   .mob-overlay { display: none; } /* Ensuring this is hidden unless active */
@@ -2355,7 +2359,7 @@ body.light-mode .step-dot { background: #3B6FF0 !important; box-shadow: 0 0 0 4p
 .theme-toggle {
   position: fixed;
   top: 33px;
-  left: calc(50% + 520px);
+  left: calc(50% + 620px);
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
   color: #fff;
@@ -3219,4 +3223,7 @@ body.light-mode .billboard-stand {
 }
 
 body.light-mode .fld select, body.light-mode .fld input { background: #ffffff !important; border: 1px solid rgba(15,23,42,0.12) !important; color: #0F172A !important; }
+
+
+.js-tilt-glare { pointer-events: none !important; }
 
