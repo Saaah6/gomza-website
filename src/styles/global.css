@@ -3227,3 +3227,9 @@ body.light-mode .fld select, body.light-mode .fld input { background: #ffffff !i
 
 .js-tilt-glare { pointer-events: none !important; }
 
+
+/* Enterprise Banner Light Mode Fix */
+body.light-mode .enterprise-banner { background: #ffffff !important; border-color: rgba(15,23,42,0.12) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.05) !important; }
+body.light-mode .enterprise-banner h3, body.light-mode .enterprise-banner p, body.light-mode .enterprise-banner div { color: #0F172A !important; }
+body.light-mode .enterprise-banner h2 { color: var(--gold) !important; }
+body.light-mode .enterprise-banner .enterprise-tag { background: rgba(15,23,42,0.04) !important; border-color: rgba(15,23,42,0.12) !important; color: #0F172A !important; }
