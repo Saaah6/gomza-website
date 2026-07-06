@@ -3261,3 +3261,28 @@ body.light-mode footer .footer-col-right span {
 body.light-mode footer .footer-col-left .fl-text {
   color: #0F172A !important;
 }
+
+/* Tools ticker light mode */
+body.light-mode .tools-ticker-wrap {
+  background: #F8FAFC;
+  border-top: .5px solid rgba(15, 23, 42, 0.1);
+  border-bottom: .5px solid rgba(15, 23, 42, 0.1);
+}
+body.light-mode .tools-ticker-wrap::before {
+  background: linear-gradient(to right, #F8FAFC, transparent);
+}
+body.light-mode .tools-ticker-wrap::after {
+  background: linear-gradient(to left, #F8FAFC, transparent);
+}
+body.light-mode .tools-label {
+  color: #0F172A;
+  background: #FFFFFF;
+  border-color: rgba(15, 23, 42, 0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+body.light-mode .tool-chip {
+  color: #0F172A;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+}
