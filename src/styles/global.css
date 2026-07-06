@@ -3235,3 +3235,11 @@ body.light-mode .enterprise-banner h2 { color: var(--gold) !important; }
 body.light-mode .enterprise-banner .enterprise-tag { background: rgba(15,23,42,0.04) !important; border-color: rgba(15,23,42,0.12) !important; color: #0F172A !important; }
 
 .enterprise-tag { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); color: #ffffff; }
+
+/* Force billboard text to be white even in light mode */
+body.light-mode .billboard-inner h3,
+body.light-mode .billboard-inner p,
+body.light-mode .billboard-inner span,
+body.light-mode .billboard-inner div {
+  color: #fff !important;
+}
