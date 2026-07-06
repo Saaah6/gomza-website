@@ -433,38 +433,51 @@ const {
 </style>
 
 
-<script>
-  // Robust JavaScript expansion fallback
-  const cards = document.querySelectorAll('.case-study-card');
-  cards.forEach(card => {
-    const expandable = card.querySelector('.csc-expandable-content');
-    const inner = card.querySelector('.csc-inner-wrapper');
-    if(!expandable || !inner) return;
+<script is:inline>
+  (function() {
+    // Robust expansion logic that runs immediately
+    function initCards() {
+      const cards = document.querySelectorAll('.case-study-card');
+      cards.forEach(card => {
+        // Prevent multiple initializations
+        if(card.dataset.initialized) return;
+        card.dataset.initialized = 'true';
 
-    function expand() {
-      card.classList.add('is-expanded');
-      expandable.style.maxHeight = (inner.scrollHeight + 100) + 'px';
-      expandable.style.opacity = '1';
+        const expandable = card.querySelector('.csc-expandable-content');
+        const inner = card.querySelector('.csc-inner-wrapper');
+        if(!expandable || !inner) return;
+
+        function expand() {
+          card.classList.add('is-expanded');
+          expandable.style.maxHeight = (inner.scrollHeight + 100) + 'px';
+          expandable.style.opacity = '1';
+        }
+
+        function collapse() {
+          card.classList.remove('is-expanded');
+          expandable.style.maxHeight = '0px';
+          expandable.style.opacity = '0';
+        }
+
+        // Allow both hover and click on desktop for maximum compatibility
+        card.addEventListener('mouseenter', expand);
+        card.addEventListener('mouseleave', collapse);
+
+        card.addEventListener('click', () => {
+          if(card.classList.contains('is-expanded')) {
+            collapse();
+          } else {
+            expand();
+          }
+        });
+      });
     }
 
-    function collapse() {
-      card.classList.remove('is-expanded');
-      expandable.style.maxHeight = '0px';
-      expandable.style.opacity = '0';
+    // Run on load and on any DOM updates
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCards);
+    } else {
+      initCards();
     }
-
-    // Expand on hover for desktop
-    card.addEventListener('mouseenter', expand);
-    card.addEventListener('mouseleave', collapse);
-
-    // Toggle on click for mobile
-    card.addEventListener('click', (e) => {
-      if (window.innerWidth > 768) return;
-      if(card.classList.contains('is-expanded')) {
-        collapse();
-      } else {
-        expand();
-      }
-    });
-  });
+  })();
 </script>
