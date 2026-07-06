@@ -1,4 +1,4 @@
-﻿/* mobile.css - High performance mobile overrides */
+/* mobile.css - High performance mobile overrides */
 @media (max-width: 768px) {
   /* Fix hero content pushing up under the navbar due to flex-center on small heights */
   #hero {
@@ -25,15 +25,20 @@
   h1 { font-size: clamp(2rem, 10vw, 2.8rem) !important; line-height: 1.2 !important; }
   .stitle { font-size: 2rem !important; }
 
+}
+
+@media (max-width: 1060px) {
   /* Mobile menu specific fixes */
   .mob-overlay {
     backdrop-filter: none !important;
     background: rgba(6, 10, 22, 0.98) !important;
   }
-  
+
   /* Fix nav overlap */
   nav { background: rgba(6, 10, 22, 0.95) !important; backdrop-filter: none !important; }
+}
 
+@media (max-width: 768px) {
   /* FORCE HERO VISIBILITY - Bulletproof fix against GSAP / JS-ready hidden states */
   #hero .eyebrow, 
   #hero h1, 
