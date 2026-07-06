@@ -14,41 +14,41 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={`${entry.data.title} | Gomza Insights`}>
-  <main style="background: var(--navy); min-height: 100vh; padding: 120px 0 5rem 0; position: relative; overflow: hidden;">
+  <main class="blog-main">
     <!-- Ambient background glows -->
-    <div style="position: fixed; top: 10%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(79,124,255,0.04) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
-    <div style="position: fixed; bottom: 10%; right: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.03) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
+    <div class="blog-ambient-1"></div>
+    <div class="blog-ambient-2"></div>
 
-    <article style="max-width: 780px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 1;">
+    <article class="blog-article">
 
       <!-- Header -->
-      <div style="margin-bottom: 3rem; text-align: center;" class="reveal">
+      <div class="blog-header reveal">
         <!-- Tags -->
-        <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
+        <div class="blog-tags">
           {entry.data.tags.map((tag: string) => (
-            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); border: 1px solid rgba(212,175,55,0.3); background: rgba(212,175,55,0.06); padding: 0.3rem 0.9rem; border-radius: 50px; font-weight: 600;">{tag}</span>
+            <span class="blog-tag">{tag}</span>
           ))}
         </div>
 
         <!-- Title -->
-        <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.02em;">{entry.data.title}</h1>
+        <h1 class="blog-title">{entry.data.title}</h1>
 
         <!-- Meta -->
-        <div style="color: rgba(255,255,255,0.4); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; font-family: 'Space Grotesk', sans-serif;">
-          <span style="color: rgba(255,255,255,0.6); font-weight: 500;">By {entry.data.author}</span>
-          <span style="color: rgba(255,255,255,0.2);">·</span>
+        <div class="blog-meta">
+          <span class="blog-author">By {entry.data.author}</span>
+          <span class="blog-dot">·</span>
           <time>{entry.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
         </div>
 
         <!-- Accent line -->
-        <div style="width: 50px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto 0; box-shadow: 0 0 10px rgba(212,175,55,0.5);"></div>
+        <div class="blog-accent-line"></div>
       </div>
 
       <!-- Hero Image -->
       {entry.data.image && (
-        <div style="width: 100%; height: 420px; border-radius: 20px; overflow: hidden; margin-bottom: 4rem; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03); position: relative;" class="reveal">
-          <img src={entry.data.image} alt={entry.data.title} style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);" />
-          <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(2,4,10,0.7) 100%);"></div>
+        <div class="blog-hero-img reveal">
+          <img src={entry.data.image} alt={entry.data.title} />
+          <div class="blog-hero-overlay"></div>
         </div>
       )}
 
@@ -58,8 +58,8 @@ const { Content } = await entry.render();
       </div>
 
       <!-- Back to blog -->
-      <div style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
-        <a href="/blog" style="display: inline-flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.5); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#F4A62A';" onmouseout="this.style.color='rgba(255,255,255,0.5)';">
+      <div class="blog-back">
+        <a href="/blog" class="blog-back-link">
           ← Back to all articles
         </a>
       </div>
