@@ -437,14 +437,22 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Right Column: Links -->
     <div class="footer-col-right">
-      <div style="display: flex; flex-direction: column; gap: 1rem;">
-        <a href="#services" style="color: rgba(251,253,255,0.7); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;">Services</a>
-        <a href="#niches" style="color: rgba(251,253,255,0.7); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;">Industries</a>
-        <a href="/tool" style="color: rgba(251,253,255,0.7); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;">CRO Tool</a>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;">
+        <a href="#services" class="glass-link">Services</a>
+        <a href="#niches" class="glass-link">Industries</a>
+        <a href="#case-studies" class="glass-link">Case Studies</a>
+        <a href="/tool" style="display: inline-flex; flex-direction: column; padding: 0.6rem 1rem; background: rgba(244,166,42,0.03); border: 1px solid rgba(244,166,42,0.15); border-radius: 8px; text-decoration: none; transition: all 0.3s ease; margin-top: 0.5rem;" onmouseover="this.style.background='rgba(244,166,42,0.08)'; this.style.borderColor='rgba(244,166,42,0.3)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(244,166,42,0.03)'; this.style.borderColor='rgba(244,166,42,0.15)'; this.style.transform='translateY(0)';">
+          <span style="color: #F4A62A; font-weight: 600; font-size: 0.9rem;">CRO Tool</span>
+          <span style="display: block; font-size: 0.7rem; color: rgba(251,253,255,0.7); margin-top: 4px;">Try our free conversion optimizer</span>
+        </a>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 1rem;">
-        <a href="#" style="color: rgba(251,253,255,0.7); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;">LinkedIn</a>
-        <a href="#" style="color: rgba(251,253,255,0.7); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;">Twitter</a>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;">
+        <a href="#" class="glass-link">LinkedIn</a>
+        <a href="#" class="glass-link">Twitter</a>
+        <a href="/blog" style="display: inline-flex; flex-direction: column; padding: 0.6rem 1rem; background: rgba(45,140,255,0.03); border: 1px solid rgba(45,140,255,0.15); border-radius: 8px; text-decoration: none; transition: all 0.3s ease; margin-top: 0.5rem;" onmouseover="this.style.background='rgba(45,140,255,0.08)'; this.style.borderColor='rgba(45,140,255,0.3)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(45,140,255,0.03)'; this.style.borderColor='rgba(45,140,255,0.15)'; this.style.transform='translateY(0)';">
+          <span style="color: #2D8CFF; font-weight: 600; font-size: 0.9rem;">Blog</span>
+          <span style="display: block; font-size: 0.7rem; color: rgba(251,253,255,0.7); margin-top: 4px;">Growth Strategies & Insights</span>
+        </a>
       </div>
     </div>
   </div>
