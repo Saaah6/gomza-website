@@ -3134,7 +3134,7 @@ body.light-mode .enterprise-banner h2 {
 
 /* Light mode overrides for Ad Showcase */
 body.light-mode .ad-showcase-section {
-  background: var(--white) !important;
+  background: #f8fafc !important;
 }
 body.light-mode .ad-showcase-intro h2 {
   color: var(--blue) !important;
