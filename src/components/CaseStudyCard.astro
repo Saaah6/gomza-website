@@ -266,11 +266,10 @@ const {
 
   /* Expandable Area Logic */
   .csc-expandable-content {
-    max-height: 0;
+    max-height: 0px;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.8s ease, opacity 0.5s ease, padding 0.5s ease;
-    padding: 0 36px;
+    transition: max-height 0.6s ease-in-out, opacity 0.5s ease-in-out;
   }
 
   .csc-inner-wrapper {
@@ -278,13 +277,18 @@ const {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    min-height: 0;
+    padding: 0 36px 0 36px;
+    transition: padding 0.6s ease-in-out;
   }
 
   .case-study-card.is-expanded .csc-expandable-content,
   .case-study-card:hover .csc-expandable-content {
-    max-height: 1500px;
+    max-height: 2000px;
     opacity: 1;
+  }
+
+  .case-study-card.is-expanded .csc-inner-wrapper,
+  .case-study-card:hover .csc-inner-wrapper {
     padding: 0 36px 36px 36px;
   }
 
