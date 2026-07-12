@@ -30,47 +30,49 @@ const {
 
 <details class="case-study-card">
   <!-- ALWAYS VISIBLE HEADER (SUMMARY) -->
-  <summary class="csc-visible-header">
-    <div class="csc-info">
-      <h3 class="case-study-title">{brand}</h3>
-      <p class="case-study-subtitle">
-        <span class="platform">{platform}</span>
-      </p>
-      {description && (
-        <p class="case-study-desc">{description}</p>
-      )}
-      {objective && (
-        <p class="csc-objective">{objective}</p>
-      )}
-      <div class="csc-desktop-hint"><span class="blink-text">Click to view details &rarr;</span></div>
-    </div>
-
-    <div class="case-study-image-wrapper">
-      <div class="mock-browser-bar">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-      </div>
-      <div class="image-placeholder">
-        {imageUrl === "/assets/indigo_airlines.png" ? (
-          <div style="width: 100%; height: 100%; position: relative; background: #0f172a; overflow: hidden; border-radius: 8px;">
-            <ThreePlane client:visible />
-          </div>
-        ) : imageUrl !== "/assets/placeholder-dashboard.png" ? (
-          <img loading="lazy" decoding="async" src={imageUrl} alt={imageAlt || `${brand} Campaign Performance Dashboard`} />
-        ) : (
-          <div class="premium-dummy-image">
-            <div class="abstract-chart">
-              <div class="bar" style="height: 40%;"></div>
-              <div class="bar" style="height: 70%;"></div>
-              <div class="bar" style="height: 50%;"></div>
-              <div class="bar" style="height: 90%;"></div>
-              <div class="bar" style="height: 60%;"></div>
-              <div class="bar" style="height: 85%;"></div>
-              <div class="bar" style="height: 100%;"></div>
-            </div>
-          </div>
+  <summary>
+    <div class="csc-visible-header">
+      <div class="csc-info">
+        <h3 class="case-study-title">{brand}</h3>
+        <p class="case-study-subtitle">
+          <span class="platform">{platform}</span>
+        </p>
+        {description && (
+          <p class="case-study-desc">{description}</p>
         )}
+        {objective && (
+          <p class="csc-objective">{objective}</p>
+        )}
+        <div class="csc-desktop-hint"><span class="blink-text">Click to view details &rarr;</span></div>
+      </div>
+
+      <div class="case-study-image-wrapper">
+        <div class="mock-browser-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="image-placeholder">
+          {imageUrl === "/assets/indigo_airlines.png" ? (
+            <div style="width: 100%; height: 100%; position: relative; background: #0f172a; overflow: hidden; border-radius: 8px;">
+              <ThreePlane client:visible />
+            </div>
+          ) : imageUrl !== "/assets/placeholder-dashboard.png" ? (
+            <img loading="lazy" decoding="async" src={imageUrl} alt={imageAlt || `${brand} Campaign Performance Dashboard`} />
+          ) : (
+            <div class="premium-dummy-image">
+              <div class="abstract-chart">
+                <div class="bar" style="height: 40%;"></div>
+                <div class="bar" style="height: 70%;"></div>
+                <div class="bar" style="height: 50%;"></div>
+                <div class="bar" style="height: 90%;"></div>
+                <div class="bar" style="height: 60%;"></div>
+                <div class="bar" style="height: 85%;"></div>
+                <div class="bar" style="height: 100%;"></div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   </summary>
@@ -153,6 +155,7 @@ const {
     list-style: none;
     cursor: pointer;
     outline: none;
+    display: block;
   }
   .case-study-card > summary::-webkit-details-marker {
     display: none;
