@@ -2600,6 +2600,13 @@ body.light-mode .case-study-desc, body.light-mode .csc-objective {
   list-style: none; /* Hide default arrow */
   text-align: left;
   gap: 1rem;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 10;
+}
+.faq-question > * {
+  pointer-events: none;
 }
 .faq-question::-webkit-details-marker {
   display: none; /* Hide default arrow in WebKit */
