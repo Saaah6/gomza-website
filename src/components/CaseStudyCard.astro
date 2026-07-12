@@ -28,54 +28,52 @@ const {
 } = Astro.props;
 ---
 
-<details class="case-study-card">
-  <!-- ALWAYS VISIBLE HEADER (SUMMARY) -->
-  <summary>
-    <div class="csc-visible-header">
-      <div class="csc-info">
-        <h3 class="case-study-title">{brand}</h3>
-        <p class="case-study-subtitle">
-          <span class="platform">{platform}</span>
-        </p>
-        {description && (
-          <p class="case-study-desc">{description}</p>
-        )}
-        {objective && (
-          <p class="csc-objective">{objective}</p>
-        )}
-        <div class="csc-desktop-hint"><span class="blink-text">Click to view details &rarr;</span></div>
-      </div>
+<div class="case-study-card">
+  <!-- ALWAYS VISIBLE HEADER -->
+  <div class="csc-visible-header">
+    <div class="csc-info">
+      <h3 class="case-study-title">{brand}</h3>
+      <p class="case-study-subtitle">
+        <span class="platform">{platform}</span>
+      </p>
+      {description && (
+        <p class="case-study-desc">{description}</p>
+      )}
+      {objective && (
+        <p class="csc-objective">{objective}</p>
+      )}
+      <div class="csc-desktop-hint"><span class="blink-text">Click to view details &rarr;</span></div>
+    </div>
 
-      <div class="case-study-image-wrapper">
-        <div class="mock-browser-bar">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-        </div>
-        <div class="image-placeholder">
-          {imageUrl === "/assets/indigo_airlines.png" ? (
-            <div style="width: 100%; height: 100%; position: relative; background: #0f172a; overflow: hidden; border-radius: 8px;">
-              <ThreePlane client:visible />
+    <div class="case-study-image-wrapper">
+      <div class="mock-browser-bar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="image-placeholder">
+        {imageUrl === "/assets/indigo_airlines.png" ? (
+          <div style="width: 100%; height: 100%; position: relative; background: #0f172a; overflow: hidden; border-radius: 8px;">
+            <ThreePlane client:visible />
+          </div>
+        ) : imageUrl !== "/assets/placeholder-dashboard.png" ? (
+          <img loading="lazy" decoding="async" src={imageUrl} alt={imageAlt || `${brand} Campaign Performance Dashboard`} />
+        ) : (
+          <div class="premium-dummy-image">
+            <div class="abstract-chart">
+              <div class="bar" style="height: 40%;"></div>
+              <div class="bar" style="height: 70%;"></div>
+              <div class="bar" style="height: 50%;"></div>
+              <div class="bar" style="height: 90%;"></div>
+              <div class="bar" style="height: 60%;"></div>
+              <div class="bar" style="height: 85%;"></div>
+              <div class="bar" style="height: 100%;"></div>
             </div>
-          ) : imageUrl !== "/assets/placeholder-dashboard.png" ? (
-            <img loading="lazy" decoding="async" src={imageUrl} alt={imageAlt || `${brand} Campaign Performance Dashboard`} />
-          ) : (
-            <div class="premium-dummy-image">
-              <div class="abstract-chart">
-                <div class="bar" style="height: 40%;"></div>
-                <div class="bar" style="height: 70%;"></div>
-                <div class="bar" style="height: 50%;"></div>
-                <div class="bar" style="height: 90%;"></div>
-                <div class="bar" style="height: 60%;"></div>
-                <div class="bar" style="height: 85%;"></div>
-                <div class="bar" style="height: 100%;"></div>
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
-  </summary>
+  </div>
   
   <!-- EXPANDABLE CONTENT -->
   <div class="csc-expandable-content">
@@ -127,20 +125,25 @@ const {
       )}
     </div>
   </div>
-</details>
+</div>
 
 <style>
   .case-study-card {
     background: rgba(15, 20, 35, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     position: relative;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 10px 40px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05);
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     margin-bottom: 2rem;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   
   .case-study-card:hover {
@@ -150,28 +153,12 @@ const {
     transform: translateY(-4px);
   }
 
-  /* Reset details summary styles */
-  .case-study-card > summary {
-    list-style: none;
-    cursor: pointer;
-    outline: none;
-    display: block;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    position: relative;
-    z-index: 10;
-  }
-  .case-study-card > summary::-webkit-details-marker {
-    display: none;
-  }
-
   .csc-visible-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     padding: 36px;
     align-items: center;
-    pointer-events: none;
   }
 
   .csc-info {
@@ -224,7 +211,8 @@ const {
     transition: opacity 0.3s ease;
   }
 
-  .case-study-card[open] .csc-desktop-hint {
+  .case-study-card.is-expanded .csc-desktop-hint,
+  .case-study-card:hover .csc-desktop-hint {
     opacity: 0;
   }
 
@@ -279,26 +267,30 @@ const {
     object-fit: cover;
   }
 
-  /* When details is open, the content naturally shows */
+  /* Expandable Area Logic */
   .csc-expandable-content {
-    animation: slideDown 0.4s ease-out forwards;
-  }
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    max-height: 0px;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease;
   }
 
   .csc-inner-wrapper {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    padding: 0 36px;
+    transition: padding 0.6s ease;
+  }
+
+  .case-study-card:hover .csc-expandable-content,
+  .case-study-card.is-expanded .csc-expandable-content {
+    max-height: 2500px;
+    opacity: 1;
+  }
+
+  .case-study-card:hover .csc-inner-wrapper {
     padding: 0 36px 36px 36px;
   }
 
@@ -397,23 +389,7 @@ const {
     border-color: rgba(41,211,255,0.4);
   }
 
-  /* Light mode fixes for Case Study Cards */
-  body.light-mode .case-study-title {
-    background: linear-gradient(90deg, #1e3a8a, #4f46e5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  body.light-mode .case-study-desc, 
-  body.light-mode .csc-objective,
-  body.light-mode .cs-section p, 
-  body.light-mode .cs-section ul {
-    color: #334155;
-  }
-
-  body.light-mode .cs-section h4 {
-    color: #4338ca;
-  }
+  /* Light mode is handled in global.css, but we can add specific resets if needed */
 
   @media (max-width: 900px) {
     .csc-visible-header {
@@ -421,11 +397,16 @@ const {
       gap: 24px;
     }
     .case-study-image-wrapper {
-      order: -1; 
+      order: -1; /* image on top for mobile */
     }
   }
 
   @media (max-width: 768px) {
+    /* Auto expand on mobile */
+    .csc-expandable-content {
+      max-height: 2500px;
+      opacity: 1;
+    }
     .csc-inner-wrapper {
       padding: 0 24px 24px 24px;
     }
@@ -451,3 +432,29 @@ const {
     50% { opacity: 0.3; }
   }
 </style>
+
+<script is:inline>
+  (function() {
+    // Robust expansion logic that runs immediately
+    function initCards() {
+      const cards = document.querySelectorAll('.case-study-card');
+      cards.forEach(card => {
+        // Prevent multiple initializations
+        if(card.dataset.initialized) return;
+        card.dataset.initialized = 'true';
+
+        // Allow both hover and click on desktop for maximum compatibility
+        card.addEventListener('click', () => {
+          card.classList.toggle('is-expanded');
+        });
+      });
+    }
+
+    // Run on load and on any DOM updates
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCards);
+    } else {
+      initCards();
+    }
+  })();
+</script>
