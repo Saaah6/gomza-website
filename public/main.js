@@ -1133,14 +1133,29 @@ function downloadAIImage(){
     mouseY = e.clientY;
   });
 
-  // Lerp loop for buttery smoothness
+  // Spring loop for lively bounce
+  let velX = 0;
+  let velY = 0;
+  
   function renderCursor() {
-    // 0.15 is the easing amount. Lower = slower/more trailing.
-    cursorX += (mouseX - cursorX) * 0.15;
-    cursorY += (mouseY - cursorY) * 0.15;
+    // Spring physics parameters
+    const spring = 0.15;
+    const friction = 0.65;
+    
+    velX += (mouseX - cursorX) * spring;
+    velY += (mouseY - cursorY) * spring;
+    
+    velX *= friction;
+    velY *= friction;
+    
+    cursorX += velX;
+    cursorY += velY;
+    
+    // Organic breathing effect
+    const breathe = 1 + Math.sin(Date.now() / 400) * 0.04;
     
     // 42.5px offset to perfectly center the 85x85px cursor
-    cursor.style.transform = `translate3d(${cursorX - 42.5}px, ${cursorY - 42.5}px, 0)`;
+    cursor.style.transform = `translate3d(${cursorX - 42.5}px, ${cursorY - 42.5}px, 0) scale(${breathe})`;
     
     requestAnimationFrame(renderCursor);
   }

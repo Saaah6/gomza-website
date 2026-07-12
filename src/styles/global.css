@@ -1277,12 +1277,14 @@ footer{
 
 /* ── MOBILE OVERLAY ── */
 .mob-overlay{
-  display:none;position:fixed;inset:0;z-index:150;
+  position:fixed;inset:0;z-index:150;
   background:rgba(3,7,18,0.6);
   opacity:0;transition:opacity .3s ease;
   pointer-events:none;
 }
-.mob-overlay.show{opacity:1;pointer-events:auto;}
+.mob-overlay.open, .mob-overlay.show {
+  opacity:1;pointer-events:auto;
+}
 
 /* ── MOBILE DRAWER ── */
 .mob-drawer{
@@ -1847,21 +1849,25 @@ footer{
   width: 85px;
   height: 85px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at center, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: white;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.05em;
   pointer-events: none;
   z-index: 99999;
   scale: 0;
   opacity: 0;
-  transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, background-color 0.3s, box-shadow 0.3s;
   text-align: center;
   will-change: transform, scale, opacity;
 }
