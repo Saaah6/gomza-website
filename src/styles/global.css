@@ -1279,11 +1279,15 @@ footer{
 .mob-overlay{
   position:fixed;inset:0;z-index:150;
   background:rgba(3,7,18,0.6);
-  opacity:0;transition:opacity .3s ease;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .3s ease, visibility .3s ease;
   pointer-events:none;
 }
 .mob-overlay.open, .mob-overlay.show {
-  opacity:1;pointer-events:auto;
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
 }
 
 /* ── MOBILE DRAWER ── */

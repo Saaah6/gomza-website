@@ -32,17 +32,27 @@ const {
   <!-- ALWAYS VISIBLE HEADER -->
   <div class="csc-visible-header">
     <div class="csc-info">
-      <h3 class="case-study-title">{brand}</h3>
-      <p class="case-study-subtitle">
+      <div class="csc-meta">
         <span class="platform">{platform}</span>
-      </p>
+      </div>
+      <h3 class="case-study-title">{brand}</h3>
       {description && (
         <p class="case-study-desc">{description}</p>
       )}
       {objective && (
-        <p class="csc-objective">{objective}</p>
+        <div class="csc-objective-box">
+          <span class="obj-label">Objective:</span>
+          <p class="csc-objective">{objective}</p>
+        </div>
       )}
-      <div class="csc-desktop-hint"><span class="blink-text">Click to view details &rarr;</span></div>
+      
+      <div class="csc-toggle-action">
+        <span class="toggle-text view-details-msg">Click to view details</span>
+        <span class="toggle-text hide-details-msg">Click to hide details</span>
+        <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
     </div>
 
     <div class="case-study-image-wrapper">
@@ -75,7 +85,7 @@ const {
     </div>
   </div>
   
-  <!-- EXPANDABLE CONTENT -->
+  <!-- EXPANDABLE CONTENT (CSS Grid height animation) -->
   <div class="csc-expandable-content">
     <div class="csc-inner-wrapper">
       <div class="csc-divider"></div>
@@ -83,7 +93,7 @@ const {
       {(challenges || strategy) && (
         <div class="cs-split">
           {challenges && (
-            <div class="cs-section">
+            <div class="cs-section challenge-block">
               <h4>Challenges</h4>
               <ul>
                 {challenges.map(c => <li>{c}</li>)}
@@ -91,7 +101,7 @@ const {
             </div>
           )}
           {strategy && (
-            <div class="cs-section">
+            <div class="cs-section strategy-block">
               <h4>Strategy</h4>
               <ul>
                 {strategy.map(s => <li>{s}</li>)}
@@ -107,7 +117,9 @@ const {
           <div class="results-grid">
             {results.map(r => (
               <div class="result-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
                 <span>{r}</span>
               </div>
             ))}
@@ -117,7 +129,7 @@ const {
 
       {services && (
         <div class="cs-section services-section">
-          <h4>Services</h4>
+          <h4>Services Delivered</h4>
           <div class="services-tags">
             {services.map(s => <span class="svc-tag">{s}</span>)}
           </div>
@@ -129,8 +141,8 @@ const {
 
 <style>
   .case-study-card {
-    background: rgba(15, 20, 35, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(10, 15, 30, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 24px;
     display: flex;
     flex-direction: column;
@@ -138,26 +150,27 @@ const {
     position: relative;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05);
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.05);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     margin-bottom: 2rem;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    will-change: transform, box-shadow;
   }
   
   .case-study-card:hover {
-    background: rgba(20, 25, 45, 0.65);
-    border-color: rgba(41, 211, 255, 0.25);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(41, 211, 255, 0.08);
+    background: rgba(16, 22, 42, 0.65);
+    border-color: rgba(79, 124, 255, 0.35);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(79, 124, 255, 0.12);
     transform: translateY(-4px);
   }
 
   .csc-visible-header {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.1fr 0.9fr;
     gap: 40px;
-    padding: 36px;
+    padding: 40px;
     align-items: center;
   }
 
@@ -167,75 +180,116 @@ const {
     gap: 16px;
   }
 
+  .csc-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   .case-study-title {
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, #ffffff, #a5b4fc);
+    font-size: 2.1rem;
+    font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(90deg, #ffffff 30%, #cbd5e1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0;
     letter-spacing: -0.5px;
-    line-height: 1.1;
-  }
-
-  .case-study-subtitle {
-    margin: 0;
+    line-height: 1.15;
   }
   
   .platform {
     display: inline-block;
-    background: rgba(244, 166, 42, 0.1);
-    border: 1px solid rgba(244, 166, 42, 0.3);
-    color: #f4a62a;
-    padding: 4px 12px;
+    background: rgba(255, 181, 71, 0.08);
+    border: 1px solid rgba(255, 181, 71, 0.25);
+    color: #ffb547;
+    padding: 5px 14px;
     border-radius: 99px;
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    font-family: 'Space Grotesk', sans-serif;
   }
 
-  .case-study-desc, .csc-objective {
+  .case-study-desc {
     font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(251, 253, 255, 0.8);
     margin: 0;
     line-height: 1.6;
   }
 
-  .csc-desktop-hint {
-    margin-top: 12px;
+  .csc-objective-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--blue);
+    padding: 10px 16px;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .obj-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--blue-bright);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .csc-objective {
+    font-size: 0.95rem;
+    color: rgba(251, 253, 255, 0.75);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Toggle hint action */
+  .csc-toggle-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    color: var(--blue-bright);
+    font-weight: 700;
     font-size: 0.9rem;
-    font-weight: 600;
-    color: #3b82f6;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    transition: color 0.3s ease;
   }
 
-  .case-study-card.is-expanded .csc-desktop-hint,
-  .case-study-card:hover .csc-desktop-hint {
-    opacity: 0;
+  .case-study-card:hover .csc-toggle-action {
+    color: #ffffff;
   }
 
+  .toggle-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .hide-details-msg {
+    display: none;
+  }
+
+  /* Image wrappers */
   .case-study-image-wrapper {
     width: 100%;
     border-radius: 16px;
     overflow: hidden;
-    background: #000;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    background: #060b18;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     display: flex;
     flex-direction: column;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.6s ease;
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.5s ease;
   }
 
   .case-study-card:hover .case-study-image-wrapper {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.2);
+    transform: scale(1.015);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   .mock-browser-bar {
     height: 28px;
-    background: #1e1e1e;
+    background: rgba(15, 23, 42, 0.6);
     display: flex;
     align-items: center;
     padding: 0 12px;
@@ -244,8 +298,8 @@ const {
   }
 
   .mock-browser-bar .dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
   }
 
@@ -259,48 +313,66 @@ const {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
   }
 
   .image-placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.8s ease;
   }
 
-  /* Expandable Area Logic */
+  .case-study-card:hover .image-placeholder img {
+    transform: scale(1.04);
+  }
+
+  /* EXPANDABLE AREA LOGIC: CSS Grid Trick */
   .csc-expandable-content {
-    max-height: 0px;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease;
+    transition: grid-template-rows 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
   }
 
   .csc-inner-wrapper {
     overflow: hidden;
+    padding: 0 40px;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding: 0 36px;
-    transition: padding 0.6s ease;
+    transition: padding 0.45s ease;
   }
 
-  .case-study-card:hover .csc-expandable-content,
+  /* State when expanded */
   .case-study-card.is-expanded .csc-expandable-content {
-    max-height: 2500px;
+    grid-template-rows: 1fr;
     opacity: 1;
   }
 
-  .case-study-card:hover .csc-inner-wrapper {
-    padding: 0 36px 36px 36px;
+  .case-study-card.is-expanded .csc-inner-wrapper {
+    padding: 10px 40px 40px 40px;
+  }
+
+  .case-study-card.is-expanded .toggle-arrow {
+    transform: rotate(-180deg);
+  }
+
+  .case-study-card.is-expanded .view-details-msg {
+    display: none;
+  }
+
+  .case-study-card.is-expanded .hide-details-msg {
+    display: inline;
   }
 
   .csc-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    margin-bottom: 12px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin-bottom: 8px;
   }
 
-  /* Internal Sections */
+  /* Internal Grid and Details styling */
   .cs-split {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -308,23 +380,32 @@ const {
   }
 
   .cs-section h4 {
-    color: #a5b4fc;
-    font-size: 0.85rem;
+    color: rgba(251, 253, 255, 0.95);
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin: 0 0 12px 0;
-    font-weight: 700;
+    margin: 0 0 16px 0;
+    font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .cs-section p, .cs-section ul {
-    color: rgba(255,255,255,0.75);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin: 0;
+  .challenge-block h4 {
+    color: #ff6b8b;
+  }
+
+  .strategy-block h4 {
+    color: var(--blue-bright);
   }
 
   .cs-section ul {
-    padding-left: 1.2rem;
+    color: rgba(251, 253, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0;
+    padding-left: 1.25rem;
   }
 
   .cs-section ul li {
@@ -332,26 +413,34 @@ const {
   }
 
   .results-section {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 24px;
+    background: rgba(74, 222, 128, 0.03);
+    border: 1px solid rgba(74, 222, 128, 0.12);
+    border-radius: 18px;
+    padding: 24px 32px;
+  }
+
+  .results-section h4 {
+    color: #4ade80;
+    margin-bottom: 20px;
   }
 
   .results-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
   }
 
   .result-item {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    color: #4ade80;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+    gap: 12px;
+    color: #ffffff;
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+
+  .result-item span {
+    font-weight: 500;
   }
 
   .result-item svg {
@@ -359,10 +448,8 @@ const {
     height: 18px;
     flex-shrink: 0;
     margin-top: 3px;
-  }
-
-  .services-section {
-    margin-top: 8px;
+    color: #4ade80;
+    filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.6));
   }
 
   .services-tags {
@@ -372,49 +459,84 @@ const {
   }
 
   .svc-tag {
-    background: rgba(41,211,255,0.05);
-    color: #60a5fa;
-    border: 1px solid rgba(41,211,255,0.15);
-    padding: 6px 14px;
+    background: rgba(41,211,255,0.06);
+    color: #8ab4ff;
+    border: 1px solid rgba(41,211,255,0.18);
+    padding: 6px 16px;
     border-radius: 99px;
     font-size: 0.8rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    font-family: 'Space Grotesk', sans-serif;
   }
 
   .svc-tag:hover {
-    background: rgba(41,211,255,0.15);
-    color: #fff;
-    border-color: rgba(41,211,255,0.4);
+    background: rgba(79, 124, 255, 0.18);
+    color: #ffffff;
+    border-color: rgba(79, 124, 255, 0.4);
   }
 
-  /* Light mode is handled in global.css, but we can add specific resets if needed */
+  .premium-dummy-image {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f172a, #050a14);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
 
-  @media (max-width: 900px) {
+  .abstract-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 60%;
+    width: 70%;
+  }
+
+  .abstract-chart .bar {
+    flex: 1;
+    background: linear-gradient(180deg, var(--blue-bright), var(--blue));
+    border-radius: 4px 4px 0 0;
+    opacity: 0.7;
+    animation: barGrow 1.5s ease-out forwards;
+    transform-origin: bottom;
+  }
+
+  .abstract-chart .bar:nth-child(even) {
+    background: linear-gradient(180deg, var(--gold), #d97706);
+  }
+
+  @keyframes barGrow {
+    0% { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+  }
+
+  /* Responsive styling */
+  @media (max-width: 990px) {
     .csc-visible-header {
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 32px;
+      padding: 32px;
     }
     .case-study-image-wrapper {
-      order: -1; /* image on top for mobile */
+      order: -1;
     }
   }
 
   @media (max-width: 768px) {
-    /* Auto expand on mobile */
-    .csc-expandable-content {
-      max-height: 2500px;
-      opacity: 1;
-    }
-    .csc-inner-wrapper {
-      padding: 0 24px 24px 24px;
-    }
     .csc-visible-header {
       padding: 24px;
     }
-    .csc-desktop-hint {
-      display: none;
+    .csc-inner-wrapper {
+      padding: 0 24px;
+    }
+    .case-study-card.is-expanded .csc-inner-wrapper {
+      padding: 10px 24px 24px 24px;
+    }
+    .case-study-title {
+      font-size: 1.7rem;
     }
     .cs-split {
       grid-template-columns: 1fr;
@@ -422,39 +544,31 @@ const {
     }
     .results-grid {
       grid-template-columns: 1fr;
+      gap: 16px;
     }
-  }
-
-  .blink-text {
-    animation: blinker 2s linear infinite;
-  }
-  @keyframes blinker {
-    50% { opacity: 0.3; }
   }
 </style>
 
-<script is:inline>
-  (function() {
-    // Robust expansion logic that runs immediately
-    function initCards() {
-      const cards = document.querySelectorAll('.case-study-card');
-      cards.forEach(card => {
-        // Prevent multiple initializations
-        if(card.dataset.initialized) return;
-        card.dataset.initialized = 'true';
-
-        // Allow both hover and click on desktop for maximum compatibility
-        card.addEventListener('click', () => {
-          card.classList.toggle('is-expanded');
-        });
+<script>
+  function initCaseStudyCards() {
+    const cards = document.querySelectorAll('.case-study-card');
+    cards.forEach(card => {
+      if (card.dataset.initialized) return;
+      card.dataset.initialized = 'true';
+      
+      card.addEventListener('click', (e) => {
+        // Stop toggle action if user clicked an interactive tag/link inside the card
+        if (e.target.closest('a, button, select, input, .svc-tag')) {
+          return;
+        }
+        card.classList.toggle('is-expanded');
       });
-    }
+    });
+  }
 
-    // Run on load and on any DOM updates
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCards);
-    } else {
-      initCards();
-    }
-  })();
+  // Initialize immediately
+  initCaseStudyCards();
+
+  // Handle page transitions if applicable
+  document.addEventListener('astro:page-load', initCaseStudyCards);
 </script>
